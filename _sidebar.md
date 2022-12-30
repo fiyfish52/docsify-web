@@ -2,7 +2,10 @@
 * 前端
   * [-nginx](/web/nginx)
   * [-css](/web/css)
-* [后端](/server/)
-* CICD
-  * [jenkins](/cicd/jekins)
-* [网站](/www/)
+* 后端
+  * [CICD](/cicd)
+    * [jenkins](/cicd/jekins)
+* [网站](/www/index)
+* [项目](/proj/index)
+* 工具
+  * [文档框架](/tool/tool)

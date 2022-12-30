@@ -8,8 +8,8 @@
 - 无需生成 html 文件
 - 众多主题
 
-[GitHub](https://github.com/docsifyjs/docsify/)
-[Get Started](#docsify)
+[GitHub](http://39.96.36.32:3000/zhanglipeng/docsify-web.git)
+[Get Started](/)
 <!-- 
 <!-- 背景图片 -->
 
