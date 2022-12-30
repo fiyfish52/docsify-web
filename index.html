@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
@@ -7,20 +8,26 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
 </head>
+
 <body>
   <nav>
     <a href="#/">EN</a>
     <a href="#/zh-cn/">中文</a>
   </nav>
   <div id="app"></div>
+
+  <div id="gitalk-container"></div>
+
   <script>
     window.$docsify = {
+      repo: "http://39.96.36.32:3000/zhanglipeng/docsify-web.git",
       // 显示导航栏
-      loadNavbar:true,
+      loadNavbar: true,
       // 显示侧边栏
-      loadSidebar:true,
-      subMaxLevel:2,
+      loadSidebar: true,
+      subMaxLevel: 2,
       // 显示封面
       coverpage: false,
       // 切换页面后是否自动跳转到页面顶部。
@@ -29,11 +36,40 @@
       mergeNavbar: true,
 
       name: '',
-      repo: ''
+      // 复制到剪切板
+      copyCode: {
+        buttonText: 'Copy to clipboard',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+      // 支持评论
+      disqus: 'shortname'
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+  <!-- 图片缩放插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <!-- 复制到剪切板 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <!-- 支持评论插件 -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/disqus.min.js"></script> -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    var gitalk = new Gitalk({
+      clientID: '174d375d70269dcaac54',
+      clientSecret: '4c6330fbbab5ba67a1d4888de9c9d86f72af2cfd',
+      repo: 'http://39.96.36.32:3000/zhanglipeng/docsify-web.git',
+      owner: 'zhanglp',
+      admin: ['zhanglp'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
 </body>
+
 </html>
