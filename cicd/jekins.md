@@ -8,6 +8,7 @@ Generic java package(.war)
 ```bash
 wget http://mirrors.jenkins.io/war-stable/2.346.3/jenkins.war
 ```
+![jenkins下载页](./../_media/jenkins下载.jpg)
 2. 启动
 ```
 脚本：
