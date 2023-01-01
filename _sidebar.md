@@ -1,11 +1,16 @@
 * [首页](/)
-* 前端
-  * [-nginx](/web/nginx)
-  * [-css](/web/css)
-* 后端
-  * [CICD](/cicd)
-    * [jenkins](/cicd/jekins)
-* [网站](/www/index)
-* [项目](/proj/index)
-* 工具
-  * [文档框架](/tool/tool)
+* &#x1F4D7; 前端
+  * [&#x1F4D8; javascript](/web/javascript)
+  * [&#x1F4D8; css](/web/css)
+  * [&#x1F4D8; nginx](/web/nginx)
+  * [&#x1F4D8; vue](/web/vue)
+* &#x1F4D7; 后端
+  * [&#x1F4D8; maven](/server/maven.md)
+  * [&#x1F4D8; jenkins](/server/cicd/jekins) 
+  * [&#x1F4D8; linux](/server/linux.md)
+* &#x1F4D7; 网站
+  * [&#x1F4D8; shanzha.work](/www/index)
+* &#x1F4D7; 项目
+  * [&#x1F4D8; 我的项目](/proj/index)
+* &#x1F4D7; 工具
+  * [&#x1F4D8; 文档框架](/tool/tool)

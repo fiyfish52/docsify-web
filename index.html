@@ -8,6 +8,8 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  
+<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/dark.css"> -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-dark-mode@latest/dist/style.min.css" />
   <style>
     /* 以下是侧边栏(自定义) */
@@ -49,24 +51,28 @@
       background-color: #42b983 !important;
       box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.4) !important;
     }
+    .app-name{
+      width:50px;
+      height: 50px;
+    }
   </style>
 </head>
 
 <body>
-  <nav>
-    <a href="#/">EN</a>
-    <a href="#/zh-cn/">中文</a>
-  </nav>
+ 
   <div id="app"></div>
 
   <script>
     window.$docsify = {
+      logo:"./_media/logo.jpg",
       repo: "http://39.96.36.32:3000/zhanglipeng/docsify-web.git",
       // 显示导航栏
       loadNavbar: true,
       // 显示侧边栏
       loadSidebar: true,
       subMaxLevel: 3,
+      // 切换页面后是否自动跳转到页面顶部。
+      auto2top: true,
       // 显示封面
       coverpage: false,
       // 切换页面后是否自动跳转到页面顶部。
@@ -82,7 +88,7 @@
         successText: 'Copied'
       },
       // 暗色主题配置
-      themeColor: "#42b983",
+      // themeColor: '#3F51B5',
       darkMode: {
         dark: {
           background: "#1c2022",
