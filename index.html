@@ -8,69 +8,37 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  
-<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/dark.css"> -->
+
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/dark.css"> -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-dark-mode@latest/dist/style.min.css" />
+  <!-- 设置默认折叠 层级 -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" />
   <style>
     /* 以下是侧边栏(自定义) */
-    aside.sidebar ul li {
-      margin: 0;
-      position: relative;
-    }
+ 
 
-    aside.sidebar ul li ul {
-      margin: 6px 0;
-    }
-
-    aside.sidebar ul li p {
-      padding-left: 22px;
-      font-size: 18px;
-      font-weight: normal;
-    }
-
-    aside.sidebar ul li a {
-      line-height: 35px;
-      font-size: 14px;
-      /* 导航栏字体大小 */
-      padding: 3px 0 3px 22px;
-    }
-
-    aside.sidebar ul li.active>a {
-      font-size: 16px !important;
-    }
-
-    aside.sidebar ul li.active>a:before {
-      content: '' !important;
-      position: absolute !important;
-      margin: 0 !important;
-      width: 10px !important;
-      height: 10px !important;
-      top: 15px !important;
-      left: 0px !important;
-      border-radius: 50% !important;
-      background-color: #42b983 !important;
-      box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.4) !important;
-    }
-    .app-name{
-      width:50px;
+    .app-name {
+      width: 50px;
       height: 50px;
     }
   </style>
 </head>
 
 <body>
- 
+
   <div id="app"></div>
 
   <script>
     window.$docsify = {
-      logo:"./_media/logo.jpg",
+      logo: "./_media/logo.jpg",
       repo: "http://39.96.36.32:3000/zhanglipeng/docsify-web.git",
       // 显示导航栏
       loadNavbar: true,
       // 显示侧边栏
       loadSidebar: true,
-      subMaxLevel: 3,
+      subMaxLevel: 4,
+      maxLevel: 4,
       // 切换页面后是否自动跳转到页面顶部。
       auto2top: true,
       // 显示封面
@@ -89,6 +57,8 @@
       },
       // 暗色主题配置
       // themeColor: '#3F51B5',
+      // <!-- 设置默认折叠 层级 -->
+      sidebarDisplayLevel: 0,
       darkMode: {
         dark: {
           background: "#1c2022",
@@ -177,6 +147,10 @@
     }
     siteTime();
   </script>
+
+
+  <!-- 设置默认折叠层级 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 
 </html>
