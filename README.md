@@ -20,3 +20,8 @@ DOWN-POINTING RED TRIANGLE &#x1F53B;
 UP-POINTING SMALL RED TRIANGLE &#x1F53C;
 
 test
+
+启动：
+```
+docsify serve ./
+```
