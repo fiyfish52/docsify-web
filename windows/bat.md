@@ -24,3 +24,17 @@ chcp 65001
 |936|GB2312|
 |20127|US-ASCII|
 |65001|UTF-8|
+
+
+
+## 创建文件夹，已当前时间命名
+
+```
+set hour=%time:~0,2%
+if /i %hour% LSS 10 (
+ set hour=0%time:~1,1%
+)
+set filename=%date:~0,4%%date:~5,2%%date:~8,2%_%hour%.%time:~3,2%.%time:~6,2%
+echo "创建文件夹：jar-%filename%"
+md jar-%filename%
+```

@@ -12,6 +12,13 @@ $3 == c
 $4 == d
 ```
 
+## 创建文件，以日期命名
+```
+#!/bin/sh
+TIME=$(date "+%Y%m%d_%H%M%S")
+d="cp sign.log logs/\"sign_$TIME.log\""
+eval $d
+```
 
 ## 启动、重启jar包
 
