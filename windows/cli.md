@@ -79,3 +79,13 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Directory\Background\shell\WebStorm\command]
 @="\"C:\\user\\program\\JetBrains\\WebStorm 2021.1.1\\bin\\WebStorm64.exe\" \"%V\""
 ```
+
+
+## 配置支持 gzip
+
+1. 下载gzip
+[下载链接](https://udomain.dl.sourceforge.net/project/gnuwin32/gzip/1.3.12-1/gzip-1.3.12-1-bin.zip)
+
+2. 解压
+3. 拷贝 ../bin/gzip.exe --> C:\Windows\System32
+4. ok
