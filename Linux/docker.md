@@ -1,0 +1,85 @@
+# 离线安装docker、docker-compose
+
+## docker
+一、环境说明：在某些部署环境下，因为网络或者其他原因，不能在线部署，这时候就需要以离线的方式安装docker；
+
+二、安装步骤：
+
+1、获取docker安装文件，官方地址如下：
+
+https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz
+2、将下载的安装文件进行解压，命令如下：
+
+tar zxvf docker-19.03.9.tgz
+3、将上述解压后文件（docker文件夹）全部移动至/usr/bin目录下（必须），命令如下：
+
+cp -p docker/* /usr/bin
+4、将docker注册为service，步骤如下：
+
+①输入如下命令：
+
+vi /usr/lib/systemd/system/docker.service
+②点击i，下面出现-----insert----进入编辑状态
+
+复制下面内容至docker.service，复制内容如下：
+
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.com
+After=network.target docker.socket
+[Service]
+Type=notify
+EnvironmentFile=-/run/flannel/docker
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/bin/dockerd \
+                -H tcp://0.0.0.0:4243 \
+                -H unix:///var/run/docker.sock \
+                --selinux-enabled=false \
+                --log-opt max-size=1g
+ExecReload=/bin/kill -s HUP $MAINPID
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+#TasksMax=infinity
+TimeoutStartSec=0
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
+复制完成之后，点击esc键，并输入:wq!保存并强制退出；
+
+可执行如下命令，查看上述复制内容是否正确
+
+cat /usr/lib/systemd/system/docker.service
+5、重新加载docker配置文件，命令如下：
+
+$ systemctl daemon-reload
+6、启动docker，命令如下：
+
+$ systemctl start docker
+7、设置docker开机启动，命令如下：
+
+$ systemctl enable docker
+8、查看docker是否安装成功，命令如下：
+
+$ docker version
+
+
+## docker-compose
+
+https://github.com/docker/compose/releases
+
+
+ 3.2上传到服务器，将文件转移至/usr/local/bin/
+mv docker-compose-Linux-x86_64 /usr/local/bin/docker-compose
+3.3添加权限
+1
+chmod +x /usr/local/bin/docker-compose
+　　测试：docker-compose -v

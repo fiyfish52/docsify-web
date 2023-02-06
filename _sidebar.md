@@ -10,6 +10,9 @@
   * cicd
     * [&#x1F4D8; jenkins](/server/cicd/jekins) 
   * [&#x1F4D8; maven](/server/maven.md)
+  * [&#x1F4D8; docker](/server/docker.md)
+  * [&#x1F4D8; elasticsearch](/server/elasticsearch.md)
+  * [&#x1F4D8; javadoc](/server/javadoc.md)
 * &#x1F4D7; 网站
   * [&#x1F4D8; shanzha.work](/www/index)
 * &#x1F4D7; 项目
@@ -35,3 +38,5 @@
 * &#x1F4D7; Study
   * PBOOK
     * [&#x1F4D8; PMP](/study/Indx.md)
+* &#x1F4D7; 问题整理
+  * [&#x1F4D8; 后端](/server/serverProblem.md)
