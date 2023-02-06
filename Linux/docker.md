@@ -107,7 +107,7 @@ https://github.com/docker/compose/releases
 1. 上传到服务器，将文件转移至/usr/local/bin/
 
 ```
-mv docker-compose-Linux-x86_64 /usr/local/bin/docker-compose
+mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose
 ```
 3. 添加权限
 
