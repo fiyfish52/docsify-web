@@ -42,32 +42,3 @@ docker build -t local-eureka .
 ```
 docker run -d --name local-eureka-8000 -p 8000:8000 local-eureka
 ```
-
-## docker 镜像迁移
-
-> linux系统间迁移
-```
-docker save  [镜像名或镜像id] | gzip > [压缩文件名].tar.gz
-```
-```
-docker load -i [压缩文件名].tar.gz
-```
-
-> 跨系统迁移（win->linux）
-
-使用上面的命令报错：**docker：Untar exit status 1 archive/tar: invalid tar header 错误解决**
-
-使用如下命令镜像文件没有压缩
-1. 生成镜像文件
-
-```
-docker save [镜像id] -o image.tar
-```
-
-2. docker导入镜像
-
-```
-docker load -i image.tar
-```
-
-3. 启动镜像
