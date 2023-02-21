@@ -1,4 +1,4 @@
-* [首页](/)
+* [knowlage-base](/)
 * &#x1F4D7; code
   * java
     * [&#x1F4D8; ftputil](/code/java/utils/ftputils.md)
@@ -6,27 +6,31 @@
     * [&#x1F4D8; xmlutil](/code/java/utils/xml.md)
   * springboot
     * [&#x1F4D8; problem](/code/springboot/problem.md)
+  * security
+    * [&#x1F4D8; basicAuth](/code/security/basicAuth.md)
+    * [&#x1F4D8; springSecurity](/code/security/springSecurity.md)
 * &#x1F4D7; 前端
   * [&#x1F4D8; javascript](/web/javascript)
   * [&#x1F4D8; css](/web/css)
   * [&#x1F4D8; vue](/web/vue)
 * &#x1F4D7; 后端
   * DB
-    * [&#x1F4D8; mysql](/server/DB/mysql.md) 
-    * [&#x1F4D8; oracle](/server/DB/oracle.md) 
+    * [&#x1F4D8; mysql](/server/DB/mysql.md)
+    * [&#x1F4D8; oracle](/server/DB/oracle.md)
   * cicd
-    * [&#x1F4D8; jenkins](/server/cicd/jekins) 
+    * [&#x1F4D8; jenkins](/server/cicd/jekins)
   * docker
     * [&#x1F4D8; docker-cli](/server/docker/docker-cli.md)
     * [&#x1F4D8; docker-use](/server/docker/docker.md)
-    * [&#x1F4D8; vsftp](/server/docker/vsftp.md) 
-    * [&#x1F4D8; sftp](/server/docker/sftp.md) 
+    * [&#x1F4D8; vsftp](/server/docker/vsftp.md)
+    * [&#x1F4D8; sftp](/server/docker/sftp.md)
   * [&#x1F4D8; maven](/server/maven.md)
   * [&#x1F4D8; elasticsearch](/server/elasticsearch.md)
   * [&#x1F4D8; javadoc](/server/javadoc.md)
 * &#x1F4D7; 网站
   * [&#x1F4D8; shanzha.work](/www/index)
 * &#x1F4D7; 项目
+  * [&#x1F4D8; githubStar](/proj/github/collection.md)
   * [&#x1F4D8; 我的项目](/proj/index)
   * [&#x1F4D8; docker环境](/proj/design/base.md)
 * &#x1F4D7; 工具
@@ -47,7 +51,7 @@
     * [&#x1F4D8; 文件服务器 Fastdfs](/linux/fastdfs.md)
     * [&#x1F4D8; 依赖：zlib](/linux/zlib.md)
     * [&#x1F4D8; web服务器 nginx](/linux/nginx.md)
-* &#x1F4D7; Windows 
+* &#x1F4D7; Windows
   * Cli
     * [&#x1F4D8; windows 命令](/windows/cli.md)
   * bat脚本
