@@ -44,6 +44,8 @@
   * 版本控制（VCS）
     * [&#x1F4D8; svn](/tool/vcs/svn.md)
     * [&#x1F4D8; git](/tool/vcs/git.md)
+  * 流程设计
+    * [&#x1F4D8; 设计工具](/tool/design/design.md)
 * &#x1F4D7; Linux
   * [&#x1F4D8; linux命令](/linux/linux.md)
   * [&#x1F4D8; shell脚本](./linux/shell.md)

@@ -61,6 +61,12 @@ select from update insert truncate
 declare begin end loop  end loop
 create tracate delete drop index 
 ```
+
+图片
+
+ ![安全配置](_media/jenkins安全策略.jpg)
+
+
 <br/>
 
 ### &#x1F536; Header
