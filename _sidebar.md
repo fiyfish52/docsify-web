@@ -12,6 +12,7 @@
     * [&#x1F4D8; springSecurity](/code/security/springSecurity.md)
 * &#x1F4D7; 前端
   * npm
+    * [&#x1F4D8; npm compomemt](/web/npm/component.md)
     * [&#x1F4D8; npm Problem](/web/npm/npmProblem.md)
   * [&#x1F4D8; javascript](/web/javascript)
   * [&#x1F4D8; css](/web/css)
