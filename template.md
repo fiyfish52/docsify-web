@@ -4,6 +4,63 @@
 [comment]: # (comment...)
 [comment]: <> (comment...)
 
+
+?> notes:
+
+`23424`
+
+html
+```html
+<html>
+  <head>
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.11.4/themes/vue.css"/>
+  <style></style>
+  </head>
+  <body>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4.11.4"></script>
+  </body>
+</html>
+```
+python
+```python
+cd docs && python -m SimpleHTTPServer 3000
+def
+for
+print
+py aaa.py
+```
+python
+```py
+cd docs && python -m http.server 3000
+```
+bash
+```bash
+# docsify serve docs
+sh aaa.sh
+
+```
+java
+```java
+public static void main(String[] argz){
+  private
+  int Integer boolean Boolean double Double float Float 
+
+
+}
+```
+json
+```json
+{"a":"11"}
+```
+
+
+sql
+```sql
+select from update insert truncate
+declare begin end loop  end loop
+create tracate delete drop index 
+```
 <br/>
 
 ### &#x1F536; Header

@@ -10,7 +10,7 @@ wget http://mirrors.jenkins.io/war-stable/2.346.3/jenkins.war
 ```
 ![jenkins下载页](../../_media/jenkins下载.jpg)
 >2. 启动
-```
+```sh
 脚本：
 #/bin/bash
 echo "starting jenkins……"
@@ -42,13 +42,15 @@ Manage Jenkins --> Manage Plugins
 ---
 ## 导入导出
 > 导出 
-```
+
+```sh
 java -jar jenkins-cli.jar -s 【jenkins访问路径，即登录jenkins后的路径】 -auth 【jenkins登录账号】:【jenkins登录密码】 get-job 【job名称】> 【job名称】.xml
 
 eg: java -jar jenkins-cli.jar -s http://localhost:8880/ -auth zhanglp:zhangLIpeng021? get-job TKH-BAS > TKH-BAS.xml
 ```
 
 > 导入
-```
+
+```sh
 java -jar jenkins-cli.jar -s http://localhost:8880/ -auth zhanglp:zhangLIpeng021?  TKH-BAS <  TKH-BAS.xml
 ```
