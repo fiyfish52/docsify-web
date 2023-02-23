@@ -20,7 +20,9 @@
 * &#x1F4D7; 后端
   * DB
     * [&#x1F4D8; mysql](/server/DB/mysql.md)
-    * [&#x1F4D8; oracle](/server/DB/oracle.md)
+    * oracle
+      * [&#x1F4D8; oracle](/server/DB/oracle/oracle.md)
+      * [&#x1F4D8; oracle grammar](/server/DB/oracle/oracleGrammar.md)
   * cicd
     * [&#x1F4D8; jenkins](/server/cicd/jekins)
   * docker
