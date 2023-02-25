@@ -7,9 +7,15 @@
     * [&#x1F4D8; xmlutil](/code/java/utils/xml.md)
   * springboot
     * [&#x1F4D8; problem](/code/springboot/problem.md)
+    * [&#x1F4D8; springboot3](/code/springboot/springboot3.md)
   * security
     * [&#x1F4D8; basicAuth](/code/security/basicAuth.md)
     * [&#x1F4D8; springSecurity](/code/security/springSecurity.md)
+  * springcloud
+    * [&#x1F4D8; componnet](/code/springcloud/component.md)
+    * [&#x1F4D8; junit](/code/springcloud/junit.md)
+    * [&#x1F4D8; openfeign](/code/springcloud/openfeign.md)
+    * [&#x1F4D8; problem](/code/springcloud/problem.md)
 * &#x1F4D7; 前端
   * npm
     * [&#x1F4D8; npm compomemt](/web/npm/component.md)
@@ -19,10 +25,13 @@
   * [&#x1F4D8; vue](/web/vue)
 * &#x1F4D7; 后端
   * DB
-    * [&#x1F4D8; mysql](/server/DB/mysql.md)
+  
     * oracle
       * [&#x1F4D8; oracle](/server/DB/oracle/oracle.md)
       * [&#x1F4D8; oracle grammar](/server/DB/oracle/oracleGrammar.md)
+    * mysql
+      * [&#x1F4D8; mysql config](/server/DB/mysql/config.md)
+      * [&#x1F4D8; mysql](/server/DB/mysql/mysql.md)
   * cicd
     * [&#x1F4D8; jenkins](/server/cicd/jekins)
   * docker
@@ -30,8 +39,9 @@
     * [&#x1F4D8; docker-use](/server/docker/docker.md)
     * [&#x1F4D8; vsftp](/server/docker/vsftp.md)
     * [&#x1F4D8; sftp](/server/docker/sftp.md)
+    * [&#x1F4D8; elasticsearch](/server/docker/elasticsearch.md)
   * [&#x1F4D8; maven](/server/maven.md)
-  * [&#x1F4D8; elasticsearch](/server/elasticsearch.md)
+  * [&#x1F4D8; elasticsearch](/server/elasticsearch/cli.md)
   * [&#x1F4D8; javadoc](/server/javadoc.md)
 * &#x1F4D7; 网站
   * [&#x1F4D8; shanzha.work](/www/index)
@@ -39,6 +49,9 @@
   * [&#x1F4D8; githubStar](/proj/github/collection.md)
   * [&#x1F4D8; 我的项目](/proj/index)
   * [&#x1F4D8; docker环境](/proj/design/base.md)
+  * knbs-base
+    * [&#x1F4D8; knbs-server](/proj/design/knbs-base/knbs-server.md)
+    * [&#x1F4D8; knbs-web](/proj/design/knbs-base/knbs-web.md)
 * &#x1F4D7; 工具
   * IDE
     * [&#x1F4D8; STS4](/tool/ide/spring%20tool%20suite%204.md)
