@@ -40,3 +40,15 @@ Caused by: java.lang.AbstractMethodError: org.springframework.cloud.netflix.ribb
             <version>3.0.6</version>
         </dependency>
 ```
+
+## Invalid redirect: http://www.XXXX.com does not match one of the registered values
+
+有时候使用OAuth2做SSO时，客户端访问统一认证中心，经过验证通过，重定向返回后可能会遇到这个问题
+
+这个时候需要检查你重定向地址的协议，域名，端口是否与在认证服务器注册的重定向地址保持一致。如果不一致就需要将多个域名配置到认证服务器。
+
+
+## Failed to launch `localhost:?code=RJAkXf` because the scheme does not have a registered handler.
+
+请求连接前面必须携带协议：http/https
+
