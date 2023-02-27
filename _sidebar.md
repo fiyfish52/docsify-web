@@ -20,14 +20,17 @@
     * [&#x1F4D8; junit](/code/springcloud/junit.md)
     * [&#x1F4D8; openfeign](/code/springcloud/openfeign.md)
     * [&#x1F4D8; problem](/code/springcloud/problem.md)
-* &#x1F4D7; 前端
+* &#x1F4D7; 前端 web
   * npm
     * [&#x1F4D8; npm compomemt](/web/npm/component.md)
     * [&#x1F4D8; npm Problem](/web/npm/npmProblem.md)
+  * vue
+    * [&#x1F4D8; vue](/web/vue/vue.md)
+    * [&#x1F4D8; vue project](/web/vue/vueproject.md)
   * [&#x1F4D8; javascript](/web/javascript)
   * [&#x1F4D8; css](/web/css)
   * [&#x1F4D8; vue](/web/vue)
-* &#x1F4D7; 后端
+* &#x1F4D7; 后端 server
   * cicd
     * [&#x1F4D8; jenkins](/server/cicd/jekins)
   * DB
