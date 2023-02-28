@@ -1,12 +1,14 @@
 # vue project
 
-## 配置代理
+## 配置跨域代理
+
+[官网](https://cli.vuejs.org/zh/config/#devserver-proxy)
 
 > 文件位置
 
 `vue.config.js`
 
-> 设置跳转
+> 设置跨域跳转
 
 ```sh
 前端请求路径："http://localhost/knbs/user/userOpt/userinfos?username=admin"
