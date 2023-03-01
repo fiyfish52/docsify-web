@@ -43,17 +43,23 @@
   * docker
     * [&#x1F4D8; docker-cli](/server/docker/docker-cli.md)
     * [&#x1F4D8; docker-use](/server/docker/docker.md)
-    * [&#x1F4D8; vsftp](/server/docker/vsftp.md)
-    * [&#x1F4D8; sftp](/server/docker/sftp.md)
     * [&#x1F4D8; elasticsearch](/server/docker/elasticsearch.md)
+    * [&#x1F4D8; nacos](/server/docker/nacos.md)
+    * [&#x1F4D8; redis](/server/docker/redis.md)
+    * [&#x1F4D8; sftp](/server/docker/sftp.md)
+    * [&#x1F4D8; vsftp](/server/docker/vsftp.md)
   * elasticsearch
     * [&#x1F4D8; cli](/server/elasticsearch/cli.md)
   * interfacedoc 接口文档
     * [&#x1F4D8; knife4j-swagger](/server/interfacedoc/knife4j-swagger/knife4j.md)
     * [&#x1F4D8; spring-doc](/server/interfacedoc/springdoc/springdoc.md)
-  * [&#x1F4D8; maven](/server/maven.md)
-  * [&#x1F4D8; elasticsearch](/server/elasticsearch/cli.md)
-  * [&#x1F4D8; javadoc](/server/javadoc.md)
+  * maven
+    * [&#x1F4D8; maven](/server/maven/maven.md)
+  * nacos
+    * [&#x1F4D8; nacos](/server/nacos/nacos.md)
+  * redis
+    * [&#x1F4D8; redis](/server/redis/redis.md)
+  * [&#x1F4D8; 问题汇总](/server/serverProblem.md)
 * &#x1F4D7; 网站
   * [&#x1F4D8; shanzha.work](/www/index)
 * &#x1F4D7; 项目
@@ -91,6 +97,4 @@
 * &#x1F4D7; Study
   * PBOOK
     * [&#x1F4D8; PMP](/study/Indx.md)
-* &#x1F4D7; 问题整理
-  * [&#x1F4D8; 后端](/server/serverProblem.md)
 * [&#x1F4D8; 模板](/template.md)

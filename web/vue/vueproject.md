@@ -43,3 +43,11 @@ proxy: {
 [HPM] GET /knbs/user/userOpt/userinfos?username=admin ~> http://localhost:8783/
 
 ```
+
+## vue 启动绑定 host
+
+[vue-cli-service命令](https://cli.vuejs.org/zh/guide/cli-service.html#vue-cli-service-serve)
+
+```json
+ "serve": "vue-cli-service serve --host 127.0.0.1"
+```
