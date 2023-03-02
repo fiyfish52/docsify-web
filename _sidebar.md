@@ -33,6 +33,12 @@
   * [&#x1F4D8; css](/web/css)
   * [&#x1F4D8; vue](/web/vue)
 * &#x1F4D7; 后端 server
+  * build 项目构建工具
+    * maven
+      * [&#x1F4D8; maven](/server/build/maven/maven.md)
+    * gradle
+      * [&#x1F4D8; gradle](/server/build/gradle/gradle.md)
+      * [&#x1F4D8; gradle problem](/server/build/gradle/gradleproblem.md)
   * cicd
     * [&#x1F4D8; jenkins](/server/cicd/jekins)
   * DB
@@ -56,8 +62,6 @@
   * interfacedoc 接口文档
     * [&#x1F4D8; knife4j-swagger](/server/interfacedoc/knife4j-swagger/knife4j.md)
     * [&#x1F4D8; spring-doc](/server/interfacedoc/springdoc/springdoc.md)
-  * maven
-    * [&#x1F4D8; maven](/server/maven/maven.md)
   * nacos
     * [&#x1F4D8; nacos](/server/nacos/nacos.md)
   * redis
