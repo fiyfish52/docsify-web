@@ -78,7 +78,8 @@
     * [&#x1F4D8; knbs-web](/proj/design/knbs-base/knbs-web.md)
 * &#x1F4D7; 工具
   * IDE
-    * [&#x1F4D8; STS4](/tool/ide/spring%20tool%20suite%204.md)
+    * [&#x1F4D8; IDEA](/tool/ide/interllij%20idea.md)
+    * [&#x1F4D8; STS4](/tool/idea/spring%20tool%20suite%204.md)
   * 文档管理工具
     * [&#x1F4D8; 文档框架](/tool/doc/doc.md)
   * 数据库文档管理工具
@@ -89,15 +90,15 @@
   * 流程设计
     * [&#x1F4D8; 设计工具](/tool/design/design.md)
 * &#x1F4D7; Linux
-  * [&#x1F4D8; linux命令](/linux/linux.md)
-  * [&#x1F4D8; shell脚本](./linux/shell.md)
   * &#x1F4D7; cli
-    * [&#x1F4D8; sftp](/linux/sftp.md)
-  * 安装
-    * [&#x1F4D8; docker](/linux/docker.md)
-    * [&#x1F4D8; 文件服务器 Fastdfs](/linux/fastdfs.md)
-    * [&#x1F4D8; 依赖：zlib](/linux/zlib.md)
-    * [&#x1F4D8; web服务器 nginx](/linux/nginx.md)
+    * [&#x1F4D8; sftp](/linux/cli/sftp.md)
+  * &#x1F4D7; 安装
+    * [&#x1F4D8; docker](/linux/install/docker.md)
+    * [&#x1F4D8; 文件服务器 Fastdfs](/linux/install/fastdfs.md)
+    * [&#x1F4D8; web服务器 nginx](/linux/install/nginx.md)
+    * [&#x1F4D8; 依赖：zlib](/linux/install/zlib.md)
+  * [&#x1F4D8; linux命令](/linux/linux.md)
+  * [&#x1F4D8; shell](/linux/shell.md)
 * &#x1F4D7; Windows
   * Cli
     * [&#x1F4D8; windows 命令](/windows/cli.md)
