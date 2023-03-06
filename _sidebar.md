@@ -76,10 +76,10 @@
   * knbs-base
     * [&#x1F4D8; knbs-server](/proj/design/knbs-base/knbs-server.md)
     * [&#x1F4D8; knbs-web](/proj/design/knbs-base/knbs-web.md)
-* &#x1F4D7; 工具
+* &#x1F4D7; 工具 tool
   * IDE
-    * [&#x1F4D8; IDEA](/tool/ide/interllij%20idea.md)
-    * [&#x1F4D8; STS4](/tool/idea/spring%20tool%20suite%204.md)
+    * [&#x1F4D8; IDEA](/tool/ide/interllijidea.md)
+    * [&#x1F4D8; STS4](/tool/ide/springtoolsuite4.md)
   * 文档管理工具
     * [&#x1F4D8; 文档框架](/tool/doc/doc.md)
   * 数据库文档管理工具
