@@ -91,14 +91,14 @@
     * [&#x1F4D8; 设计工具](/tool/design/design.md)
 * &#x1F4D7; Linux
   * &#x1F4D7; cli
-    * [&#x1F4D8; sftp](/linux/cli/sftp.md)
+    * [&#x1F4D8; sftp](/linux1/cli/sftp.md)
   * &#x1F4D7; 安装
-    * [&#x1F4D8; docker](/linux/install/docker.md)
-    * [&#x1F4D8; 文件服务器 Fastdfs](/linux/install/fastdfs.md)
-    * [&#x1F4D8; web服务器 nginx](/linux/install/nginx.md)
-    * [&#x1F4D8; 依赖：zlib](/linux/install/zlib.md)
-  * [&#x1F4D8; linux命令](/linux/linux.md)
-  * [&#x1F4D8; shell](/linux/shell.md)
+    * [&#x1F4D8; docker](/linux1/install/docker.md)
+    * [&#x1F4D8; 文件服务器 Fastdfs](/linux1/install/fastdfs.md)
+    * [&#x1F4D8; web服务器 nginx](/linux1/install/nginx.md)
+    * [&#x1F4D8; 依赖：zlib](/linux1/install/zlib.md)
+  * [&#x1F4D8; linux命令](/linux1/linux.md)
+  * [&#x1F4D8; shell](/linux1/shell.md)
 * &#x1F4D7; Windows
   * Cli
     * [&#x1F4D8; windows 命令](/windows/cli.md)
