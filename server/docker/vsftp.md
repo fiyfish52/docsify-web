@@ -19,3 +19,13 @@ docker pull fauria/vsftpd
 ```
 docker run -d -v ./agent:/home/vsftpd -p 20:20 -p 21:21 -p 21100-21110:21100-21110 -e FTP_USER=digittest -e FTP_PASS=digit123456 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 --name vsftpd --restart=always fauria/vsftpd
 ```
+
+4. 测试
+
+```sh
+ftp ip
+```
+
+输入用户名`digittest`： 启动容器时的配置：`FTP_USER=digittest`
+
+输入密码`digit123456`： 启动容器时的配置：`FTP_PASS=digit123456`

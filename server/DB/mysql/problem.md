@@ -19,3 +19,17 @@ Update frameworkdepartments SET ParentId=(SELECT id FROM (SELECT id FROM framewo
 ```sql
 UPDATE sample  SET UpdateBy=(SELECT Name FROM frameworkusers WHERE id='12') WHERE UpdateBy='12'
 ```
+
+## 自增序列不是1
+
+> 查看自增序列
+
+```sql
+show variables like '%increment%';
+```
+
+> 修改自增序列为1
+
+```sql
+set @@auto_increment_increment = 1;
+```

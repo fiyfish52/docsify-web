@@ -170,3 +170,10 @@ INSERT INTO table_name SELECT * FROM book;
 ?> LIKE：创建出来的新表包含源表的完整结构和索引信息。
 
 ?> 补充：Oracle支持AS，即只有表结构没有索引，Oracle不支持LIKE
+
+
+## 导出sql
+
+```sql
+ mysqldump.exe --defaults-file="C:\Users\MR3A2A~1.ZHA\AppData\Local\Temp\tmpaqcwytib.cnf"  --host=172.28.28.165 --port=13306 --default-character-set=utf8 --user=root --protocol=tcp --column-statistics=FALSE --skip-triggers "channel"
+```

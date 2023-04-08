@@ -23,6 +23,9 @@
     * [&#x1F4D8; openfeign](/code/springcloud/openfeign.md)
     * [&#x1F4D8; problem](/code/springcloud/problem.md)
 * &#x1F4D7; 前端 web
+  * nginx
+    * [&#x1F4D8; nginx](/web/nginx/nginx.md)
+    * [&#x1F4D8; nginx-problem](/web/nginx/nginxproblem.md)
   * npm
     * [&#x1F4D8; npm compomemt](/web/npm/component.md)
     * [&#x1F4D8; npm Problem](/web/npm/npmProblem.md)
@@ -53,6 +56,7 @@
     * [&#x1F4D8; docker-cli](/server/docker/docker-cli.md)
     * [&#x1F4D8; docker-use](/server/docker/docker.md)
     * [&#x1F4D8; elasticsearch](/server/docker/elasticsearch.md)
+    * [&#x1F4D8; ldap](/server/docker/ldap.md)
     * [&#x1F4D8; nacos](/server/docker/nacos.md)
     * [&#x1F4D8; redis](/server/docker/redis.md)
     * [&#x1F4D8; sftp](/server/docker/sftp.md)
@@ -94,8 +98,11 @@
     * [&#x1F4D8; sftp](/linux1/cli/sftp.md)
   * &#x1F4D7; 安装
     * [&#x1F4D8; docker](/linux1/install/docker.md)
+    * [&#x1F4D8; elasticsearch](/linux1/install/elasticsearch.md)
     * [&#x1F4D8; 文件服务器 Fastdfs](/linux1/install/fastdfs.md)
+    * [&#x1F4D8; kafka](/linux1/install/kafka.md)
     * [&#x1F4D8; web服务器 nginx](/linux1/install/nginx.md)
+    * [&#x1F4D8; redis](/linux1/install/redis.md)
     * [&#x1F4D8; 依赖：zlib](/linux1/install/zlib.md)
   * [&#x1F4D8; linux命令](/linux1/linux.md)
   * [&#x1F4D8; shell](/linux1/shell.md)

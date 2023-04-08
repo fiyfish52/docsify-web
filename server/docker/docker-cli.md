@@ -133,6 +133,73 @@ yum remove docker-ce.x86_64 ddocker-ce-cli.x86_64 -y
 rm -rf /var/lib/docker
 ```
 
+> 查看docker容器 日志
+
+```sh
+docker logs [OPTIONS] CONTAINER
+  Options:
+        --details        显示更多的信息
+    -f, --follow         跟踪实时日志
+        --since string   显示自某个timestamp之后的日志，或相对时间，如42m（即42分钟）
+        --tail string    从日志末尾显示多少行日志， 默认是all
+    -t, --timestamps     显示时间戳
+        --until string   显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
+```
+
+1. 查看指定时间后的日志，只显示最后100行：
+
+```sh
+docker logs -f -t --since="2018-02-08" --tail=100 CONTAINER_ID
+```
+
+2. 查看最近30分钟的日志:
+
+```sh
+docker logs --since 30m CONTAINER_ID
+```
+
+3. 查看某时间之后的日志：
+
+```sh
+docker logs -t --since="2018-02-08T13:23:37" CONTAINER_ID
+```
+
+4. 查看某时间段日志：
+
+```sh
+docker logs -t --since="2018-02-08T13:23:37" --until "2018-02-09T12:23:37" CONTAINER_ID
+```
+
+> 查看镜像文件
+
+**imagesname : 镜像名称**
+
+```sh
+docker run -i -t imagesname /bin/bash
+```
+
+> 拷贝镜像文件至宿主
+
+```sh
+docker cp nginx-dgwork-4:/etc/nginx /home/dgwork/data/nginx-4
+```
+
+| 属性                        | 说明             |
+| --------------------------- | ---------------- |
+| `nginx-dgwork-4`            | `镜像名`         |
+| `/etc/nginx`                | `镜像内文件路径` |
+| `/home/dgwork/data/nginx-4` | `宿主文件路径`   |
+
+## docker 问题
+
+> 查看日志
+
+报错：/docker-entrypoint.sh: 38: exec: -p: not found
+
+原因： `-p` 参数放到了 `-d`的后面
+
+解决： 更改启动`docker run` 命令，将`-d` 参数放到最后面，
+
 ## docker 镜像迁移
 
 > linux系统间迁移

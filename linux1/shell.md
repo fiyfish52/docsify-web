@@ -144,3 +144,9 @@ done
 fi
 exit 1
 ```
+
+## java -jar 指定端口号
+
+```sh
+Java -jar xxx.jar --server.port=8085
+```
