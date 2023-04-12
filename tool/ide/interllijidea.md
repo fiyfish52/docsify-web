@@ -39,3 +39,9 @@ maven helper
 ```sh
 ctrl+shift+F9
 ```
+
+## mybatis tool
+
+`Free MyBatis Tool` is a plugin that enhances idea support for mybatis.
+
+**快速从代码跳转到mapper及从mapper返回代码**
