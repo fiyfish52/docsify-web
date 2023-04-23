@@ -345,6 +345,14 @@ docker cp nginx-dgwork-4:/etc/nginx /home/dgwork/data/nginx-4
 | `/etc/nginx`                | `镜像内文件路径` |
 | `/home/dgwork/data/nginx-4` | `宿主文件路径`   |
 
+## 容器更新
+
+设置自启动
+
+```sh
+docker update --restart=always  容器id
+```
+
 ## docker 问题
 
 > 查看日志

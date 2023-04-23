@@ -56,6 +56,7 @@
     * [&#x1F4D8; docker-cli](/server/docker/docker-cli.md)
     * [&#x1F4D8; docker-use](/server/docker/docker.md)
     * [&#x1F4D8; elasticsearch](/server/docker/elasticsearch.md)
+    * [&#x1F4D8; fdfs](/server/docker/fastdfs.md)
     * [&#x1F4D8; ldap](/server/docker/ldap.md)
     * [&#x1F4D8; nacos](/server/docker/nacos.md)
     * [&#x1F4D8; redis](/server/docker/redis.md)
@@ -111,6 +112,8 @@
     * [&#x1F4D8; windows 命令](/windows/cli.md)
   * bat脚本
     * [&#x1F4D8; Bat](/windows/bat.md)
+  * wsl
+    * [&#x1F4D8; wsl](/windows/wsl.md)
 * &#x1F4D7; Study
   * PBOOK
     * [&#x1F4D8; PMP](/study/Indx.md)

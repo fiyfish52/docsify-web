@@ -177,3 +177,41 @@ INSERT INTO table_name SELECT * FROM book;
 ```sql
  mysqldump.exe --defaults-file="C:\Users\MR3A2A~1.ZHA\AppData\Local\Temp\tmpaqcwytib.cnf"  --host=172.28.28.165 --port=13306 --default-character-set=utf8 --user=root --protocol=tcp --column-statistics=FALSE --skip-triggers "channel"
 ```
+
+
+## 字符串转数字
+
+在使用mysql中，经常遇到要将字符串数字转换成可计算数字，现总结 了几种方式：
+
+> 将字符的数字转成数字，比如'0'转成0可以直接用加法来实现
+
+例如：将pony表中的d 进行排序，可d的定义为varchar，可以这样解决
+select * from pony order by (d+0)
+
+> 在进行ifnull处理时，比如 ifnull(a/b,'0') 这样就会导致 a/b成了字符串，因此需要把'0'改成0，即可解决此困扰
+
+> 比较数字和varchar时，比如a=11，b="11ddddd";
+则 select 11="11ddddd"相等
+若绝对比较可以这样：
+
+select binary 11 =binary "11ddddd"
+
+> 字符集转换 : CONVERT(xxx USING gb2312)
+类型转换和SQL Server一样,就是类型参数有点点不同 : CAST(xxx AS 类型) , CONVERT(xxx,类型)，类型必须用下列的类型：
+
+可用的类型：
+
+二进制,同带binary前缀的效果 : BINARY
+字符型,可带参数 : CHAR()
+日期 : DATE
+时间: TIME
+日期时间型 : DATETIME
+浮点数 : DECIMAL
+整数 : SIGNED
+无符号整数 : UNSIGNED
+
+```sql
+方法一：SELECT CAST('123' AS SIGNED);
+方法二：SELECT CONVERT('123',SIGNED);
+方法三：SELECT '123'+0;
+```
