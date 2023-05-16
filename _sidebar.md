@@ -12,6 +12,8 @@
     * [&#x1F4D8; ftputil](/code/java/utils/ftputils.md)
     * [&#x1F4D8; md5util](/code/java/utils/md5.md)
     * [&#x1F4D8; xmlutil](/code/java/utils/xml.md)
+  * mybatis
+    * [&#x1F4D8; jsqlparser](/code/mybatis/jsqlparser.md)
   * springboot
     * [&#x1F4D8; problem](/code/springboot/problem.md)
     * [&#x1F4D8; springboot3](/code/springboot/springboot3.md)
