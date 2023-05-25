@@ -171,6 +171,7 @@ mkdir test
 功能说明：改变文件或目录时间。
 
 语　　法：
+
 ```
 touch [-acfm][-d <日期时间>][-r <参考文件或目 录>][-t <日期时间>] [--help]　　 [--version][文件或目录...] 或 touch [-acfm][--help][--version][日期时 间][文件或目录...]
 ```
@@ -188,26 +189,30 @@ touch [-acfm][-d <日期时间>][-r <参考文件或目 录>][-t <日期时间>]
 | -r                                       | <参考文件或目录> 把指定文件或目录的日期时间，统统设成和参考文件或目录的日期时间相同。 |
 | -t                                       | <日期时间> 使用指定的日期时间，而非现在的时间。                                       |
 
-
 ---
 
 ## 压缩与解压缩
- 
- **tar命令**
+
+### tar命令
 
 > 压缩操作
-```
+
+```sh
 tar -cvf /usr/local/auto_bak/test.tar /usr/local/test
 ```
+
 **仅打包，不压缩**
-```
+
+```sh
 tar -zcvf /usr/local/auto_bak/test.tar.gz /usr/local/test
 ```
+
 **打包后，以gzip压缩 在参数f后面的压缩文件名是自己取的，习惯上用tar来做，**   
 **如果加z参数，则以tar.gz 或tgz来代表gzip压缩过的tar file文件**
 
 > 解压操作
-```
+
+```sh
 tar -zxvf /usr/local/test.tar.gz
 ```
 
@@ -275,7 +280,13 @@ tar -zxvf /usr/local/test.tar.gz
 | *.rar            | 用 unrar e解压                |
 | *.zip            | 用 unzip 解压                 |
 
+### zip\unzip命令
 
+> 强制覆盖
+
+```sh
+unzip -o 文件
+```
 
 ---
 

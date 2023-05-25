@@ -1,45 +1,50 @@
 # windows-Cli
 
-
 ## 查看文件
 
-```
+```sh
 type filename
 ```
 
 ## 端口占用
-```
+
+```sh
 netstat -aon|findstr 80 
 ```
-```
+
+```sh
 tasklist|findstr 15892
 ```
-```
+
+```sh
 taskkill -F /pid 15892    根据pid 结束进程
 ```
-```
+
+```sh
 taskkill /f /t /im nginx.exe 根据进程名结束进程
 ```
 
+## 自启动bat配置
 
-## 	自启动bat配置
 C:\Users\Mr.zhang\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
->1. 示例 （启动consule.exe） 
+>1. 示例 （启动consule.exe）
 
 启动文件 startConsul.bat:
-```
+
+```sh
 call "D:\workspace\TKH\consul_1.11.4_windows_amd64\startConsul.bat"
 pause
 ```
+
 启动脚本 D:\workspace\TKH\consul_1.11.4_windows_amd64\startConsul.bat：
-```
+
+```sh
 d:
 cd D:\workspace\TKH\consul_1.11.4_windows_amd64
 .\consul.exe agent -dev -client 0.0.0.0 -ui
 Pause
 ```
-
 
 ## 右键菜单加入指定快捷
 
@@ -47,11 +52,11 @@ Pause
 
 更改内容主要包含为：
 
-**exe路径：【C:\\user\\program\\JetBrains\\WebStorm 2021.1.1\\bin\\WebStorm64.exe】**
+!> exe路径：【C:\\user\\program\\JetBrains\\WebStorm 2021.1.1\\bin\\WebStorm64.exe】
 
-**右键菜单显示的名称【WebStorm】**
+!> 右键菜单显示的名称【WebStorm】
 
-```
+```sh
 Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\*\shell\WebStorm]
@@ -80,7 +85,6 @@ Windows Registry Editor Version 5.00
 @="\"C:\\user\\program\\JetBrains\\WebStorm 2021.1.1\\bin\\WebStorm64.exe\" \"%V\""
 ```
 
-
 ## 配置支持 gzip
 
 1. 下载gzip
@@ -89,3 +93,4 @@ Windows Registry Editor Version 5.00
 2. 解压
 3. 拷贝 ../bin/gzip.exe --> C:\Windows\System32
 4. ok
+

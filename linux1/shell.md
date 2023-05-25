@@ -13,7 +13,8 @@ $4 == d
 ```
 
 ## 创建文件，以日期命名
-```
+
+```sh
 #!/bin/sh
 TIME=$(date "+%Y%m%d_%H%M%S")
 d="cp sign.log logs/\"sign_$TIME.log\""
@@ -22,7 +23,7 @@ eval $d
 
 ## 启动、重启jar包
 
-```
+```sh
 #!/bin/bash
 #PATH=/usr1/jdk/jdk1.8.0_241/bin:$PATH
 
