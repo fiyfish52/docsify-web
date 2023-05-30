@@ -148,3 +148,23 @@ bms_output.put_line('参数名'||paramName);
 ```
 dbms_output.put_line('开始时间'||TO_CHAR(startDATE, 'DD-MON-YYYY HH24:MI:SS'));|
 ```
+
+## 根据索引查询表
+
+```sql
+SELECT *
+FROM dba_indexes
+WHERE INDEX_NAME = '索引名称';
+```
+
+```sql
+SELECT *
+FROM all_indexes
+WHERE INDEX_NAME = '索引名称';
+```
+
+```sql
+SELECT *
+FROM user_indexes
+WHERE INDEX_NAME = '索引名称';
+```
