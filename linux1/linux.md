@@ -398,18 +398,14 @@ firewall-cmd --remove-port=80/tcp --permanent
 firewall-cmd --reload
 ```
 
-
-
-
-
 ## 问题
+
 >更改环境变量后 ll，ls命令失效
 
 ftp进入/root/ 重新设置 .bashrc 文件
+
 ```
 1. export PATH=/usr/local/git/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 2. rsource ~/.bashc
 ok
 ```
-
-

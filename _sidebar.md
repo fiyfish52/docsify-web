@@ -7,6 +7,7 @@
     * [&#x1F4D8; swagger](/code/doc/swagger/swagger.md)
     * [&#x1F4D8; openapi](/code/doc/springdoc-openapi/springdoc-openapi.md)
   * java
+    * [&#x1F4D8; 反射](/code/java/code/reflection.md)
     * [&#x1F4D8; dateTimeutil](/code/java/utils/datetime.md)
     * [&#x1F4D8; fastjsonutil](/code/java/utils/fastjson.md)
     * [&#x1F4D8; ftputil](/code/java/utils/ftputils.md)
@@ -70,6 +71,12 @@
   * interfacedoc 接口文档
     * [&#x1F4D8; knife4j-swagger](/server/interfacedoc/knife4j-swagger/knife4j.md)
     * [&#x1F4D8; spring-doc](/server/interfacedoc/springdoc/springdoc.md)
+  * language 语言
+    * go
+      * [&#x1F4D8; go](/server/language/go/go.md)
+      * [&#x1F4D8; go-code](/server/language/go/code.md)
+    * java
+      * [&#x1F4D8; java](/server/language/java/java.md)
   * nacos
     * [&#x1F4D8; nacos](/server/nacos/nacos.md)
   * redis
@@ -101,6 +108,7 @@
   * &#x1F4D7; cli
     * [&#x1F4D8; sftp](/linux1/cli/sftp.md)
   * &#x1F4D7; 安装
+    * [&#x1F4D8; 基础环境](/linux1/install/base.md)
     * [&#x1F4D8; docker](/linux1/install/docker.md)
     * [&#x1F4D8; elasticsearch](/linux1/install/elasticsearch.md)
     * [&#x1F4D8; 文件服务器 Fastdfs](/linux1/install/fastdfs.md)
@@ -120,4 +128,4 @@
 * &#x1F4D7; Study
   * PBOOK
     * [&#x1F4D8; PMP](/study/Indx.md)
-* [&#x1F4D8; 模板](/template.md)
+* [&#x1F4D7; 模板](/template.md)

@@ -3,6 +3,15 @@
 ## code
 
 ```java
+<!-- https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
+<dependency>
+    <groupId>com.alibaba.fastjson2</groupId>
+    <artifactId>fastjson2</artifactId>
+    <version>2.0.33</version>
+</dependency>
+```
+
+```java
 package com.knbs.common.utils.json;
 
 import com.alibaba.fastjson.JSON;
