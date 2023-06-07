@@ -26,7 +26,7 @@ tar -xvf go1.20.4.linux-amd64.tar.gz
 
 !> 需要使用root用户
 
-?> `/usr1/software/golang` 是golang安装目录
+?> `/usr1/software/golang/go` 是golang安装目录
 
 ```sh
 vi /etc/profile
@@ -35,7 +35,8 @@ vi /etc/profile
 在`/etc/profile`最后一行添加
 
 ```sh
-export GOROOT=/usr1/software/golang
+export GOROOT=/usr1/software/golang/go
+export GOPATH=$HOME/gopath
 export PATH=$PATH:$GOROOT/bin
 ```
 
