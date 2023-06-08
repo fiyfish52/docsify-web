@@ -16,6 +16,7 @@
   * mybatis
     * [&#x1F4D8; jsqlparser](/code/mybatis/jsqlparser.md)
   * springboot
+    * [&#x1F4D8; base](/code/springboot/base.md)
     * [&#x1F4D8; problem](/code/springboot/problem.md)
     * [&#x1F4D8; springboot3](/code/springboot/springboot3.md)
   * security
