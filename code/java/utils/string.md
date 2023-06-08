@@ -40,6 +40,7 @@ public class StringToHex {
             }  
         }  
         try {  
+            // 这里可以指定编码，解决乱码
             s = new String(baKeyword, "gbk");  
             new String();  
         } catch (Exception e1) {  

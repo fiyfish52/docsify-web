@@ -11,6 +11,7 @@
     * [&#x1F4D8; dateTimeutil](/code/java/utils/datetime.md)
     * [&#x1F4D8; fastjsonutil](/code/java/utils/fastjson.md)
     * [&#x1F4D8; ftputil](/code/java/utils/ftputils.md)
+    * [&#x1F4D8; httputil](/code/java/utils/http.md)
     * [&#x1F4D8; md5util](/code/java/utils/md5.md)
     * [&#x1F4D8; xmlutil](/code/java/utils/xml.md)
   * mybatis
