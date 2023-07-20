@@ -33,3 +33,13 @@ show variables like '%increment%';
 ```sql
 set @@auto_increment_increment = 1;
 ```
+
+## [42000] [1075] Incorrect table definition; there can be only one auto column and it must be defined as a key
+
+设置了自增序列，需要设置为主键
+
+数据库中设置了自增列（auto-Incrementing column），但未将其设置为PRIMARY KEY或UNIQUE KEY，导致执行脚本失败。所以，针对该问题的解决方法：
+
+方法1：将自增列（auto-Incrementing column）设置为主键（PRIMARY KEY）；
+
+方法2：如果不将自增列设置为主键，可将其设置为 唯一索引UNIQUE KEY也可解决该问题；

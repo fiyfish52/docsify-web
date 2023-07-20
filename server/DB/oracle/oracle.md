@@ -1,5 +1,11 @@
 # oracle
 
+## 查看sid
+
+```sql
+select instance_name from v$instance;
+```
+
 ## 创建数据库
 
 Oracle安装文件夹：app\oraserver\product\11.2.0\dbhome_1\BIN\launch.exe

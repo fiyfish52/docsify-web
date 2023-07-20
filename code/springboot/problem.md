@@ -1,5 +1,20 @@
 # problem
 
+## 返回流
+
+```java
+returnType:ResponseEntity<byte[]>
+
+ ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Content-Disposition", "attachment; filename=\"" + fileName + "\"; filename*=utf-8''" + fileName);
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.add("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        return ResponseEntity.ok().headers(headers).body(byteArrayOutputStream.toByteArray());
+```
+
 ## 文件上传异常
 ---
 **提示：[The temporary upload location xxx is not valid]**

@@ -1,5 +1,14 @@
 # base
 
+## 获取resources 下的文件
+
+`resources/file/`
+
+```java
+ ClassPathResource classPathResource = new ClassPathResource("file/canvas-2.png");
+inputStream = classPathResource.getInputStream();
+```
+
 ## 注解说明
 
 ### @Controller

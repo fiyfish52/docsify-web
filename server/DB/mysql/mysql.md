@@ -215,3 +215,73 @@ select binary 11 =binary "11ddddd"
 方法二：SELECT CONVERT('123',SIGNED);
 方法三：SELECT '123'+0;
 ```
+
+## oracle 表转mysql 建表语句
+
+## 修改表注释
+
+```sh
+ALTER TABLE tb_user COMMENT '用户信息表2';
+```
+
+## 修改字段注释
+
+修改字段备注，其实就是修改字段的定义。
+
+```sh
+ALTER TABLE tb_user MODIFY COLUMN name VARCHAR(30) NOT NULL COMMENT '姓名2';
+```
+
+注意：修改时要把该字段的完整定义写上，如字段类型、属性等。千万不要因为只是为了修改一个注释，而把该字段定义的其它属性给覆盖掉了。
+
+## 查询字段信息
+
+SHOW FULL COLUMNS FROM tb_user;
+
+## 创建表
+
+```sql
+create table sys_user
+(
+    id            int auto_increment comment '用户id',
+    code          varchar(32)  not null comment '用户编码',
+    name          varchar(128) null comment '用户名称',
+    pwd           varchar(128) not null comment '用户密码',
+    idcard        varchar(32)  null,
+    phone         int          null comment '联系电话',
+    address       varchar(512) null comment '住址',
+    level         varchar(2)   null comment '用户级别',
+    type          varchar(2)   null comment '用户类型',
+    create_time   datetime     not null comment '创建时间',
+    create_user   varchar(32)  null comment '创建人',
+    update_time   datetime     not null comment '更新时间',
+    update_user   varchar(32)  null comment '修改人',
+    expire_time   datetime     null comment '失效日期',
+    last_pwd_time datetime     null comment '最后设置密码时间',
+    locked        varchar(1)   null comment '是否锁定(Y,N)',
+    deleted       varchar(1)   null comment '是否删除(Y,N)',
+    memo          varchar(256) null comment '备注',
+    constraint sys_user_id
+        primary key (id)
+)
+    comment '用户信息表';
+
+create unique index sys_user_code_index
+    on sys_user (code)
+    comment '用户编码唯一索引';
+```
+
+## 修改表字段类型
+
+```sql
+alter table sys_user
+    modify phone varchar(11) null comment '联系电话';
+```
+
+## 删除表
+
+```sql
+drop table if exists aa cascade;
+```
+
+cascade: Delete or update the row from the parent table and automatically delete or update the matching rows in the child table. 
