@@ -501,19 +501,20 @@ PC 端：一台 Win10 电脑，用于测试访问，与服务器处于同一局�
 首先，根据自己的系统，下载最新的二进制文件，这里我下载的版本为 v1.4.3：
 
 ```sh
-[root@localhost ~]# wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64 
+wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64 
 ```
 
 为二进制文件添加可执行权限，并移动到 $PATH 中：
 
 ```sh
-[root@localhost ~]# chmod +x mkcert [root@localhost ~]# mv mkcert /usr/local/bin/ 
+chmod +x mkcert 
+mv mkcert /usr/local/bin/ 
 ```
 
 检查 mkcert 的版本：
 
 ```sh
-[root@localhost ~]# mkcert -version v1.4.3 
+mkcert -version v1.4.3 
 如果版本显示正常，说明安装无误。接下来，我们看看 mkcert 是如何创建证书的。
 ```
 
@@ -524,7 +525,7 @@ mkcert domain1 [domain2 [...]]
 多个域名/IP用空格分隔，一个自签名的证书可以这样创建：
 
 ```sh
-[root@localhost ~]# mkcert 192.168.128.134 example.com localhost 127.0.0.1 ::1
+mkcert 192.168.128.134 example.com localhost 127.0.0.1 ::1
 Note: the local CA is not installed in the system trust store.
 Note: the local CA is not installed in the Firefox and/or Chrome/Chromium trust store.
 Run "mkcert -install" for certificates to be trusted automatically 
@@ -546,7 +547,7 @@ It will expire on 7 September 2023
 由于服务器上已经装了 nginx，也配置了 SSL，所以在命令中可以加入 -cert-file 和 -key-file 参数，将文件直接生成到对应的目录里：
 
 ```sh
-[root@localhost ~]# mkcert -cert-file /etc/nginx/ssl/server.crt -key-file /etc/nginx/ssl/server.key 192.168.128.134 example.com localhost 127.0.0.1 ::1 
+mkcert -cert-file /etc/nginx/ssl/server.crt -key-file /etc/nginx/ssl/server.key 192.168.128.134 example.com localhost 127.0.0.1 ::1 
 ```
 
 或
@@ -564,13 +565,13 @@ It will expire on 7 September 2023
 回到服务器，执行以下命令将 mkcert 的认证机构安装到服务器上：
 
 ```sh
-[root@localhost ~]# mkcert -install 
+mkcert -install 
 ```
 
 CA 证书的位置可以通过以下命令查看：
 
 ```sh
-[root@localhost ~]# mkcert -CAROOT /root/.local/share/mkcert 
+mkcert -CAROOT /root/.local/share/mkcert 
 ```
 
 该目录中有两个文件：`rootCA-key.pem` 和 `rootCA.pem`。将 rootCA.pem 复制到 PC 上，并将其后缀改为 .crt。
