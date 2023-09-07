@@ -268,17 +268,17 @@ tar -zxvf /usr/local/test.tar.gz
 
 > 总结
 
-| 命令             | 说明                          |
-| ---------------- | ----------------------------- |
-| *.tar            | 用 tar –xvf 解压              |
-| *.gz             | 用 gzip -d或者gunzip 解压     |
+| 命令                | 说明                          |
+| ------------------- | ----------------------------- |
+| *.tar               | 用 tar –xvf 解压              |
+| *.gz                | 用 gzip -d或者gunzip 解压     |
 | `*.tar.gz` 和 *.tgz | 用 tar –xzf 解压              |
-| *.bz2            | 用 bzip2 -d或者用bunzip2 解压 |
-| *.tar.bz2        | 用tar –xjf 解压               |
-| *.Z              | 用 uncompress 解压            |
-| *.tar.Z          | 用tar –xZf 解压               |
-| *.rar            | 用 unrar e解压                |
-| *.zip            | 用 unzip 解压                 |
+| *.bz2               | 用 bzip2 -d或者用bunzip2 解压 |
+| *.tar.bz2           | 用tar –xjf 解压               |
+| *.Z                 | 用 uncompress 解压            |
+| *.tar.Z             | 用tar –xZf 解压               |
+| *.rar               | 用 unrar e解压                |
+| *.zip               | 用 unzip 解压                 |
 
 ### zip\unzip命令
 
@@ -612,7 +612,7 @@ cpuinfo输出了详细的信息，
 | model           | CPU属于其系列中的哪一代的代号                                                                                             |
 | model name      | CPU属于的名字及其编号、标称主频                                                                                           |
 | stepping        | CPU属于制作更新版本                                                                                                       |
-| cpu MHz         | CPU的实际使用`主频`                                                                                                         |
+| cpu MHz         | CPU的实际使用`主频`                                                                                                       |
 | cache size      | CPU二级缓存大小                                                                                                           |
 | physical id     | 单个CPU的标号                                                                                                             |
 | siblings        | 单个CPU逻辑物理核数                                                                                                       |
@@ -802,6 +802,48 @@ Usr （用户字段组）
 切换显示空闲任务
 
 原文链接：https://blog.csdn.net/csdn066/article/details/77171018
+
+## 查询端口是否被占用
+
+```sh
+netstat -anp|grep 80
+```
+
+### 杀掉被占用的端口
+
+```sh
+kill -9 pid
+```
+
+### 根据指定pid查看详细进程信息
+
+```sh
+ps -p pid
+```
+
+#### 查看更详细内容
+
+> 方式一
+
+```sh
+ps -ef | grep 进程id
+```
+
+| 用户    | 进程id | 父进程ID |     |                   |           |
+| ------- | ------ | -------- | --- | ----------------- | --------- |
+| zhanglp | 80983  | 66046    | 1   | 20:38 ?  00:00:01 | Verdaccio |
+
+> 方式二
+
+```sh
+ps -p xxx -f
+```
+
+## linux执行包含main方法的java文件
+
+使用eclipse导出为jar file，
+
+java -jar ccc.jar
 
 ## 问题
 
