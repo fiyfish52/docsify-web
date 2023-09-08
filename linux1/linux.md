@@ -839,6 +839,32 @@ ps -ef | grep 进程id
 ps -p xxx -f
 ```
 
+## 根据pid查看端口
+
+### 根据进程pid查端口
+
+```sh
+lsof -i | grep pid
+```
+
+### 根据端口port查进程（某次面试还考过）：
+
+```sh
+lsof  -i:port     
+```
+
+### 根据进程pid查端口：
+
+```sh
+netstat -nap | grep pid
+```
+
+### 根据端口port查进程
+
+```sh
+netstat -nap | grep port
+```
+
 ## linux执行包含main方法的java文件
 
 使用eclipse导出为jar file，
