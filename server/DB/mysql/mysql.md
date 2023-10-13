@@ -271,11 +271,78 @@ create unique index sys_user_code_index
     comment '用户编码唯一索引';
 ```
 
+## 增加表字段
+
+```sql
+alter table sys_user_real
+    add type int not null comment '关系类型（GROUP:用户组;OA:OA;BOSS:BOSS）' after create_time;
+```
+
+## 调整字段位置
+
+```sql
+alter table sys_user_real
+    modify create_time datetime null comment '创建时间' after type;
+```
+
+## 修改主键
+
+```sql
+alter table sys_users
+    drop primary key;
+
+alter table sys_users
+    add primary key (id);
+```
+
+## 修改约束key constraint key
+
+```sql
+alter table sys_users
+               drop key sys_users_idx_code;
+
+alter table sys_users
+               add constraint sys_users_idx_code_tenantid
+                   unique (code, tenant_id)
+```
+
 ## 修改表字段类型
 
 ```sql
 alter table sys_user
     modify phone varchar(11) null comment '联系电话';
+```
+
+## 修改表字段名称
+
+```sql
+alter table sys_users
+    change updator updater varchar(64) null comment '更新人';
+```
+
+## 修改默认值
+
+```sql
+alter table sys_users
+    alter column update_time set default now();
+```
+
+## 增加索引
+
+```sql
+drop index sys_user_group_idx_tenantid on sys_user_group;
+
+create index sys_user_group_idx_code_tenantid
+    on sys_user_group (tenant_id, code);
+```
+
+## 增加唯一索引
+
+```sql
+drop index sys_user_group_idx_code_tenantid on sys_user_group;
+
+create unique index sys_user_group_idx_code_tenantid
+    on sys_user_group (tenant_id, code);
 ```
 
 ## 删除表
