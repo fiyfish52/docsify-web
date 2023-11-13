@@ -271,6 +271,12 @@ create unique index sys_user_code_index
     comment '用户编码唯一索引';
 ```
 
+## 更改表名
+
+```sql
+rename table sys_user_real to sys_user_rela;
+```
+
 ## 增加表字段
 
 ```sql
@@ -352,3 +358,15 @@ drop table if exists aa cascade;
 ```
 
 cascade: Delete or update the row from the parent table and automatically delete or update the matching rows in the child table. 
+
+## 锁
+
+```sql
+select * from information_schema.processlist where command not in ('Sleep') ORDER BY time desc
+```
+
+kill 16519789
+
+```sql
+kill id
+```
