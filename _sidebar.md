@@ -1,4 +1,3 @@
-
 * [knowlage-base](/)
 * &#x1F4D7; code
   * doc
@@ -14,6 +13,7 @@
     * [&#x1F4D8; httputil](/code/java/utils/http.md)
     * [&#x1F4D8; md5util](/code/java/utils/md5.md)
     * [&#x1F4D8; xmlutil](/code/java/utils/xml.md)
+    * [&#x1F4D8; RSAUtil](/code/java/utils/RSAUtil.md)
   * mybatis
     * [&#x1F4D8; jsqlparser](/code/mybatis/jsqlparser.md)
   * springboot
@@ -29,6 +29,8 @@
     * [&#x1F4D8; openfeign](/code/springcloud/openfeign.md)
     * [&#x1F4D8; problem](/code/springcloud/problem.md)
 * &#x1F4D7; 前端 web
+  * echart
+    * [&#x1F4D8; 配置说明](/web/echarts/index.md)
   * nginx
     * [&#x1F4D8; nginx](/web/nginx/nginx.md)
     * [&#x1F4D8; nginx-problem](/web/nginx/nginxproblem.md)

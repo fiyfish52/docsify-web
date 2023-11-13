@@ -9,6 +9,5 @@
   * [使用插件](zh-cn/plugins.md)
   * [Markdown 配置](zh-cn/markdown.md)
   * [代码高亮](zh-cn/language-highlight.md) -->
-* 主题
 * [:cn:](/)
-  
+* [工具](http://39.96.36.32:8769/#/)
