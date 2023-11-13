@@ -27,3 +27,9 @@ x轴移动-50% `transform:translate(-50%,0)`
         transform:translate(-50%,-50%);//水平、垂直都居中,也可以写成下面的方式
     }
 ```
+
+## inline-block 上对齐
+
+```css
+vertical-align:top;
+```
