@@ -8,7 +8,7 @@
 - 无需生成 html 文件
 - 众多主题
 
-[GitHub](http://39.96.36.32:3000/zhanglipeng/docsify-web.git)
+<!-- [GitHub](http://39.96.36.32:3000/zhanglipeng/docsify-web.git) -->
 [Get Started](/)
 <!-- 
 <!-- 背景图片 -->

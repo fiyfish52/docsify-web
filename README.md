@@ -2,7 +2,6 @@
 
 > 创建于2022年12月30日
 
-
 BLUE BOOK &#x1F4D8;
 
 GREEN BOOK &#x1F4D7;
@@ -22,6 +21,7 @@ UP-POINTING SMALL RED TRIANGLE &#x1F53C;
 test
 
 启动：
-```
+
+```sh
 docsify serve ./
 ```
