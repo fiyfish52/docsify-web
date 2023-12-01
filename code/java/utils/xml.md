@@ -1,7 +1,6 @@
 # xml
 
-```
-
+```java
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -31,202 +30,202 @@ import java.nio.file.Paths;
  */
 public class XmlUtil {
 
-	private static final String ENCODING = "UTF-8";
+    private static final String ENCODING = "UTF-8";
 
-	/**
-	 * JSON对象转漂亮的xml字符串
-	 *
-	 * @param json JSON对象
-	 * @return 漂亮的xml字符串
-	 * @throws IOException
-	 * @throws SAXException
-	 */
-	public static String jsonToPrettyXml(JSONObject json) throws IOException, SAXException {
-		Document document = jsonToDocument(json);
+    /**
+     * JSON对象转漂亮的xml字符串
+     *
+     * @param json JSON对象
+     * @return 漂亮的xml字符串
+     * @throws IOException
+     * @throws SAXException
+     */
+    public static String jsonToPrettyXml(JSONObject json) throws IOException, SAXException {
+        Document document = jsonToDocument(json);
 
-		/* 格式化xml */
-		OutputFormat format = OutputFormat.createPrettyPrint();
+        /* 格式化xml */
+        OutputFormat format = OutputFormat.createPrettyPrint();
 
-		// 设置缩进为4个空格
-		format.setIndent(" ");
-		format.setIndentSize(4);
+        // 设置缩进为4个空格
+        format.setIndent(" ");
+        format.setIndentSize(4);
 
-		StringWriter formatXml = new StringWriter();
-		XMLWriter writer = new XMLWriter(formatXml, format);
-		writer.write(document);
+        StringWriter formatXml = new StringWriter();
+        XMLWriter writer = new XMLWriter(formatXml, format);
+        writer.write(document);
 
-		return formatXml.toString();
-	}
+        return formatXml.toString();
+    }
 
-	/**
-	 * JSON对象转Document对象
-	 *
-	 * @param json JSON对象
-	 * @return Document对象
-	 * @throws SAXException
-	 */
-	public static Document jsonToDocument(JSONObject json) throws SAXException {
-		Document document = DocumentHelper.createDocument();
-		document.setXMLEncoding(ENCODING);
+    /**
+     * JSON对象转Document对象
+     *
+     * @param json JSON对象
+     * @return Document对象
+     * @throws SAXException
+     */
+    public static Document jsonToDocument(JSONObject json) throws SAXException {
+        Document document = DocumentHelper.createDocument();
+        document.setXMLEncoding(ENCODING);
 
-		// root对象只能有一个
-		for (String rootKey : json.keySet()) {
-			Element root = jsonToElement(json.getJSONObject(rootKey), rootKey);
-			document.add(root);
-			break;
-		}
-		return document;
-	}
+        // root对象只能有一个
+        for (String rootKey : json.keySet()) {
+            Element root = jsonToElement(json.getJSONObject(rootKey), rootKey);
+            document.add(root);
+            break;
+        }
+        return document;
+    }
 
-	/**
-	 * JSON对象转Element对象
-	 *
-	 * @param json     JSON对象
-	 * @param nodeName 节点名称
-	 * @return Element对象
-	 */
-	public static Element jsonToElement(JSONObject json, String nodeName) {
-		Element node = DocumentHelper.createElement(nodeName);
-		for (String key : json.keySet()) {
-			Object child = json.get(key);
-			if (child instanceof JSONObject) {
-				node.add(jsonToElement(json.getJSONObject(key), key));
-			}
+    /**
+     * JSON对象转Element对象
+     *
+     * @param json     JSON对象
+     * @param nodeName 节点名称
+     * @return Element对象
+     */
+    public static Element jsonToElement(JSONObject json, String nodeName) {
+        Element node = DocumentHelper.createElement(nodeName);
+        for (String key : json.keySet()) {
+            Object child = json.get(key);
+            if (child instanceof JSONObject) {
+                node.add(jsonToElement(json.getJSONObject(key), key));
+            }
 
-			else {
-				Element element = DocumentHelper.createElement(key);
-				element.setText(json.getString(key) == null ? "" : json.getString(key));
-				node.add(element);
-			}
-		}
+            else {
+                Element element = DocumentHelper.createElement(key);
+                element.setText(json.getString(key) == null ? "" : json.getString(key));
+                node.add(element);
+            }
+        }
 
-		return node;
-	}
+        return node;
+    }
 
-	/**
-	 * XML字符串转JSON对象
-	 *
-	 * @param xml xml字符串
-	 * @return JSON对象
-	 * @throws DocumentException
-	 */
-	public static JSONObject xmlToJson(String xml) throws DocumentException {
-		JSONObject json = new JSONObject();
-		SAXReader reader = new SAXReader();
-		Document document = reader.read(new StringReader(xml));
-		Element root = document.getRootElement();
-		json.put(root.getName(), elementToJson(root));
-		return json;
-	}
+    /**
+     * XML字符串转JSON对象
+     *
+     * @param xml xml字符串
+     * @return JSON对象
+     * @throws DocumentException
+     */
+    public static JSONObject xmlToJson(String xml) throws DocumentException {
+        JSONObject json = new JSONObject();
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(new StringReader(xml));
+        Element root = document.getRootElement();
+        json.put(root.getName(), elementToJson(root));
+        return json;
+    }
 
-	/**
-	 * Element对象转JSON对象
-	 *
-	 * @param element Element对象
-	 * @return JSON对象
-	 */
-	public static JSONObject elementToJson(Element element) {
-		JSONObject json = new JSONObject();
-		for (Element e : element.elements()) {
-			Object o;
-			if (e.elements().isEmpty()) {
-				o = e.getText();
-			} else {
-				o = elementToJson(e);
-			}
+    /**
+     * Element对象转JSON对象
+     *
+     * @param element Element对象
+     * @return JSON对象
+     */
+    public static JSONObject elementToJson(Element element) {
+        JSONObject json = new JSONObject();
+        for (Element e : element.elements()) {
+            Object o;
+            if (e.elements().isEmpty()) {
+                o = e.getText();
+            } else {
+                o = elementToJson(e);
+            }
 
-			if (json.containsKey(e.getName())) {
-				if (json.get(e.getName()) instanceof JSONArray) {
-					JSONArray array = (JSONArray) json.get(e.getName());
-					array.add(o);
-				} else {
-					JSONArray array = new JSONArray();
-					array.add(json.get(e.getName()));
-					array.add(o);
-					json.put(e.getName(), array);
-				}
-			} else {
-				json.put(e.getName(), o);
-			}
-		}
+            if (json.containsKey(e.getName())) {
+                if (json.get(e.getName()) instanceof JSONArray) {
+                    JSONArray array = (JSONArray) json.get(e.getName());
+                    array.add(o);
+                } else {
+                    JSONArray array = new JSONArray();
+                    array.add(json.get(e.getName()));
+                    array.add(o);
+                    json.put(e.getName(), array);
+                }
+            } else {
+                json.put(e.getName(), o);
+            }
+        }
 
-		return json;
-	}
+        return json;
+    }
 
-	/**
-	 * 文件内容转换成字符串
-	 *
-	 * @param filePath 文件路径
-	 * @return 内容字符串
-	 * @throws IOException
-	 */
-	public static String fileToString(URL filePath) throws IOException {
-		return IOUtils.toString(filePath, ENCODING);
-	}
+    /**
+     * 文件内容转换成字符串
+     *
+     * @param filePath 文件路径
+     * @return 内容字符串
+     * @throws IOException
+     */
+    public static String fileToString(URL filePath) throws IOException {
+        return IOUtils.toString(filePath, ENCODING);
+    }
 
-	/**
-	 * 文件内容转换成字符串
-	 *
-	 * @param filePath 文件路径
-	 * @return 内容字符串
-	 * @throws IOException
-	 */
-	public static String fileToString(String filePath) throws IOException {
-		return IOUtils.toString(Paths.get(filePath).toUri(), ENCODING);
-	}
+    /**
+     * 文件内容转换成字符串
+     *
+     * @param filePath 文件路径
+     * @return 内容字符串
+     * @throws IOException
+     */
+    public static String fileToString(String filePath) throws IOException {
+        return IOUtils.toString(Paths.get(filePath).toUri(), ENCODING);
+    }
 
-	/**
-	 * 字符串输出到文件
-	 *
-	 * @param str      字符串内容
-	 * @param filePath 文件路径
-	 * @throws IOException
-	 */
-	public static void stringToFile(String str, String filePath) throws IOException {
-		FileUtils.writeStringToFile(Paths.get(filePath).toFile(), str, ENCODING);
-	}
+    /**
+     * 字符串输出到文件
+     *
+     * @param str      字符串内容
+     * @param filePath 文件路径
+     * @throws IOException
+     */
+    public static void stringToFile(String str, String filePath) throws IOException {
+        FileUtils.writeStringToFile(Paths.get(filePath).toFile(), str, ENCODING);
+    }
 
-	/**
-	 * 字符串输出到文件
-	 *
-	 * @param str      字符串内容
-	 * @param filePath 文件路径
-	 * @throws IOException
-	 */
-	public static void stringToFile(String str, URL filePath) throws IOException {
-		FileUtils.writeStringToFile(new File(filePath.getPath()), str, ENCODING);
-	}
+    /**
+     * 字符串输出到文件
+     *
+     * @param str      字符串内容
+     * @param filePath 文件路径
+     * @throws IOException
+     */
+    public static void stringToFile(String str, URL filePath) throws IOException {
+        FileUtils.writeStringToFile(new File(filePath.getPath()), str, ENCODING);
+    }
 
-	/**
-	 * 字符串输出到文件
-	 *
-	 * @param str  字符串内容
-	 * @param file 输出文件
-	 * @throws IOException
-	 */
-	public static void stringToFile(String str, File file) throws IOException {
-		FileUtils.writeStringToFile(file, str, ENCODING);
-	}
+    /**
+     * 字符串输出到文件
+     *
+     * @param str  字符串内容
+     * @param file 输出文件
+     * @throws IOException
+     */
+    public static void stringToFile(String str, File file) throws IOException {
+        FileUtils.writeStringToFile(file, str, ENCODING);
+    }
 
-	/**
-	 * JSON对象转xml字符串
-	 *
-	 * @param json JSON对象
-	 * @param flag 是否去除 <?xml version="1.0" encoding="UTF-8"?>
-	 * @return xml字符串
-	 * @throws SAXException
-	 */
-	public static String JsonToXml(JSONObject json, boolean flag) throws SAXException {
-		if (flag)
-			return jsonToDocument(json).getRootElement().asXML();
-		return jsonToDocument(json).asXML();
-	}
+    /**
+     * JSON对象转xml字符串
+     *
+     * @param json JSON对象
+     * @param flag 是否去除 <?xml version="1.0" encoding="UTF-8"?>
+     * @return xml字符串
+     * @throws SAXException
+     */
+    public static String JsonToXml(JSONObject json, boolean flag) throws SAXException {
+        if (flag)
+            return jsonToDocument(json).getRootElement().asXML();
+        return jsonToDocument(json).asXML();
+    }
 
-	public static <T> T xml2bean(String xml, Class<T> load) throws JAXBException {
-		JAXBContext contenxt = JAXBContext.newInstance(load);
-		Unmarshaller unmarshaller = contenxt.createUnmarshaller();
-		return (T) unmarshaller.unmarshal(new StringReader(xml));
-	}
+    public static <T> T xml2bean(String xml, Class<T> load) throws JAXBException {
+        JAXBContext contenxt = JAXBContext.newInstance(load);
+        Unmarshaller unmarshaller = contenxt.createUnmarshaller();
+        return (T) unmarshaller.unmarshal(new StringReader(xml));
+    }
 
 }
 ```
