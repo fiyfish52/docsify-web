@@ -40,8 +40,12 @@ try {
     if (responseCode == 200) {
         // 得到响应流
         InputStream inputStream = conn.getInputStream();
+
+        byte[] bytes = new byte[0];
+        bytes = new byte[inputStream.available()];
+        inputStream.read(bytes);
         // 将响应流转换成字符串
-        String returnLine = getStringFromInputStream(inputStream);
+        String returnLine = new String(bytes);
         String str = "Success" + conn.getResponseCode() + "---" + conn.getResponseMessage() + "---"
                 + returnLine;
         System.out.print(str);
