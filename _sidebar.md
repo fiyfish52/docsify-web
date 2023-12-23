@@ -76,6 +76,7 @@
     * [&#x1F4D8; elasticsearch](/server/docker/elasticsearch.md)
     * [&#x1F4D8; fdfs](/server/docker/fastdfs.md)
     * [&#x1F4D8; ldap](/server/docker/ldap.md)
+    * [&#x1F4D8; mysql](/server/docker/mysql.md)
     * [&#x1F4D8; nacos](/server/docker/nacos.md)
     * [&#x1F4D8; redis](/server/docker/redis.md)
     * [&#x1F4D8; sftp](/server/docker/sftp.md)
