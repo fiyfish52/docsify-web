@@ -359,7 +359,9 @@ drop table if exists aa cascade;
 
 cascade: Delete or update the row from the parent table and automatically delete or update the matching rows in the child table. 
 
-## 锁
+## 锁表
+
+?> `show processlist`
 
 ```sql
 select * from information_schema.processlist where command not in ('Sleep') ORDER BY time desc
@@ -370,3 +372,11 @@ kill 16519789
 ```sql
 kill id
 ```
+
+### 如何锁表
+
+lock table 表名 read;
+
+### 解锁表
+
+unlock tables;
