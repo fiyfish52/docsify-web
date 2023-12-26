@@ -363,6 +363,24 @@ docker update --restart=always  容器id
 
 解决： 更改启动`docker run` 命令，将`-d` 参数放到最后面，
 
+## docker 容器迁移
+
+?> 1.把运行中的容器打包成镜像，2.迁移镜像
+
+### 查找容器id
+
+```sh
+docker ps
+```
+
+### 容器打包成镜像
+
+```sh
+docker commit d1b696ef8378 mywide-fdfs-nginx-165:0.0.1
+```
+
+### 迁移打包好的镜像
+
 ## docker 镜像迁移
 
 > linux系统间迁移
