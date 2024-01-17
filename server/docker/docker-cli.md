@@ -4,9 +4,15 @@
 
 [官网命令地址](https://docs.docker.com/engine/reference/commandline/exec/)
 
+## docker cli
+
+[官网地址](https://docs.docker.com/engine/reference/commandline/restart/)
+
+
 ## docker run
 
 [docker run](https://docs.docker.com/engine/reference/run/#tmpfs-mount-tmpfs-filesystems)
+
 
 > -v
 
@@ -204,7 +210,7 @@ docker network inspect bridge
 
 ## 容器操作
 
-> 进入容器
+### 进入容器
 
 ```sh
 docker ps
@@ -214,7 +220,7 @@ docker ps
 docker exec -it [CONTAINERID] /bin/bash
 ```
 
-> docker 删除容器 镜像
+### docker 删除容器 镜像
 
 ```sh
 1.停用全部运行中的容器: docker stop $(docker ps -a)
@@ -224,13 +230,13 @@ docker exec -it [CONTAINERID] /bin/bash
 docker rmi -f $(docker images)
 ```
 
-> 删除镜像
+### 删除镜像
 
 ```sh
 docker rmi -f 镜像id
 ```
 
-> docker 删除/停止容器
+### docker 删除/停止容器
 
 1. 查看所有正在运行容器
 
@@ -268,7 +274,7 @@ docker rm [containerId]
 docker rm $(docker ps -a -q)   
 ```
 
-> 卸载docker
+### 卸载docker
 
 1. 查询docker安装过的包：
 
@@ -288,7 +294,7 @@ yum remove docker-ce.x86_64 ddocker-ce-cli.x86_64 -y
 rm -rf /var/lib/docker
 ```
 
-> 查看docker容器 日志
+### 查看docker容器 日志
 
 ```sh
 docker logs [OPTIONS] CONTAINER
@@ -325,7 +331,7 @@ docker logs -t --since="2018-02-08T13:23:37" CONTAINER_ID
 docker logs -t --since="2018-02-08T13:23:37" --until "2018-02-09T12:23:37" CONTAINER_ID
 ```
 
-> 查看镜像文件
+### 查看镜像文件
 
 **imagesname : 镜像名称**
 
@@ -333,7 +339,7 @@ docker logs -t --since="2018-02-08T13:23:37" --until "2018-02-09T12:23:37" CONTA
 docker run -i -t imagesname /bin/bash
 ```
 
-> 拷贝镜像文件至宿主
+### 拷贝镜像文件至宿主
 
 ```sh
 docker cp nginx-dgwork-4:/etc/nginx /home/dgwork/data/nginx-4
@@ -351,6 +357,26 @@ docker cp nginx-dgwork-4:/etc/nginx /home/dgwork/data/nginx-4
 
 ```sh
 docker update --restart=always  容器id
+```
+
+### restart 参数
+
+#### no 默认值，表示容器退出时，docker不自动重启容器
+
+#### on-failure 若容器的退出状态非0，则docker自动重启容器，还可以指定重启次数，若超过指定次数未能启动容器则放弃
+
+```sh
+--restart=on-failure:3
+```
+
+#### always 容器退出时总是重启
+
+#### unless-stopped 容器退出时总是重启，但不考虑Docker守护进程启动时就已经停止的容器
+
+#### 如果容器启动时没有设置–restart参数，则通过下面命令进行更新
+
+```sh
+docker update --restart=always [容器名]
 ```
 
 ## docker 问题
