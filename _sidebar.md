@@ -36,6 +36,8 @@
     * [&#x1F4D8; junit](/code/springcloud/junit.md)
     * [&#x1F4D8; openfeign](/code/springcloud/openfeign.md)
     * [&#x1F4D8; problem](/code/springcloud/problem.md)
+  * vue
+    * [&#x1F4D8; 水印](/code/vue/watermark.md)
 * &#x1F4D7; 前端 web
   * HTTP
     * [&#x1F4D8; HTTP](/web/http/http.md)
@@ -73,6 +75,7 @@
   * docker
     * [&#x1F4D8; docker-cli](/server/docker/docker-cli.md)
     * [&#x1F4D8; docker-use](/server/docker/docker.md)
+    * [&#x1F4D8; easyconnect](/server/docker/easyconnect.md)
     * [&#x1F4D8; elasticsearch](/server/docker/elasticsearch.md)
     * [&#x1F4D8; fdfs](/server/docker/fastdfs.md)
     * [&#x1F4D8; ldap](/server/docker/ldap.md)
