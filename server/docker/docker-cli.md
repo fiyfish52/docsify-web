@@ -8,7 +8,6 @@
 
 [官网地址](https://docs.docker.com/engine/reference/commandline/restart/)
 
-
 ## docker run
 
 [docker run](https://docs.docker.com/engine/reference/run/#tmpfs-mount-tmpfs-filesystems)
@@ -360,6 +359,8 @@ docker update --restart=always  容器id
 ```
 
 ### restart 参数
+
+[官网说明](https://docs.docker.com/engine/reference/commandline/run/#restart)
 
 #### no 默认值，表示容器退出时，docker不自动重启容器
 
