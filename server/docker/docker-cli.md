@@ -352,7 +352,10 @@ docker cp nginx-dgwork-4:/etc/nginx /home/dgwork/data/nginx-4
 
 ## 容器更新
 
-设置自启动
+
+### restart 设置自启动
+
+
 
 ```sh
 docker update --restart=always  容器id
@@ -362,19 +365,19 @@ docker update --restart=always  容器id
 
 [官网说明](https://docs.docker.com/engine/reference/commandline/run/#restart)
 
-#### no 默认值，表示容器退出时，docker不自动重启容器
+> no 默认值，表示容器退出时，docker不自动重启容器
 
-#### on-failure 若容器的退出状态非0，则docker自动重启容器，还可以指定重启次数，若超过指定次数未能启动容器则放弃
+> on-failure 若容器的退出状态非0，则docker自动重启容器，还可以指定重启次数，若超过指定次数未能启动容器则放弃
 
 ```sh
 --restart=on-failure:3
 ```
 
-#### always 容器退出时总是重启
+> always 容器退出时总是重启
 
-#### unless-stopped 容器退出时总是重启，但不考虑Docker守护进程启动时就已经停止的容器
+> unless-stopped 容器退出时总是重启，但不考虑Docker守护进程启动时就已经停止的容器
 
-#### 如果容器启动时没有设置–restart参数，则通过下面命令进行更新
+> 如果容器启动时没有设置–restart参数，则通过下面命令进行更新
 
 ```sh
 docker update --restart=always [容器名]
