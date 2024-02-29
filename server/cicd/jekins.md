@@ -54,3 +54,29 @@ eg: java -jar jenkins-cli.jar -s http://localhost:8880/ -auth zhanglp:zhangLIpen
 ```sh
 java -jar jenkins-cli.jar -s http://localhost:8880/ -auth zhanglp:zhangLIpeng021?  TKH-BAS <  TKH-BAS.xml
 ```
+
+## 配置
+
+config.xml
+
+安装目录下：.jenkins
+
+```xml
+  <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULL_NAME}</workspaceDir>
+  <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
+    <jdks>
+    <jdk>
+      <name>jdk_1.8.0.161</name>
+      <home>C:\Program Files\JAVA\jdk1.8.0_161</home>
+      <properties/>
+    </jdk>
+  </jdks>
+```
+  <workspaceDir>D:/software/jekins/workspace/${ITEM_FULL_NAME}</workspaceDir>
+  <buildsDir>D:/software/jekins/jobs/${ITEM_FULLNAME}/builds</buildsDir>
+
+  
+JENKINS_HOME、ITEM_ROOTDIR、ITEM_FULLNAME
+JENKINS_HOME：表示jenkins的jobs目录，就是jobs的主目录
+ITEM_FULLNAME：表示jobs的名字
+ITEM_ROOTDIR：表示jenkins的主目录下的jobs下的jobs名字，可以表示为${JENKINS_HOME}/jobs/${ITEM_FULLNAME}
