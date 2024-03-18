@@ -1,5 +1,13 @@
 # Interllij idea 
 
+## 配置
+
+### 设置项目 编码格式
+
+> 设置编码格式
+
+![编码格式](../../_media/tool/idea/encoding.jpg)
+
 ## 插件
 
 > maven 依赖关系插件
