@@ -1,7 +1,18 @@
 # mysql
 
-## 创建数据库、用户，并授权
+## 高级配置
 
+| advanced                  | 配置                             | 说明                                                          |
+|---------------------------|--------------------------------|-------------------------------------------------------------|
+| `useSSL`                  | `5.7之后的版本必须要加上useSSL=false,`   | `useSSL=true是进行安全验证，一般通过证书或者令牌什么的，useSSL=false就是通过账号密码进行连接` |
+| `allowPublicKeyRetrieval` | `allowPublicKeyRetrieval=true` |       `` |
+
+## 语法
+
+### 创建数据库、用户，并授权
+
+?> 8.X 版本最好指定库编码：CREATE SCHEMA `knbs_base` DEFAULT CHARACTER SET utf8mb4  COLLATE utf8mb4_0900_ai_ci;
+  
 ```sql
 CREATE SCHEMA `sx_kf_grid` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
 ```
@@ -26,7 +37,7 @@ grant all privileges on `sx_kf_grid`.* to 'sxcmms'@'%' ;
 flush privileges;
 ```
 
-## 快捷创建表、复制数据
+### 快捷创建表、复制数据
 
 > MySQL复制相同表结构的方法：
 
@@ -44,13 +55,13 @@ CREATE TABLE table_name LIKE other_table;
 
 > 复制表的数据
 
-1. 复制全部数据 注意：复制全部数据 列的类型要相同 
+1. 复制全部数据 注意：复制全部数据 列的类型要相同
 
 ```sql
 INSERT INTO table_name SELECT * FROM other_name; 
 ```
 
-2. 复制指定的列 
+2. 复制指定的列
 
 ```sql
 INSERT INTO test_index_tbl1 ( 
@@ -116,7 +127,7 @@ CREATE TABLE `table_name` (
 ?> 使用AS复制源表，结论：对比两次查询的创建语句发现，AS复制了表的源数据和结构，但没有复制索引和主键的设置。
 
 
->> 测试LIKE复制表
+> > 测试LIKE复制表
 
 ①.使用LIKE复制表
 
@@ -155,7 +166,7 @@ CREATE TABLE `table_name` (
 
 对比两次结果发现完完全全的复制了源表的结构包括索引信息。
 
->> 结论：
+> > 结论：
 
 ?> AS：用来创建相同表结构并复制源表数据(可根据后面的条件来控制要不要复制源表数据)
 
@@ -171,15 +182,7 @@ INSERT INTO table_name SELECT * FROM book;
 
 ?> 补充：Oracle支持AS，即只有表结构没有索引，Oracle不支持LIKE
 
-
-## 导出sql
-
-```sql
- mysqldump.exe --defaults-file="C:\Users\MR3A2A~1.ZHA\AppData\Local\Temp\tmpaqcwytib.cnf"  --host=172.28.28.165 --port=13306 --default-character-set=utf8 --user=root --protocol=tcp --column-statistics=FALSE --skip-triggers "channel"
-```
-
-
-## 字符串转数字
+### 字符串转数字
 
 在使用mysql中，经常遇到要将字符串数字转换成可计算数字，现总结 了几种方式：
 
@@ -191,13 +194,13 @@ select * from pony order by (d+0)
 > 在进行ifnull处理时，比如 ifnull(a/b,'0') 这样就会导致 a/b成了字符串，因此需要把'0'改成0，即可解决此困扰
 
 > 比较数字和varchar时，比如a=11，b="11ddddd";
-则 select 11="11ddddd"相等
-若绝对比较可以这样：
+> 则 select 11="11ddddd"相等
+> 若绝对比较可以这样：
 
 select binary 11 =binary "11ddddd"
 
 > 字符集转换 : CONVERT(xxx USING gb2312)
-类型转换和SQL Server一样,就是类型参数有点点不同 : CAST(xxx AS 类型) , CONVERT(xxx,类型)，类型必须用下列的类型：
+> 类型转换和SQL Server一样,就是类型参数有点点不同 : CAST(xxx AS 类型) , CONVERT(xxx,类型)，类型必须用下列的类型：
 
 可用的类型：
 
@@ -216,15 +219,15 @@ select binary 11 =binary "11ddddd"
 方法三：SELECT '123'+0;
 ```
 
-## oracle 表转mysql 建表语句
+### oracle 表转mysql 建表语句
 
-## 修改表注释
+### 修改表注释
 
 ```sh
 ALTER TABLE tb_user COMMENT '用户信息表2';
 ```
 
-## 修改字段注释
+### 修改字段注释
 
 修改字段备注，其实就是修改字段的定义。
 
@@ -234,11 +237,11 @@ ALTER TABLE tb_user MODIFY COLUMN name VARCHAR(30) NOT NULL COMMENT '姓名2';
 
 注意：修改时要把该字段的完整定义写上，如字段类型、属性等。千万不要因为只是为了修改一个注释，而把该字段定义的其它属性给覆盖掉了。
 
-## 查询字段信息
+### 查询字段信息
 
 SHOW FULL COLUMNS FROM tb_user;
 
-## 创建表
+### 创建表
 
 ```sql
 create table sys_user
@@ -271,27 +274,27 @@ create unique index sys_user_code_index
     comment '用户编码唯一索引';
 ```
 
-## 更改表名
+### 更改表名
 
 ```sql
 rename table sys_user_real to sys_user_rela;
 ```
 
-## 增加表字段
+### 增加表字段
 
 ```sql
 alter table sys_user_real
     add type int not null comment '关系类型（GROUP:用户组;OA:OA;BOSS:BOSS）' after create_time;
 ```
 
-## 调整字段位置
+### 调整字段位置
 
 ```sql
 alter table sys_user_real
     modify create_time datetime null comment '创建时间' after type;
 ```
 
-## 修改主键
+### 修改主键
 
 ```sql
 alter table sys_users
@@ -301,7 +304,7 @@ alter table sys_users
     add primary key (id);
 ```
 
-## 修改约束key constraint key
+### 修改约束key constraint key
 
 ```sql
 alter table sys_users
@@ -312,28 +315,28 @@ alter table sys_users
                    unique (code, tenant_id)
 ```
 
-## 修改表字段类型
+### 修改表字段类型
 
 ```sql
 alter table sys_user
     modify phone varchar(11) null comment '联系电话';
 ```
 
-## 修改表字段名称
+### 修改表字段名称
 
 ```sql
 alter table sys_users
     change updator updater varchar(64) null comment '更新人';
 ```
 
-## 修改默认值
+### 修改默认值
 
 ```sql
 alter table sys_users
     alter column update_time set default now();
 ```
 
-## 增加索引
+### 增加索引
 
 ```sql
 drop index sys_user_group_idx_tenantid on sys_user_group;
@@ -342,7 +345,7 @@ create index sys_user_group_idx_code_tenantid
     on sys_user_group (tenant_id, code);
 ```
 
-## 增加唯一索引
+### 增加唯一索引
 
 ```sql
 drop index sys_user_group_idx_code_tenantid on sys_user_group;
@@ -351,15 +354,32 @@ create unique index sys_user_group_idx_code_tenantid
     on sys_user_group (tenant_id, code);
 ```
 
-## 删除表
+### 删除表
 
 ```sql
 drop table if exists aa cascade;
 ```
 
-cascade: Delete or update the row from the parent table and automatically delete or update the matching rows in the child table. 
+cascade: Delete or update the row from the parent table and automatically delete or update the matching rows in the
+child table.
 
-## 锁表
+### 导出sql
+
+```sql
+ mysqldump.exe --defaults-file="C:\Users\MR3A2A~1.ZHA\AppData\Local\Temp\tmpaqcwytib.cnf"  --host=172.28.28.165 --port=13306 --default-character-set=utf8 --user=root --protocol=tcp --column-statistics=FALSE --skip-triggers "channel"
+```
+
+## 数据库监控
+
+### 查看数据量以及条数
+
+```sql
+select concat(round(sum(data_length / 1024 / 1024), 2), 'MB') as data, sum(table_rows)
+from information_schema.tables
+where (table_schema = 'channel' or TABLE_SCHEMA like 'knbs%');
+```
+
+## 锁
 
 ?> `show processlist`
 

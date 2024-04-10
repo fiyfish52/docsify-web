@@ -10,10 +10,10 @@ docker pull mysql:8.0.31
 
 ## 启动镜像
 
-!> 此处启动是为了获取配置文件，后面会挂载到宿主
+!> 此处启动是为了获取配置文件，后面会挂载到宿主 --lower_case_table_names=1 设置大小写不敏感，8版本后，只能在部署的时候设置，部署后不能更改，更改会导致启动报错
 
 ```sh
-docker run -p 13316:3306 --name MyMysql -e MYSQL_ROOT_PASSWORD='abcd!@#$'  -d mysql:8.0.31
+docker run -p 13316:3306 --name MyMysql -e MYSQL_ROOT_PASSWORD='abcd!@#$'  -d mysql:8.0.31 --lower_case_table_names=1
 ```
 
 ## 查看是否启动成功
@@ -25,8 +25,7 @@ docker ps -a
 ## 创建宿主机mysql数据目录
 
 ```sh
-mkdir -p /usr1/maywide/bin/images/mysql/data
-
+mkdir -p /usr1/maywide/bin/images/mysql/mydata
 ```
 
 ## 启动成功后，进入容器内部拷贝配置文件，到宿主主机
@@ -34,10 +33,10 @@ mkdir -p /usr1/maywide/bin/images/mysql/data
 ?> `/usr1/maywide/bin/images/mysql/data` 自己指定的宿主地址 用于挂载mysql数据文件
 
 ```sh
-docker cp  MyMysql:/etc /usr1/maywide/bin/images/mysql/data
+docker cp  MyMysql:/etc /usr1/maywide/bin/images/mysql/mydata
 ```
 
-拷贝容器的 /etc目录 到 主机目录/usr1/maywide/bin/images/mysql/data
+拷贝容器的 /etc目录 到 主机目录/usr1/maywide/bin/images/mysql/mydata
 
 ## 删除mysql容器，重新创建容器
 
@@ -67,7 +66,8 @@ docker run -p 13316:3306 \
 -v /usr1/maywide/bin/images/mysql/mydata/data:/var/lib/mysql \
 -v /etc/localtime:/etc/localtime \
 -e MYSQL_ROOT_PASSWORD=Maywide368_#^* \
--d mysql:8.0.31
+-d mysql:8.0.31 \
+--lower_case_table_names=1
 ```
 
 命令解释：
