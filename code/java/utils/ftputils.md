@@ -1,5 +1,17 @@
 # FtpUtil
 
+> mvn repository
+
+```java
+ <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
+<!--        Hutool核心，包括集合、字符串、Bean等工具-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>5.8.24</version>
+        </dependency>
+```
+
 > java code
 
 ```java
