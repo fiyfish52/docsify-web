@@ -1,5 +1,18 @@
 # problem
 
+## useSSL=false
+
+`SSL(Secure Sockets Layer 安全套接字协议)，在mysql进行连接的时候,如果mysql的版本是5.7之后的版本必须要加上useSSL=false,
+mysql5.7以及之前的版本则不用进行添加useSSL=false，会默认为false，
+一般情况下都是使用useSSL=false，尤其是在将项目部署到linux上时，一定要使用useSSL=false！！！，
+useSSL=true是进行安全验证，一般通过证书或者令牌什么的，useSSL=false就是通过账号密码进行连接，通常使用useSSL=false！！！`
+
+## 外部工具链接 提示：Public Key Retrieval is not allowed
+
+```
+链接后面添加：allowPublicKeyRetrieval=true
+```
+
 ## mysql错误：1093-You can’t specify target table for update in FROM clause的解决方法
 
 ?> 在做更新操作的时候，赋值操作用了子查询，这个时候Mysql就报了如标题的错误。
