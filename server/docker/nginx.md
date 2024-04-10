@@ -21,7 +21,7 @@ docker run --name test-nginx -d nginx
 ## 拷贝配置文件到宿主要挂载文件路径位置
 
 ```sh
-docker cp test-nginx:/etc/nginx /usr1/maywide/bin/dockerimage/nginx/data
+docker cp test-nginx:/etc/nginx /usr1/maywide/bin/dockerimage/nginx/data/conf
 docker cp test-nginx:/var/log/nginx /usr1/maywide/bin/dockerimage/nginx/data/logs
 docker cp test-nginx:/usr/share/nginx/html /usr1/maywide/bin/dockerimage/nginx/data/html
 ```
@@ -33,11 +33,11 @@ docker ps -a
 ```
 
 ```sh
-docker stop containerid
+docker stop test-nginx
 ```
 
 ```sh
-docker rm containerid
+docker rm test-nginx
 ```
 
 ## 启动正式容器
