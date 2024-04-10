@@ -1,5 +1,7 @@
 # openfeign
 
+## spring webmvc
+
 > maven 依赖
 
 ```pom
@@ -35,3 +37,7 @@ public interface ClientServerFeign {
 // 调用
     clientServerFeign.XXXXX
 ```
+
+## spring webflux
+
+使用 webclient
