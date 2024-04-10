@@ -238,3 +238,47 @@ InputStream targetStream = IOUtils.toInputStream(str, StandardCharsets.UTF_8.nam
 InputStream targetStream =
         new ReaderInputStream(CharSource.wrap(str).openStream(), StandardCharsets.UTF_8.name());
 ```
+
+
+## 文件转换为 字符串 再转为 文件
+
+?> 系统间传递 需要使用 URLDecoder 编解码， 同时需要 指定编码集 编码：`java.net.URLEncoder.encode(str)` 解码：`URLDecoder.decode(res3,"utf-8")`
+
+```java
+  private byte[] test() throws IOException {
+        //1、第一步：文件转为byte数组
+        File file = new File("D:\\TOOL\\CSS3\\学习素材和工具\\工具集\\JavaScript工具集\\ECMAScript3.0规范英文版.pdf");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        int size = fileInputStream.available();
+        byte[] buffer = new byte[size];
+        fileInputStream.read(buffer);
+
+        //2、第二步：byte数组转换为char数组
+        char[] byToChs = new char[size];
+        for (int i = 0; i < size; i++) {
+            byToChs[i] = (char) buffer[i];
+        }
+
+        //3、第三步：char数组转换为字符串
+        StringBuilder sb = new StringBuilder();
+        sb.append(byToChs);
+        String str = sb.toString();
+
+        //4、第四步：字符串转换为char数组
+        char[] strTochs = str.toCharArray();
+
+        //5、第五步:char数组转换为byte数组
+        for (int i = 0; i < size; i++) {
+            buffer[i] = (byte) strTochs[i];
+        }
+        String path = System.getProperty("user.dir");
+        //6、第6步，把byte数组转化为文件
+        File outputFile = new File(path + "/1.pdf");
+        FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+        fileOutputStream.write(buffer);
+
+        fileOutputStream.close();
+        fileInputStream.close();
+        return null;
+    }
+```
