@@ -2,7 +2,7 @@
 
 ## 安装 java
 
->下载指定版本：
+> 下载指定版本：
 
 `https://www.oracle.com/java/technologies/downloads/archive/`
 
@@ -32,4 +32,29 @@ export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
 ```sh
 source /etc/profile
+```
+
+## keytool
+
+### 生成证书
+
+?> 管理员启动cmd
+
+?> jdk1.8.0.11 生成的证书中有md5； jdk 11.0.11 生成的证书中没有md5
+
+```sh
+.\keytool.exe -genkey -alias cmms -keyalg RSA -keysize 1024 -validity 365 -keystore test1.keystore
+```
+
+| 参数          | 说明    | 值                           |
+|-------------|-------|-----------------------------|
+| `-alias`    | 别名    | 自定义字符串 `cmms`               |
+| `keysize`   | 密钥位数  | `1024` `2048`               |
+| `-validity` | 有效期天数 | 单位是天 `365` 表示365天           |
+| `-keystore` | 证书名称  | 名称自定义 `test1.keystore` 后缀固定 |
+
+### 查看证书
+
+```sh
+ .\keytool.exe -list -v -alias cmms  -storepass 123456  -keystore .\test1.keystore
 ```
