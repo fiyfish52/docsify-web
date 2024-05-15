@@ -8,6 +8,24 @@
 
 [官网地址](https://docs.docker.com/engine/reference/commandline/restart/)
 
+### 阿里云加速地址
+
+```vim
+https://h6x865gy.mirror.aliyuncs.com
+```
+
+### 拉取镜像
+
+```sh
+docker pull XXXX
+```
+
+> 指定版本
+
+```sh
+docker pull XXXX:2.4.1
+```
+
 ## docker run
 
 [docker run](https://docs.docker.com/engine/reference/run/#tmpfs-mount-tmpfs-filesystems)

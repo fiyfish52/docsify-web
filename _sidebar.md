@@ -54,6 +54,9 @@
   * npm
     * [&#x1F4D8; npm compomemt](/web/npm/component.md)
     * [&#x1F4D8; npm Problem](/web/npm/npmProblem.md)
+  * uniapp
+    * [&#x1F4D8; android plugin](/web/uniapp/androidplugin/plugins.md)
+    * [&#x1F4D8; solve the problem](/web/uniapp/androidplugin/solveProblem.md)
   * vue
     * [&#x1F4D8; vue](/web/vue/vue.md)
     * [&#x1F4D8; vue project](/web/vue/vueproject.md)
