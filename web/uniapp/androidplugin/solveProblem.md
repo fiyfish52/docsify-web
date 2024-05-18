@@ -27,6 +27,15 @@
 
 !> 导入的app与 appkey 必须是同属于一个应用
 
+包名可自定义 ，对应的android项目 需要更改：
+1, app/build.gradle:android.defaultConfig.applicationId
+2, app/src/main/AndroidManifest.xml: package 内容
+
+key 要填写报名对应的 appkey
+
+配置app对应的证书
+
+### 生成证书
 
 
 > ## 手动处理aar
