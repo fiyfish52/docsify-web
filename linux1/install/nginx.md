@@ -583,3 +583,26 @@ mkcert -CAROOT /root/.local/share/mkcert
 重启浏览器再次访问，可以看到连接已经变为安全：
 
 我们通过 mkcert 创建了自签名的 SSL 证书，并建立了安全的访问连接。与 OpenSSL 相比，mkcert 的使用更加简单，简化了在内网搭建 HTTPS 环境的复杂性。
+
+
+## 配置图片服务器
+
+### 配置请求
+```sh
+#在下面添加如下内容：
+    location /images {
+        root   /usr/local/src/;
+        autoindex on;
+    }
+```
+### 创建相关路径和上传图片
+
+```sh
+mkdir /usr/local/src/images/ 
+```
+
+### 重启
+
+```sh
+nginx -s reload -c /nginx.conf
+```
