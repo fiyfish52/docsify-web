@@ -10,6 +10,9 @@ wget http://mirrors.jenkins.io/war-stable/2.346.3/jenkins.war
 ```
 ![jenkins下载页](../../_media/jenkins下载.jpg)
 >2. 启动
+
+ linux 
+
 ```sh
 脚本：
 #/bin/bash
@@ -18,10 +21,31 @@ nohup java -jar ./jenkins.war  --httpPort=8081 >>jenkins.log   &
 echo "started jenkins"
 ps -ef|grep jenkins
 ```
+windows
+
+管理员启动cmd
+
+```sh
+net start jenkins
+```
+
+关闭
+
+```sh
+net stop jenkins
+```
+
 >3. 访问
    http://ip:8081 等待自安装
 
 >4. 查找自动生成的密码（日志文件中）输入后等待启动
+
+>5. 重启
+
+```url
+http://ip:port/restart
+```
+
 ---
 ## 插件安装
 >设置路径
