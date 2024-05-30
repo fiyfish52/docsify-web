@@ -55,7 +55,8 @@ Manage Jenkins --> Manage Plugins
 >插件名称
 
 远程发布：publish over ssh
-
+执行多个job；Multijob plugin
+执行node脚本：NodeJS
 ---
 ## 问题处理
 >1. gitea 配置web钩子不生效

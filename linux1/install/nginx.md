@@ -591,8 +591,12 @@ mkcert -CAROOT /root/.local/share/mkcert
 ```sh
 #在下面添加如下内容：
     location /images {
-        root   /usr/local/src/;
+        root   /usr/local/src;
         autoindex on;
+#        配置可跨域访问 
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Headers X-Requested-With;
+        add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
     }
 ```
 ### 创建相关路径和上传图片
