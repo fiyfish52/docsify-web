@@ -79,111 +79,281 @@ season/fastdfs storage
 
 ### client测试
 
+
 两个容器创建完之后，但此时两个容器其实并没有关联起来，我们进入tracker容器，通过client.conf测试一下：
 
+```sh
 docker exec -it tracker bash
+```
+
+```sh
 cd /etc/fdfs/
+```
+
+```sh
 ls
+```
+
+```sh
 cat client.conf
-输出的 client.conf 都是默认配置，我们可以找到其中的 track_server 地址：
+```
 
+输出的 client.conf 都是默认配置，我们可以找到其中的 `track_server` 地址
 
-尝试执行一下连接：
+```sh
+# tracker_server can ocur more than once, and tracker_server format is
+#  "host:port", host can be hostname or ip address
+tracker_server=177.2.33.109:22122
+```
 
-fdfs_monitor client.conf
-然后会得到如下内容：
+##### 修改client.conf配置文件
 
-ERROR - file: ../common/connection_pool.c, line: 84, connect to 192.168.209.121:22122 fail, errno: 110, error info: Connection timed out
-也就是在没有修改client配置之前，默认 tracker 是去连接 192.168.209.121 地址的，那么接下来就是需要去配置client配置文件了。
-
-
-3.4、修改client.conf配置文件
-通过 docker exec -it tracker bash 进入 tracker 容器后不能使用 vi vim 命令，所以干脆将 client.conf 配置文件复制出来，在宿主机修改完再粘贴回去。
+修改storage.conf配置文件
+通过 `docker exec -it tracker bash` 进入 `tracker` 容器后不能使用 `vi` `vim` 命令，将 `client.conf` 配置文件复制出来，在宿主机修改完再粘贴回去。
 
 执行命令：
 
-docker cp trakcer:/etc/fdfs/client.conf /usr/local/server/fastdfs/
-我们通过 docker 指令将配置文件复制到 /usr/local/server/fastdfs/ 目录。
+```sh
+docker cp tracker:/etc/fdfs/client.conf /usr1/maywide/bin/dockerimage/fdfs
+```
+
+```sh
+vi client.conf
+```
+
+> 修改1
+
+```sh
+# tracker_server can ocur more than once, and tracker_server format is
+#  "host:port", host can be hostname or ip address
+tracker_server=177.2.33.109:22122
 
 
-我们编辑这个文件，修改 tracker_url 地址（vi client.conf）：
+#HTTP settings
+http.tracker_server_port=8091
+
+```
+
+> 修改2
+
+```sh
+# the base path to store log files
+base_path=/fastdfs/store_path
+```
+
+> 修改后保存，然后将修改后的文件替换回去。指令命令：
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/client.conf tracker:/etc/fdfs
+```
 
 
-修改后保存，然后将修改后的文件替换回去。指令命令：
+##### 修改storage.conf配置文件
 
-docker cp /usr/local/server/fastdfs/client.conf tracker:/etc/fdfs 
-至此，配置文件修改完了，接下来我们创建文件上传测试一下。
+```sh
+docker cp tracker:/etc/fdfs/storage.conf /usr1/maywide/bin/dockerimage/fdfs
+```
 
-4、文件上传测试
-执行命令，进入 tracker 容器中：
+```sh
+vi storage.conf
+```
 
+> 修改1
+
+```sh
+# tracker_server can ocur more than once, and tracker_server format is
+#  "host:port", host can be hostname or ip address
+tracker_server=192.168.209.121:22122
+```
+
+`修改为`
+
+```sh
+# tracker_server can ocur more than once, and tracker_server format is
+#  "host:port", host can be hostname or ip address
+tracker_server=177.2.33.109:22122
+```
+
+> 保存，然后将修改后的文件替换回去。指令命令：
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/storage.conf tracker:/etc/fdfs
+```
+
+##### 文件上传测试
+
+> 进入 tracker 容器中：
+
+```sh
 docker exec -it tracker bash
-随便创建一个 txt 文件：
+```
 
+> 创建一个 txt 文件：
+
+```sh
 echo "niceyoo" > niceyoo.txt
-然后通过 fdfs_upload_file 命令将 niceyoo.txt 文件上传至服务器：
+```
 
+> 然后通过 fdfs_upload_file 命令将 niceyoo.txt 文件上传至服务器：
+
+```sh
 fdfs_upload_file /etc/fdfs/client.conf niceyoo.txt
-如果此时报了如下错误：
+```
 
+上传后返回文件名：`group1/M00/00/00/rBEABmQ3wHaAJr6RAAAACBfWGpM166.txt`
 
-那么就创建一下这个路径，没有的跳过：
+后面配置nginx时配置访问文件路径。
 
-mkdir -p /home/yuqing/fastdfs
-创建目录后重新尝试提交：
+> 查看宿主机文件路径：
 
-
-我们复制出这个文件名来：group1/M00/00/00/CtM3BF84iz2AWE_JAAAACBfWGpM793.txt，这个名称后面有用，将用作后面配置nginx时配置访问文件路径。
-
-因为我们之前挂载了宿主机的目录，我们去 cd /usr/local/server/fastdfs 看一下：
-
-cd /usr/local/server/fastdfs/data/storage/data
+```sh
+cd /usr1/maywide/bin/dockerimage/fdfs/storage/path/data/00/00
 ls
-输出内容如下：
-
-
-5、配置Nginx
-前面的补充已经提到了，默认上传的文件是只能在本机访问的，当然这样肯定是不行的，所以我们需要配置一下Nginx 来帮我们实现 Web 访问的效果。
-
-创建nginx目录：
-
-mkdir -p /usr/local/server/fastdfs/nginx/
-将storage容器中的nginx配置文件复制出来：
-
-docker cp storage:/etc/nginx/conf/nginx.conf /usr/local/server/fastdfs/nginx/
-修改nginx中的配置：
-
-vi /usr/local/server/fastdfs/nginx/nginx.conf
-找到local节点，修改为：
-
- location / {
-    root /fastdfs/store_path/data;
-    ngx_fastdfs_module;
- }
-相关截图如下：
+```
 
 
 
-接下来就是创建nginx容器，并指向刚刚的配置文件了。
+#### docker安装 fdfs-Nginx
 
-没有安装过nginx的小伙伴同样可以执行如下指令，默认会帮你拉取镜像然后安装的。
+访问fdfs 文件服务器内容
 
-注意：请修改ip地址后再执行
+##### 制作nginx 二进制文件
 
-docker run -id --name fastdfs_nginx \
---restart=always \
--v /usr/local/server/fastdfs/data/storage:/fastdfs/store_path \
--v /usr/local/server/fastdfs/nginx/nginx.conf:/etc/nginx/conf/nginx.conf \
--p 8888:80 \
--e TRACKER_SERVER=10.211.55.4:22122 \
-season/fastdfs:1.2 nginx
-至此，我们查看一下目前创建以及启动的容器：
+制作包含 `fastdfs-nginx-module` 的nginx启动文件；
 
+文件位置：14陕西省网BOSS2项目\社会代理商管理系统平台\05代码\正式环境部署\环境\docker-images\fdfs\
 
-我们测试一下之前上传的文件 group1/M00/00/00/CtM3BF84iz2AWE_JAAAACBfWGpM793.txt，执行如下命令：
+```sh
+./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-compat --with-threads --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_random_index_module --with-http_realip_module --with-http_secure_link_module --with-http_slice_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --add-module=/usr1/maywide/bin/dockerimage/fdfs/nginx/fastdfs-nginx-module/src --with-openssl=/usr1/maywide/bin/dockerimage/fdfs/nginx/openssl-1.1.1l/
+```
 
-curl -i http://127.0.0.1:8888/group1/M00/00/00/CtM3BF84iz2AWE_JAAAACBfWGpM793.txt
-执行结果：
+```sh
+make
+```
 
+##### 创建nginx目录
 
-至此，整个过程就搭建成功了，我们通过浏览器访问一下：
+```sh
+mkdir -p /usr1/maywide/bin/dockerimage/fdfs/nginx
+```
+
+```sh
+cd /usr1/maywide/bin/dockerimage/fdfs/nginx
+```
+
+##### 上传 fastdfs-nginx-module
+
+文件位置：14陕西省网BOSS2项目\社会代理商管理系统平台\05代码\正式环境部署\环境\docker-images\fdfs\
+
+`fastdfs-nginx-module-maywide.tar.gz`
+`libfastcommon.so`
+`libfdfsclient.so`
+`nginx-fdfs.tar.gz`
+`openssl-1.1.1l.tar.gz`
+
+```sh
+tar -xvf fastdfs-nginx-module-maywide.tar.gz
+```
+
+```sh
+tar -xvf openssl-1.1.1l.tar.gz
+```
+
+```sh
+tar -xvf nginx-fdfs.tar.gz
+```
+
+##### 更改nginx.conf 配置
+
+?> nginx 镜像中没有
+
+##### 启动容器
+
+```sh
+docker run -d \
+    --name fdfs-nginx \
+    --restart=always \
+    -p 8091:8091 \
+    -v /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs/data/conf/nginx:/etc/nginx \
+    -v /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs/data/web/html:/usr/share/nginx/html \
+    -v /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs/data/logs/nginx:/var/log/nginx \
+    -v /usr1/maywide/bin/dockerimage/fdfs/nginx/tmp:/fastdfs/tmp \
+    -v /usr1/maywide/bin/dockerimage/fdfs/storage/path:/fastdfs/store_path \
+    -v /usr1/maywide/bin/dockerimage/fdfs/nginx/fastdfs-nginx-module:/usr1/maywide/bin/dockerimage/fdfs/nginx/fastdfs-nginx-module \
+    -v /usr1/maywide/bin/dockerimage/fdfs/nginx/openssl-1.1.1l:/usr1/maywide/bin/dockerimage/fdfs/nginx/openssl-1.1.1l \
+    nginx
+```
+
+##### 拷贝配置文件
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/nginx/fastdfs-nginx-module/src/mod_fastdfs.conf fdfs-nginx:/etc/fdfs/
+```
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs/nginx fdfs-nginx:/usr/sbin/
+```
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/nginx/libfastcommon.so fdfs-nginx:/usr/lib/
+```
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/nginx/libfdfsclient.so fdfs-nginx:/usr/lib/
+```
+
+##### 获取fdfs配置信息
+
+```sh
+docker cp tracker:/etc/fdfs/http.conf /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs
+docker cp tracker:/etc/fdfs/mime.types /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs
+```
+
+拷贝到 fdfs-nginx
+
+```sh
+docker cp /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs/http.conf fdfs-nginx:/etc/fdfs/
+docker cp /usr1/maywide/bin/dockerimage/fdfs/nginx/nginx-fdfs/mime.types fdfs-nginx:/etc/fdfs/
+```
+
+##### 处理文件链接
+
+在文件存储目录下创建软连接，将其链接到实际存放数据的目录，注意这个文件存储的位置后面多个data目录是系统自动生成的
+
+```sh
+docker exec -it fdfs-nginx bash
+```
+
+```sh
+mkdir /fastdfs/store_path/data/M00
+```
+
+```sh
+cd /fastdfs/store_path
+```
+
+```sh
+ln -s /fastdfs/store_path/data /fastdfs/store_path/data/M00
+```
+
+##### 重启 容器
+
+```sh
+docker restart fdfs-nginx
+```
+
+```sh
+docker restart tracker
+```
+
+```sh
+docker restart storage
+```
+
+##### 测试nginx访问
+
+我们测试一下之前上传的文件 `group1/M00/00/00/CtM3BF84iz2AWE_JAAAACBfWGpM793.txt`，执行如下命令：
+
+```sh
+curl -i http://177.2.33.109:8091/group1/M00/00/00/CtM3BF84iz2AWE_JAAAACBfWGpM793.txt
+```
