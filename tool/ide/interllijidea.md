@@ -53,3 +53,10 @@ ctrl+shift+F9
 `Free MyBatis Tool` is a plugin that enhances idea support for mybatis.
 
 **快速从代码跳转到mapper及从mapper返回代码**
+
+
+## 下载源码
+
+```sh
+ mvn dependency:resolve -Dclassifier=sources
+```
