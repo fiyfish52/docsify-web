@@ -4,6 +4,32 @@
 
 [官网命令地址](https://docs.docker.com/engine/reference/commandline/exec/)
 
+## docker 配置
+
+```sh
+docker info
+```
+
+### 更改docker 镜像
+
+> windows docker desktop
+
+设置->Docker Engine  增加如下配置
+
+```sh
+{
+  ...其他配置
+  
+  "registry-mirrors": [
+    "https://h6x865gy.mirror.aliyuncs.com"
+  ]
+}
+```
+
+> linux
+
+一般linux 镜像直接从 本地 上传 
+
 ## docker cli
 
 [官网地址](https://docs.docker.com/engine/reference/commandline/restart/)
