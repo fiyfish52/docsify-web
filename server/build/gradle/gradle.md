@@ -1,5 +1,15 @@
 # gradle
 
+## 配置 高级系统设置，增加环境变量
+
+安装包位置
+
+GRADLE_HOME ： D:/software/gradle/gradle-7.4.2
+
+仓库位置：
+
+gradle_user_home：D:\software\gradle\respository
+
 ## 查看版本
 
 ```sh
@@ -8,7 +18,8 @@ gradle -v
 
 ## 配置
 
-?> C:\Users\.....\.gradle 配置中心仓库
+###  gradle.
+?> C:\Users\.....\.gradle 增加配置文件：init.gradle  内容如下
 
 ```sh
 allprojects{
