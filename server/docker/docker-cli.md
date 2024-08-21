@@ -251,6 +251,26 @@ docker network ls
 docker network inspect bridge
 ```
 
+
+## 创建网络
+
+```sh
+docker network create -d bridge efk-net
+```
+
+## 删除网络
+
+```sh
+docker network rm efk-net
+```
+
+## 查看容器配置
+
+```sh
+docker container inspect [containerId]
+```
+
+
 ## 容器操作
 
 ### 进入容器
