@@ -37,6 +37,13 @@ grant all privileges on `sx_kf_grid`.* to 'sxcmms'@'%' ;
 flush privileges;
 ```
 
+### 时区问题
+
+```shell
+show variables like '%time_zone%';
+set global time_zone='+8:00';
+```
+
 ### 快捷创建表、复制数据
 
 > MySQL复制相同表结构的方法：

@@ -588,6 +588,9 @@ mkcert -CAROOT /root/.local/share/mkcert
 ## 配置图片服务器
 
 ### 配置请求
+
+> linux
+
 ```sh
 #在下面添加如下内容：
     location /images {
@@ -599,6 +602,21 @@ mkcert -CAROOT /root/.local/share/mkcert
         add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
     }
 ```
+
+> windows
+
+```shell
+location /tools {
+
+            alias   E:\Tools;
+
+            allow all;
+
+            autoindex on;
+
+        }
+```
+
 ### 创建相关路径和上传图片
 
 ```sh
@@ -607,6 +625,14 @@ mkdir /usr/local/src/images/
 
 ### 重启
 
+> linux 
+
 ```sh
 nginx -s reload -c /nginx.conf
+```
+
+> windows
+
+```shell
+.\nginx.exe -s reload
 ```

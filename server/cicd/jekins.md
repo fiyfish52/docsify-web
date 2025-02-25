@@ -57,6 +57,7 @@ Manage Jenkins --> Manage Plugins
 远程发布：publish over ssh
 执行多个job；Multijob plugin
 执行node脚本：NodeJS
+配置参数checkbox：Extended Choice Parameter plugin
 ---
 ## 问题处理
 >1. gitea 配置web钩子不生效
@@ -105,3 +106,20 @@ JENKINS_HOME、ITEM_ROOTDIR、ITEM_FULLNAME
 JENKINS_HOME：表示jenkins的jobs目录，就是jobs的主目录
 ITEM_FULLNAME：表示jobs的名字
 ITEM_ROOTDIR：表示jenkins的主目录下的jobs下的jobs名字，可以表示为${JENKINS_HOME}/jobs/${ITEM_FULLNAME}
+
+
+## 代理
+
+```vim
+172.28.28*
+177.2.33*
+39.96.36.32*
+smtp.163.com
+*.jenkins.io
+updates.jenkins.io
+maven.aliyun.com
+nexus.bladex.vip
+git.maywide.com
+```
+
+

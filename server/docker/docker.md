@@ -2,7 +2,7 @@
 
 ## 安装docker dockercompose
 
-[安装](/linux/docker.md)
+[安装](/linux1/install/docker.md)
 
 ## Dockerfile
 

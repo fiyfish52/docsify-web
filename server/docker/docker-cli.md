@@ -26,6 +26,28 @@ docker info
 }
 ```
 
+```sh
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "experimental": false,
+  "registry-mirrors": [
+    "https://h6x865gy.mirror.aliyuncs.com",
+    "https://do.nark.eu.org",
+    "https://dc.j8.work",
+    "https://docker.m.daocloud.io",
+    "https://dockerproxy.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://docker.nju.edu.cn"
+  ]
+  
+}
+```
+
 > linux
 
 一般linux 镜像直接从 本地 上传 
@@ -38,6 +60,16 @@ docker info
 
 ```vim
 https://h6x865gy.mirror.aliyuncs.com
+```
+### 其他加速地址
+
+```vim
+    "https://do.nark.eu.org",
+    "https://dc.j8.work",
+    "https://docker.m.daocloud.io",
+    "https://dockerproxy.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://docker.nju.edu.cn"
 ```
 
 ### 拉取镜像

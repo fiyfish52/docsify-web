@@ -1,5 +1,10 @@
 #
 
+## 环境配置
+
+ANDROID_HOME:D:\software\Android\sdk-34
+path:%ANDROID_HOME%\platform-tools  %ANDROID_HOME%\tools  %ANDROID_HOME%\tools\bin
+
 ## 生成签名证书
 
 [生成证书](/server/language/java/java.md?id=keytool)

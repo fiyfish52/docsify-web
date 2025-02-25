@@ -4,11 +4,21 @@
 
 安装包位置
 
+```sh
 GRADLE_HOME ： D:/software/gradle/gradle-7.4.2
+```
 
 仓库位置：
 
+```sh
 gradle_user_home：D:\software\gradle\respository
+```
+
+path增加：
+
+```sh
+%GRADLE_HOME%\bin
+```
 
 ## 查看版本
 

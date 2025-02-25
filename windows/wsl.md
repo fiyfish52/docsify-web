@@ -1,8 +1,41 @@
 # wsl
 
+## 安装wsl
+
+设置-》更多windows服务 
+
+勾选虚拟机平台/适用于Linux的windows子系统
+
+
+### 查询可安装服务
+
+```shell
+wsl --list -o
+```
+
+### 安装服务
+
+```shell
+wsl --install -d Ubuntu-24.04
+```
+
+### 报错
+
+```vim
+wsl/service/0x8007273d
+```
+
+解决方法： 管理员终端：netsh winsock reset 重启电脑
+
+### 检查更新
+
+```shell
+ wsl --update
+```
+
 ## 用户名密码
 
-ubuntu:root/zhangLIpeng0211|zhanglipeng/zhangLIpeng0211
+ubuntu:root/zhangLIpeng021?|zhanglipeng/zhangLIpeng021?
 
 ## 修改root用户密码
 

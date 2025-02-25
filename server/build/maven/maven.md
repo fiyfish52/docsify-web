@@ -11,4 +11,16 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 
 ```pom
 http://maven.aliyun.com/nexus/content/groups/public//
+
+```
+
+## repository 镜像地址
+
+```text
+<mirror>
+  <id>aliyunmaven</id>
+  <mirrorOf>*</mirrorOf>
+  <name>阿里云公共仓库</name>
+  <url>https://maven.aliyun.com/repository/public</url>
+</mirror>
 ```

@@ -7,6 +7,10 @@
     * [&#x1F4D8; openapi](/code/doc/springdoc-openapi/springdoc-openapi.md)
   * java
     * base
+      * [&#x1F4D8; 数组](/code/java/base/Array.md)
+      * [&#x1F4D8; 位运算](/code/java/base/BitOperation.md)
+      * [&#x1F4D8; 泛型](/code/java/base/Generic.md)
+    * code
       * [&#x1F4D8; 反射](/code/java/code/reflection.md)
     * utils
       * [&#x1F4D8; aesUtils](/code/java/utils/aesUtils.md)
@@ -27,13 +31,14 @@
     * [&#x1F4D8; jsqlparser](/code/mybatis/jsqlparser.md)
   * python
     * [&#x1F4D8; python](/code/python/python.md)
-  * springboot
-    * [&#x1F4D8; base](/code/springboot/base.md)
-    * [&#x1F4D8; problem](/code/springboot/problem.md)
-    * [&#x1F4D8; springboot3](/code/springboot/springboot3.md)
   * security
     * [&#x1F4D8; basicAuth](/code/security/basicAuth.md)
     * [&#x1F4D8; springSecurity](/code/security/springSecurity.md)
+  * springboot
+    * [&#x1F4D8; elasticsearch](/code/springboot/elasticsearch/es.md)
+    * [&#x1F4D8; base](/code/springboot/base.md)
+    * [&#x1F4D8; problem](/code/springboot/problem.md)
+    * [&#x1F4D8; springboot3](/code/springboot/springboot3.md)
   * springcloud
     * [&#x1F4D8; componnet](/code/springcloud/component.md)
     * [&#x1F4D8; junit](/code/springcloud/junit.md)
@@ -57,6 +62,7 @@
   * uniapp
     * [&#x1F4D8; android plugin](/web/uniapp/androidplugin/plugins.md)
     * [&#x1F4D8; solve the problem](/web/uniapp/androidplugin/solveProblem.md)
+    * [&#x1F4D8; vue3 uniapp 开发](/web/uniapp/uniapp/dev.md)
   * vue
     * [&#x1F4D8; vue](/web/vue/vue.md)
     * [&#x1F4D8; vue project](/web/vue/vueproject.md)
@@ -64,22 +70,27 @@
   * [&#x1F4D8; css](/web/css)
   * [&#x1F4D8; vue](/web/vue)
 * &#x1F4D7; 后端 server
-  * android 安卓项目
+  * 安卓项目
     *  [&#x1F4D8; env](/server/android/env.md)
-  * build 项目构建工具
+  * 项目构建工具 build
     * maven
       * [&#x1F4D8; maven](/server/build/maven/maven.md)
     * gradle
       * [&#x1F4D8; gradle](/server/build/gradle/gradle.md)
       * [&#x1F4D8; gradle problem](/server/build/gradle/gradleproblem.md)
-  * cicd
+  * 持续集成 cicd
     * [&#x1F4D8; jenkins](/server/cicd/jekins)
-  * DB
+  * 数据库
+    * 定义
+      * [&#x1F4D8; base](/server/DB/infomation.md)
     * oracle
+      * [&#x1F4D8; ddl](/server/DB/oracle/ddl.md)
+      * [&#x1F4D8; dml](/server/DB/oracle/dml.md)
       * [&#x1F4D8; oracle](/server/DB/oracle/oracle.md)
       * [&#x1F4D8; oracle grammar](/server/DB/oracle/oracleGrammar.md)
     * mysql
       * [&#x1F4D8; mysql config](/server/DB/mysql/config.md)
+      * [&#x1F4D8; dml](/server/DB/mysql/dml.md)
       * [&#x1F4D8; mysql](/server/DB/mysql/mysql.md)
       * [&#x1F4D8; problem](/server/DB/mysql/problem.md)
   * docker
@@ -92,25 +103,33 @@
     * [&#x1F4D8; mysql](/server/docker/mysql.md)
     * [&#x1F4D8; nacos](/server/docker/nacos.md)
     * [&#x1F4D8; nginx](/server/docker/nginx.md)
+    * [&#x1F4D8; rabbitmq](/server/docker/rabbitmq.md)
     * [&#x1F4D8; redis](/server/docker/redis.md)
     * [&#x1F4D8; sftp](/server/docker/sftp.md)
     * [&#x1F4D8; vsftp](/server/docker/vsftp.md)
-  * elasticsearch
-    * [&#x1F4D8; cli](/server/elasticsearch/cli.md)
-  * interfacedoc 接口文档
+  * 接口文档
     * [&#x1F4D8; knife4j-swagger](/server/interfacedoc/knife4j-swagger/knife4j.md)
     * [&#x1F4D8; spring-doc](/server/interfacedoc/springdoc/springdoc.md)
-  * language 语言
+  * 编程语言
     * go
       * [&#x1F4D8; go](/server/language/go/go.md)
       * [&#x1F4D8; go-code](/server/language/go/code.md)
     * java
       * [&#x1F4D8; java](/server/language/java/java.md)
+  * 日志分析
+    * EFK
+      * [&#x1F4D8; EFK](/server/logAnylysis/EFK/EFK.md)
+    * ZipKin
+      * [&#x1F4D8; ZipKin](/server/logAnylysis/zipkin/ZipKin.md)
   * nacos
     * [&#x1F4D8; nacos](/server/nacos/nacos.md)
   * redis
     * [&#x1F4D8; redis](/server/redis/redis.md)
   * [&#x1F4D8; 问题汇总](/server/serverProblem.md)
+* &#x1F4D7; 加油站
+  * java
+    * 并发
+      *  [&#x1F4D8; 多线程](/study/java/thread/myThread.md)
 * &#x1F4D7; 网站
   * [&#x1F4D8; shanzha.work](/www/index)
 * &#x1F4D7; 项目
