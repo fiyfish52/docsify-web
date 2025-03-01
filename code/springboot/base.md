@@ -13,7 +13,36 @@ inputStream = classPathResource.getInputStream();
 
 ### @Controller
 
-标识一个该类是Spring MVC controller处理器，用来创建处理http请求的对象.
+
+
+`@Controller` 是 Spring MVC 框架中的一个注解，用于标识一个类作为 MVC 控制器。被 @Controller 注解的类通常负责处理用户的 HTTP 请求，并返回模型和视图对象，或者返回 JSON/XML 等数据格式的响应。
+
+当 Spring 容器启动时，它会扫描所有的类，查找被 `@Controller` 注解的类，并将它们注册为 Spring MVC 的控制器。然后，Spring MVC 会根据配置的 URL 映射规则，将这些控制器与特定的 HTTP 请求 URL 关联起来。
+
+下面是一个简单的 @Controller 示例：
+
+```java
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class MyController {
+
+    @GetMapping("/hello")
+    @ResponseBody
+    public String sayHello() {
+        return "Hello, World!";
+    }
+}
+
+```
+
+
+
+在上面的示例中，MyController 类被 `@Controller` 注解标识为一个控制器。`@GetMapping("/hello") `注解指定了当用户访问 `/hello` URL 时，应该调用 `sayHello()` 方法。`@ResponseBody` 注解表示方法的返回值应该直接作为 HTTP 响应体返回给客户端。
+
+
 
 ### @RestController
 
@@ -199,11 +228,217 @@ model.addAttribute("name", name);
 
 当你创建多个具有相同类型的 bean 时，并且想要用一个属性只为它们其中的一个进行装配，在这种情况下，你可以使用 @Qualifier 注释和 @Autowired 注释通过指定哪一个真正的 bean 将会被装配来消除混乱。
 
+### @DependsOn 
+
+`@DependsOn` 是 Spring 框架提供的一个注解，用于指定某个 bean 在初始化之前必须先初始化另一个 bean。这个注解可以确保依赖关系的正确处理，特别是在 bean 的自动装配和初始化顺序很重要时。
+
+> 使用场景
+
+当一个 bean 依赖于另一个 bean 的初始化状态时。
+当需要控制 bean 的初始化顺序，以避免因依赖未初始化而导致的错误。
+
+> 示例
+
+假设有两个 bean，BeanA 和 BeanB，其中 BeanA 依赖于 BeanB 的初始化完成：
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public BeanB beanB() {
+        return new BeanB();
+    }
+
+    @Bean
+    @DependsOn("beanB") // 确保 beanB 在 beanA 之前初始化
+    public BeanA beanA() {
+        return new BeanA(beanB());
+    }
+}
+
+```
 
 
 
+> 注意事项
 
 
 
-## 重定向请求
+1. `@DependsOn` 主要用于解决初始化顺序的问题，而不是解决 bean 之间的依赖关系。对于依赖关系，应该使用构造函数注入或 `@Autowired` 注解。
+2. 过度使用 `@DependsOn` 可能会导致配置复杂化，应该谨慎使用。
+
+### 自动配置
+
+
+
+#### @ConditionalOnClass
+
+@ConditionalOnClass 是 Spring Boot 提供的一个条件注解，用于在类路径中存在指定类时才启用某个配置。这个注解通常用在自动配置类上，以确保只有在相关依赖存在时，自动配置才会生效。
+例如，如果你有一个自动配置类，它依赖于某个特定的数据库连接池实现（比如 HikariCP），你可以使用 @ConditionalOnClass 来确保只有当 HikariCP 的类存在于类路径中时，这个自动配置类才会被加载。
+下面是一个简单的例子，展示了如何使用 @ConditionalOnClass 注解：
+
+```java
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+// 只有当类路径中存在 HikariDataSource 类时，这个配置类才会被加载
+@ConditionalOnClass(name = "com.zaxxer.hikari.HikariDataSource")
+public class MyDataSourceConfiguration {
+    // 配置代码...
+}
+```
+
+#### @ConditionalOnProperty
+
+@ConditionalOnProperty 是 Spring Boot 提供的另一个条件注解，它用于根据配置文件中的属性值来决定是否启用某个配置。这个注解非常有用，因为它允许开发者通过外部配置来控制自动配置的行为。
+
+@ConditionalOnProperty 注解可以接受以下几个参数：
+name: 属性名称，用于在配置文件中查找。
+havingValue: 期望的属性值，只有当配置文件中的属性值与这个值相匹配时，条件才会成立。
+prefix: 属性名称的前缀，可以与 name 结合使用，以简化属性名称的书写。
+matchIfMissing: 当配置文件中没有指定的属性时，是否默认匹配。默认为 false。
+
+下面是一个使用 @ConditionalOnProperty 注解的例子：
+
+```java
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+// 只有当配置文件中存在 my.service.enabled 属性，并且其值为 true 时，这个配置类才会被加载
+@ConditionalOnProperty(name = "my.service.enabled", havingValue = "true")
+public class MyServiceConfiguration {
+    // 配置代码...
+}
+
+```
+
+#### @Import
+
+@Import 是 Java 配置中的一个注解，它允许你导入其他配置类，从而可以在当前配置类中使用那些被导入配置类中定义的 bean。这个注解可以用来组合多个配置类，使得配置更加模块化和可重用。
+
+
+
+这样做的目的是为了集中管理 Camunda BPM 的所有自动配置，使得配置更加清晰和模块化
+
+
+
+@Import 注解可以接受以下几种参数：
+类类型：你可以直接指定要导入的配置类的类型。
+ImportSelector：这是一个接口，你可以实现它来动态地决定哪些配置类应该被导入。
+ImportBeanDefinitionRegistrar：这是一个接口，你可以实现它来注册 bean 定义。
+
+下面是一个使用 @Import 注解的例子：
+
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+@Configuration
+// 导入其他配置类
+@Import({OtherConfiguration.class, AnotherConfiguration.class})
+public class MainConfiguration {
+    // 配置代码...
+}
+
+```
+
+#### @ConditionalOnMissingBean
+
+`@ConditionalOnMissingBean` 是 Spring Boot 提供的一个条件注解，用于在自动配置过程中判断某个类型的 bean 是否已经存在。如果不存在，则当前配置类中的相应 bean 定义会被注册到 Spring 容器中；如果已经存在，则跳过当前配置类中的 bean 定义。
+
+这个注解非常有用，因为它允许开发者自定义 bean 的定义，同时仍然能够利用 Spring Boot 的自动配置功能。通过使用 `@ConditionalOnMissingBean`，可以确保自动配置不会覆盖用户自定义的 bean 定义。
+
+`@ConditionalOnMissingBean` 注解可以接受以下几个参数：
+
+value 或 type：指定要检查的 bean 的类型。
+
+name：指定要检查的 bean 的名称。
+
+annotation：指定要检查的 bean 是否具有特定的注解。
+
+下面是一个使用 @ConditionalOnMissingBean 注解的例子：
+
+
+
+```java
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean(MyService.class) // 只有当 MyService 类型的 bean 不存在时，才会注册 myServiceBean
+    public MyService myServiceBean() {
+        return new MyServiceImpl();
+    }
+}
+
+```
+
+
+
+## 接口
+
+### ApplicationContextAware
+
+`ApplicationContextAware`是 Spring 框架中的一个接口，它允许实现类获得对 ApplicationContext 的引用。ApplicationContext 是 Spring 的核心接口之一，代表 Spring 容器，负责管理 bean 的生命周期和依赖注入。
+
+当一个类实现了 ApplicationContextAware 接口，Spring 容器会在创建这个类的实例时自动调用它的 setApplicationContext 方法，并将当前的 ApplicationContext 实例作为参数传入。这样，实现类就可以在运行时访问 Spring 容器，从而可以获取容器中的其他 bean 或者发布事件等。
+
+下面是一个简单的例子，展示了如何实现 ApplicationContextAware 接口：
+
+```java
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyApplicationContextAware implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    // 你可以使用 applicationContext 来获取其他 bean 或者执行其他操作
+}
+
+```
+
+
+
+通常情况下，直接实现 ApplicationContextAware 接口并不是最佳实践，因为它会增加代码与 Spring 框架的耦合度。更推荐的做法是使用依赖注入（DI）来获取所需的 bean，或者使用 @Autowired 注解直接注入 ApplicationContext。这种方式更加符合 Spring 的编程模型，也更容易进行单元测试。
+
+例如：
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyComponent {
+
+    private final ApplicationContext applicationContext;
+
+    @Autowired
+    public MyComponent(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    // 使用 applicationContext...
+}
+
+```
 
