@@ -1,0 +1,9 @@
+/docker/gitea/gitea/mysql/sys/x@0024schema_table_statistics.frm
+/docker/FILE/MiniIO/MinIOInstall/data1
+/docker/FILE/MiniIO/MinIOInstall/data2
+/docker/FILE/MiniIO/MinIOInstall/data3
+/docker/FILE/MiniIO/MinIOInstall/data4
+/docker/gitea/gitea/gitea/
+/docker/gitea/gitea/mysql/
+/docker/**/data
+/.idea/**
