@@ -1,5 +1,11 @@
 # Linux-cli
 
+## 查找文件占用内存
+
+du -h --max-depth=1|sort -rh
+
+
+
 ## 给用户赋文件夹权限
 
 ```
@@ -62,6 +68,7 @@ source /etc/profile
 如果你有对 /etc/profile 有修改的话必须得 source 一下你的修改才会生效，此修改对每个用户都生效。
 3. 方案三
    
+
 **设置环境变量，最方便**
 
 ```
@@ -871,6 +878,12 @@ netstat -nap | grep port
 
 java -jar ccc.jar
 
+## 清空文件内容
+
+```shell
+truncate -s 0 my_access.log
+```
+
 ## 问题
 
 >更改环境变量后 ll，ls命令失效
@@ -882,3 +895,4 @@ ftp进入/root/ 重新设置 .bashrc 文件
 2. rsource ~/.bashc
 ok
 ```
+

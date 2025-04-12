@@ -1,5 +1,7 @@
 # 离线安装docker、docker-compose
 
+**<font color=red>安装docker必须拥有root权限</font>**
+
 ## docker
 
 > 环境说明
