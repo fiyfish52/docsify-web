@@ -25,6 +25,21 @@ docker info
   ]
 }
 ```
+or
+```sh
+{
+  ...其他配置
+  
+  "registry-mirrors": [
+    "https://h6x865gy.mirror.aliyuncs.com",
+    "https://docker.m.daocloud.io",
+    "https://dockerproxy.com",
+    "https://mirror.baidubce.com",
+    "https://docker.nju.edu.cn",
+    "https://mirror.iscas.ac.cn"
+  ],
+}
+```
 
 ```sh
 {

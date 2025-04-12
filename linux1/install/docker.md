@@ -86,6 +86,11 @@ systemctl daemon-reload
 ```
 systemctl start docker
 ```
+
+重启
+```
+systemctl restart docker
+```
 1. 设置docker开机启动，命令如下：
 
 
@@ -121,3 +126,26 @@ chmod +x /usr/local/bin/docker-compose
 ```
 docker-compose -v
 ```
+
+## 拉取镜像超时
+
+```shell
+vi /etc/docker/daemon.json
+```
+
+增加镜像地址：
+
+```shell
+ "https://h6x865gy.mirror.aliyuncs.com",
+    "https://do.nark.eu.org",
+    "https://dc.j8.work",
+    "https://docker.m.daocloud.io",
+    "https://dockerproxy.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://docker.nju.edu.cn"
+```
+
+重新加载配置
+sudo systemctl daemon-reload
+重启docker
+sudo systemctl restart docker
