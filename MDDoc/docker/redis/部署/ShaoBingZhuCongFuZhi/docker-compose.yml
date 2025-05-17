@@ -1,0 +1,107 @@
+version: '3.8'
+
+networks:
+  redis-net:
+    driver: bridge
+    # ipam:
+    #     driver: default
+    #     config:
+    #         - subnet: 192.168.100.0/24
+services:
+  redis-master:
+    image: redis:latest
+    container_name: redis-master
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-master.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/master-data:/usr/local/etc/redis/data
+    networks:
+      - redis-net
+      # redis-net:
+      #   ipv4_address: 192.168.100.3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+
+  redis-slave1:
+    image: redis:latest
+    container_name: redis-slave1
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis-slave.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/slave1-data:/usr/local/etc/redis/data
+    networks:
+      - redis-net
+      # redis-net:
+      #   ipv4_address: 192.168.100.4
+    depends_on:
+      - redis-master
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+
+  redis-slave2:
+    image: redis:latest
+    container_name: redis-slave2
+    ports:
+      - "6381:6379"
+    volumes:
+      - ./redis-slave2.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/slave2-data:/usr/local/etc/redis/data
+    networks:
+      - redis-net
+      # redis-net:
+      #   ipv4_address: 192.168.100.5
+    depends_on:
+      - redis-master
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    
+  redis-sentinel1:
+    image: redis:latest
+    container_name: redis-sentinel1
+    ports:
+      - "26379:26379"
+    volumes:
+      - ./sentinel.conf:/usr/local/etc/redis/sentinel.conf
+    restart: always
+    networks:
+      - redis-net
+      # redis-net:
+      #   ipv4_address: 192.168.100.6
+    depends_on:
+      - redis-master
+      - redis-slave1
+      - redis-slave2
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+
+  redis-sentinel2:
+    image: redis:latest
+    container_name: redis-sentinel2
+    ports:
+      - "26380:26379"
+    volumes:
+      - ./sentinel2.conf:/usr/local/etc/redis/sentinel.conf
+    networks:
+      - redis-net
+      # redis-net:
+      #   ipv4_address: 192.168.100.7
+    depends_on:
+      - redis-master
+      - redis-slave1
+      - redis-slave2
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+
+  redis-sentinel3:
+    image: redis:latest
+    container_name: redis-sentinel3
+    ports:
+      - "26381:26379"
+    volumes:
+      - ./sentinel3.conf:/usr/local/etc/redis/sentinel.conf
+    networks:
+      - redis-net
+      # redis-net:
+      #   ipv4_address: 192.168.100.8
+    depends_on:
+      - redis-master
+      - redis-slave1
+      - redis-slave2
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]

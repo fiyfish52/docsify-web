@@ -1,0 +1,15 @@
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts  # 使用官方 Jenkins 镜像
+    container_name: jenkins
+    restart: always
+    privileged: true
+    environment:
+      TZ: 'Asia/Shanghai'
+    ports:
+      - 9003:8080  # 将容器的 8080 端口映射到主机的 9003 端口
+      - 50000:50000  # 将容器的 50000 端口映射到主机的 50000 端口
+    volumes:
+      - ./data/jenkins_home:/var/jenkins_home  # 挂载 Jenkins 数据卷
+      - ./var/run/docker.sock:/var/run/docker.sock  # 挂载 Docker 套接字

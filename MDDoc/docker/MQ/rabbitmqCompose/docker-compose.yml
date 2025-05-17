@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  rabbitmq1:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq1
+    hostname: rabbitmq1
+    ports:
+      - "5672:5672"  # AMQP 端口
+      - "15672:15672"  # 管理界面端口
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie  # 集群通信的 Cookie
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq1-data:/var/lib/rabbitmq
+    networks:
+      rabbitmq-cluster:
+        ipv4_address: 172.20.0.2
+
+  rabbitmq2:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq2
+    hostname: rabbitmq2
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq2-data:/var/lib/rabbitmq
+    networks:
+      rabbitmq-cluster:
+        ipv4_address: 172.20.0.3
+    depends_on:
+      - rabbitmq1
+
+  rabbitmq3:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq3
+    hostname: rabbitmq3
+    ports:
+      - "5674:5672"
+      - "15674:15672"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq3-data:/var/lib/rabbitmq
+    networks:
+      rabbitmq-cluster:
+        ipv4_address: 172.20.0.4
+    depends_on:
+      - rabbitmq1
+
+  rabbitmq4:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq4
+    hostname: rabbitmq4
+    ports:
+      - "5675:5672"
+      - "15675:15672"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq4-data:/var/lib/rabbitmq
+    networks:
+      rabbitmq-cluster:
+        ipv4_address: 172.20.0.5
+    depends_on:
+      - rabbitmq1
+
+  rabbitmq5:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq5
+    hostname: rabbitmq5
+    ports:
+      - "5676:5672"
+      - "15676:15672"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq5-data:/var/lib/rabbitmq
+    networks:
+      rabbitmq-cluster:
+        ipv4_address: 172.20.0.6
+    depends_on:
+      - rabbitmq1
+
+  rabbitmq6:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq6
+    hostname: rabbitmq6
+    ports:
+      - "5677:5672"
+      - "15677:15672"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq6-data:/var/lib/rabbitmq
+    networks:
+      rabbitmq-cluster:
+        ipv4_address: 172.20.0.7
+    depends_on:
+      - rabbitmq1
+volumes:
+  rabbitmq1-data:
+  rabbitmq2-data:
+  rabbitmq3-data:
+  rabbitmq4-data:
+  rabbitmq5-data:
+  rabbitmq6-data:
+
+networks:
+  rabbitmq-cluster:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
