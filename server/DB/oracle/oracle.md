@@ -47,6 +47,20 @@ AND LO.SESSION_ID = SESS.SID
 ORDER BY sid, sess.serial#;
 ```
 
+```sql
+SELECT '''' || sid || ',' || serial# || '''',
+         sid,
+         serial#,
+         username,
+         oSUSEr
+    FROM v$session
+   where sid in (select session_id
+                   from v$locked_object t
+                  where t.os_user_name = 'zhanglipengLZ');
+```
+
+
+
 ## sql 执行慢
 
 ```sql

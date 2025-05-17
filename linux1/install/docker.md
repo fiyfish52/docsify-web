@@ -135,8 +135,12 @@ vi /etc/docker/daemon.json
 
 增加镜像地址：
 
+2025年4月28日 09:38:04 阿里云镜像加速，公共地址用不了了 
+
 ```shell
- "https://h6x865gy.mirror.aliyuncs.com",
+    "https://docker.1ms.run",
+    "https://docker.xuanyuan.me",
+    "https://h6x865gy.mirror.aliyuncs.com",
     "https://do.nark.eu.org",
     "https://dc.j8.work",
     "https://docker.m.daocloud.io",

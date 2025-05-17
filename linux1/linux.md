@@ -301,6 +301,49 @@ unzip -o 文件
 
 ![vim](../_media/vim.png)
 
+### 显示行号
+
+在Linux环境下，使用vim编辑器查看或编辑文件时，默认情况下是不显示行号的。显示行号对于编程和脚本编辑非常有用，因为它可以帮助快速定位代码。以下是在Linux中显示行号的几种方法：
+
+#### 临时显示行号
+
+如果你只是想临时显示行号，可以在vim编辑器中使用以下命令：
+
+```shell
+:set number
+```
+或者简写为：
+
+```shell
+:set nu
+```
+
+这将立即在vim编辑器中显示行号。但是，当你退出vim并重新打开文件时，行号将不再显示。
+
+#### 永久显示行号
+
+要永久显示行号，需要修改vim的配置文件。以下是步骤：
+
+打开vim的配置文件，通常位于/etc/vimrc：
+
+```shell
+vim /etc/vimrc
+```
+
+在文件的最后一行添加以下内容：
+
+```shell
+set number
+```
+
+或者简写为：
+
+```shell
+set nu
+```
+
+保存并退出vim。在命令模式下，按Esc键退出插入模式，然后输入:wq保存并退出。
+
 ## find
 
 ### 语法
@@ -883,6 +926,265 @@ java -jar ccc.jar
 ```shell
 truncate -s 0 my_access.log
 ```
+
+## 定时任务
+
+### crontab
+
+#### 语法
+
+```sh
+* * * * * command-to-be-executed
+- - - - -
+| | | | |
+| | | | +----- day of week (0 - 6) (Sunday=0 or 7)
+| | | +------- month (1 - 12)
+| | +--------- day of month (1 - 31)
+| +----------- hour (0 - 23)
++------------- minute (0 - 59)
+```
+
+#### **创建Shell脚本**
+
+首先，你需要有一个shell脚本文件，例如`myscript.sh`。确保这个脚本有执行权限，可以通过以下命令给予执行权限：
+
+```perl
+chmod +x myscript.sh
+```
+
+#### **编辑Cron表**
+
+ 使用`crontab`命令编辑当前用户的cron表：
+
+```undefined
+crontab -e
+```
+
+这将打开一个编辑器，你可以在里面添加你的定时任务。
+
+#### **添加Cron任务**
+
+例如，如果你想每天凌晨1点运行`myscript.sh`，你可以添加以下行：
+
+**注意：脚本中的路径要为绝对路径，或者执行时，cd到对应的路径下，否则会导致找不到对应的文件而报错**
+
+```sh
+0 1 * * * /path/to/myscript.sh
+```
+
+确保替换`/path/to/myscript.sh`为你的脚本实际路径。
+
+#### 保存并退出
+
+保存你的更改并退出编辑器。Cron将自动加载新的cron表，并在指定的时间执行任务。
+
+#### 检查Cron作业
+
+ 你可以使用以下命令来查看当前用户的cron作业列表：
+
+```
+crontab -l
+```
+
+#### 日志和调试
+
+如果需要调试cron作业，你可以将脚本的输出重定向到一个日志文件中，例如：
+
+```sh
+0 1 * * * /path/to/myscript.sh >> /path/to/logfile.log 2>&1
+```
+
+这样，任何标准输出和错误输出都会被写入到`logfile.log`。
+
+## 输出重定向
+
+我们无论是在写批处理还是 Linux 的 Shell 都常用到 >, >> 或 <，这是输入输出重定向。特别是 Linux 的 Shell 常见到 2>&1 这样的写法，这是在干什么呢？这里就来了解下 Linux 下的输入输出重定向的一些来龙去脉。
+
+在 Linux 下几乎一切都号称是文件，标准输入、输出也不例外，它们是叫做 fd (File Descriptor) 文件描述符。这里我们关注三个东西
+
+| 名称                 | 代码 | 操作符           | Java中表示 | Linux 下文件描述符（Debian 为例)             |
+| -------------------- | ---- | ---------------- | ---------- | -------------------------------------------- |
+| 标准输入(stdin)      | 0    | < 或 <<          | System.in  | /dev/stdin -> /proc/self/fd/0 -> /dev/pts/0  |
+| 标准输出(stdout)     | 1    | >, >>, 1> 或 1>> | System.out | /dev/stdout -> /proc/self/fd/1 -> /dev/pts/0 |
+| 标准错误输出(stderr) | 2    | 2> 或 2>>        | System.err | /dev/stderr -> /proc/self/fd/2 -> /dev/pts/0 |
+
+从以上表格我们可以理解 0, 1 和 2 分别是什么东西了，它们的输入源或输出目的地默认都是屏幕。
+
+下面不作系统解释输入, 输出重定向的完整使用，只说明一些常见的例子：
+
+使用 > 或 >> 时，默认为标准输出 1 重定向, 所以 > file 就是 1> file 的省写，1 与 > 之间不能有空格。
+
+比如 ls -l > a.txt 就是 ls -l 1> a.txt
+
+数字 0, 1, 2 与它后面的操作符 > 或 < 等 总是一个整体
+
+2>&1 表示把 标准错误输出 重定向到 标准输出, 这在控制台下看到的效果 2>&1 和 1>&2 可能是一样的，因为标准输出或标准错误输出的目的地默认都为屏幕。
+
+2>&1 是最常见到的写，这样就是把错误信息与标准输出都收集到一块了
+
+&> file 表示把 标准输出 和 标准错误输出 都重定向到文件 file 中
+\>& file 把标准输出和标准错误输出都重定向到文件 file, 由于 > 默认为重定向标准输出，所以和 1>& file 是一个意思
+
+以上 &> file 和 >& file 也较少见，我还不没能理解上边两个中那个光杆子 & 是什么含义
+
+我们要把错误也重定向到标准输出上，一般是用 >file 2>&1, 即分两步，先 标准输出 重定向到 file 中，然后 标准错误输出 定向到 标准输出
+
+如：
+
+```sh
+ls xxx > /dev/null 2>&1
+```
+
+
+
+同样第一个 `>` 操作的默认是 1 所以写成 `ls xxx 1> /dev/null 2>&1` 是一样的
+
+`\>/dev/null` 的使用也是惯招，它表示一个空设备，相当于一个黑洞，用来`忽略掉输出`
+
+顺序要注意，假设 xxx 是不存在的，所以 ls xxx 命令能产生一个错误输出
+
+```sh
+bash-3.2$ ls -l xxx > /dev/null 2>&1
+bash-3.2$
+bash-3.2$ ls xxx 2>&1 > /dev/null
+ls: xxx: No such file or directory
+```
+
+
+
+`2>&1`, 或 `1>&2` 中的 `&` 可以理解为像是 C 中的取地址操作，用于重定向到另一个文件描述符上去。
+
+`> /dev/null `可以关闭输出，还有另一种方式能做到，即 `&-`
+
+```
+bash-3.2$ ls xxx 2>&-
+bash-3.2$
+```
+
+关闭标准输入也无差异，用 `< &-`
+
+输出重定向的一个应用例子，有些命令的输出是在 `stderr` 上，而 grep 只作用在标准输出
+
+```sh
+bash-3.2$ java -version | grep version
+java version "1.8.0_31"
+Java(TM) SE Runtime Environment (build 1.8.0_31-b13)
+Java HotSpot(TM) 64-Bit Server VM (build 25.31-b07, mixed mode)
+```
+
+上面无论 grep 什么都抓不到只想要显示 的行，这时候可以把错误输出导向到标准输出, 然后再 grep
+
+```sh
+bash-3.2$ java -version 2>&1 | grep version
+java version "1.8.0_31"
+```
+
+
+
+------
+
+这里还是补上从别处摘来的三个表格：
+
+**输出重定向**
+
+| Command > filename              | 把标准输出重定向到一个新文件中               |
+| ------------------------------- | -------------------------------------------- |
+| Command >> filename             | 把标准输出重定向到一个文件(追加)             |
+| Command > filename 2>&1         | 把标准输出和错误一起重定向到一个文件中       |
+| Command 2> filename             | 把标准错误重定向到一个文件中                 |
+| Command 2>> filename            | 把标准错误重定向到一个文件中(追加)           |
+| Command >> filename 2>&1        | 把标准输出和错误一起重定向到一个文件中(追加) |
+| Command > filename 2> /dev/null | 标准输出定向到文件，屏蔽掉错误输出           |
+
+**输入重定向**
+
+| Command < filename             | Command 命令以 filename 文件作为标准输入                     |
+| ------------------------------ | ------------------------------------------------------------ |
+| Command < filename > filename2 | Command 信不信以 filename 文件作为标准输入，以 filename 2 作为标准输出 |
+| Command << delimiter           | 从标准输入中读入，以 delimiter 为结束符。这就是 Bash 的 HereDoc 用法 |
+
+**绑定重定向**
+
+| Command >&m  | 把标准输出重定向到文件描述符 m 中，如 ls >&1                 |
+| ------------ | ------------------------------------------------------------ |
+| Command m>&n | 把往文件描述符 m 的输出重定向到文件描述符 n 上，2>71。再如上面的完整写法是 1>&m |
+| Command <&-  | 关闭标准输入                                                 |
+| Command 2>&- | 关闭标准错误输出，和 2>/dev/null 有类似功效                  |
+
+可以用 exec 绑定重定向做一些有趣的操作，摘录两个操作实例
+
+```sh
+[chengmo@centos5 shell]$ exec 6>&1
+\#将标准输出与fd 6绑定
+ 
+[chengmo@centos5 shell]$ ls /proc/self/fd/
+0 1 2 3 6
+\#出现文件描述符6
+ 
+[chengmo@centos5 shell]$ exec 1>suc.txt
+\#将接下来所有命令标准输出，绑定到suc.txt文件（输出到该文件）
+ 
+[chengmo@centos5 shell]$ ls -al
+\#执行命令，发现什么都不返回了，因为标准输出已经输出到suc.txt文件了
+ 
+[chengmo@centos5 shell]$ exec 1>&6
+\#恢复标准输出
+ 
+[chengmo@centos5 shell]$ exec 6>&-
+\#关闭fd 6描述符
+ 
+[chengmo@centos5 ~]$ ls /proc/self/fd/
+0 1 2 3
+```
+
+**读文件：**
+
+```sh
+exec 3<>test.sh;
+\#打开test.sh可读写操作，与文件描述符3绑定
+
+while read line<&3
+ do
+  echo $line;
+done
+\#循环读取文件描述符3（读取的是test.sh内容）
+exec 3>&-
+exec 3<&-
+\#关闭文件的，输入，输出绑定
+```
+
+
+
+附：下面是用 ls 命令显示出的在 Linux 和 Mac 下文件描述符的链接关系：
+
+Debian 8 下
+
+```sh
+~# ls -l /dev/std* /proc/self/fd/* /dev/pts/0
+crw------- 1 root tty 136, 0 Jun 27 13:11 /dev/pts/0
+lrwxrwxrwx 1 root root   15 Jun 22 16:47 /dev/stderr -> /proc/self/fd/2
+lrwxrwxrwx 1 root root   15 Jun 22 16:47 /dev/stdin -> /proc/self/fd/0
+lrwxrwxrwx 1 root root   15 Jun 22 16:47 /dev/stdout -> /proc/self/fd/1
+lrwx------ 1 root root   64 Jun 27 13:11 /proc/self/fd/0 -> /dev/pts/0
+lrwx------ 1 root root   64 Jun 27 13:11 /proc/self/fd/1 -> /dev/pts/0
+lrwx------ 1 root root   64 Jun 27 13:11 /proc/self/fd/2 -> /dev/pts/0
+```
+
+
+
+Mac OS X 下
+
+```sh
+$ ls -l /dev/std* /dev/fd/*
+crw--w---- 1 yanbin  tty   16,  1 Jun 26 23:09 /dev/fd/0
+crw--w---- 1 yanbin  tty   16,  1 Jun 26 23:09 /dev/fd/1
+crw--w---- 1 yanbin  tty   16,  1 Jun 26 23:09 /dev/fd/2
+lr-xr-xr-x 1 root wheel     0 Jun 26 12:05 /dev/stderr -> fd/2
+lr-xr-xr-x 1 root wheel     0 Jun 26 12:05 /dev/stdin -> fd/0
+lr-xr-xr-x 1 root wheel     0 Jun 26 12:05 /dev/stdout -> fd/1
+```
+
+
 
 ## 问题
 
