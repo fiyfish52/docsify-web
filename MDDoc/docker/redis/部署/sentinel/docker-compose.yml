@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # 主节点
+  redis-master:
+    image: redis:6.2-alpine
+    container_name: redis-master
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/master/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    networks:
+      - redis-network
+
+  # 从节点1
+  redis-slave1:
+    image: redis:6.2-alpine
+    container_name: redis-slave1
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/slave1/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6380:6379"
+    depends_on:
+      - redis-master
+    networks:
+      - redis-network
+
+  # 从节点2
+  redis-slave2:
+    image: redis:6.2-alpine
+    container_name: redis-slave2
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/slave2/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6381:6379"
+    depends_on:
+      - redis-master
+    networks:
+      - redis-network
+
+  # 哨兵1
+  redis-sentinel1:
+    image: redis:6.2-alpine
+    container_name: redis-sentinel1
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel/sentinel1.conf:/usr/local/etc/redis/sentinel.conf
+    ports:
+      - "26379:26379"
+    depends_on:
+      - redis-master
+      - redis-slave1
+      - redis-slave2
+    networks:
+      - redis-network
+
+  # 哨兵2
+  redis-sentinel2:
+    image: redis:6.2-alpine
+    container_name: redis-sentinel2
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel/sentinel2.conf:/usr/local/etc/redis/sentinel.conf
+    ports:
+      - "26380:26379"
+    depends_on:
+      - redis-master
+      - redis-slave1
+      - redis-slave2
+    networks:
+      - redis-network
+
+  # 哨兵3
+  redis-sentinel3:
+    image: redis:6.2-alpine
+    container_name: redis-sentinel3
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel/sentinel3.conf:/usr/local/etc/redis/sentinel.conf
+    ports:
+      - "26381:26379"
+    depends_on:
+      - redis-master
+      - redis-slave1
+      - redis-slave2
+    networks:
+      - redis-network
+
+networks:
+  redis-network:
+    driver: bridge
