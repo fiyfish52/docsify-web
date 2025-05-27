@@ -302,7 +302,7 @@ public class MyDataSourceConfiguration {
 name: 属性名称，用于在配置文件中查找。
 havingValue: 期望的属性值，只有当配置文件中的属性值与这个值相匹配时，条件才会成立。
 prefix: 属性名称的前缀，可以与 name 结合使用，以简化属性名称的书写。
-matchIfMissing: 当配置文件中没有指定的属性时，是否默认匹配。默认为 false。
+matchIfMissing: 当配置文件中没有指定的属性时，是否默认匹配。默认为 false ，即不匹配，即条件不满足。
 
 下面是一个使用 @ConditionalOnProperty 注解的例子：
 
@@ -312,6 +312,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 // 只有当配置文件中存在 my.service.enabled 属性，并且其值为 true 时，这个配置类才会被加载
+// matchIfMissing 默认为false,如果没有配置 my.service.enabled  默认是条件不满足； 即不生效，配置为true意思是如果不配置该字段，默认条件满足
 @ConditionalOnProperty(name = "my.service.enabled", havingValue = "true")
 public class MyServiceConfiguration {
     // 配置代码...

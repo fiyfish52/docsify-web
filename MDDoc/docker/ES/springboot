@@ -1,0 +1,301 @@
+
+
+springboot实现https安全访问elasticsearch8.17.3，并支持API TOKEN或账号密码
+
+maven项目引入jar包
+
+<dependency>
+  <groupId>co.elastic.clients</groupId>
+  <artifactId>elasticsearch-java</artifactId>
+  <version>8.17.3</version>
+</dependency>
+
+<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-databind</artifactId>
+  <version>2.17.0</version>
+</dependency>
+
+springboot配置项
+
+# 设置elasticsearch配置：host:port,host:port,host:port
+spring.data.elasticsearch.endpoints=https://192.168.1.102:9200
+# 针对一个域名同时间正在使用的最多的连接数，默认值为 5
+spring.data.elasticsearch.max-conn-per-route=20
+# 同时间正在使用的最多的连接数，默认值为 2 * 5
+spring.data.elasticsearch.max-conn-total=20
+# 客户端和服务器建立连接超时时间
+spring.data.elasticsearch.connection-timeout=10000
+# 从服务器端到客户端传输数据超时时间
+spring.data.elasticsearch.socket-timeout=30000
+# 从连接池中获取连接超时时间
+spring.data.elasticsearch.connection-request-timeout=500
+# 优先支持token，再支持账号密码
+spring.data.elasticsearch.apiKey=QVA1YXNaVUI1c1UxMHJScThKY086cS1LT1l0VldRc21kc0RmVTA4TVBpUQ==
+spring.data.elasticsearch.username=tms
+spring.data.elasticsearch.password=tms2025*
+# CA证书的绝对路径，可从ES服务器获取：/etc/elasticsearch/certs/http_ca.crt
+spring.data.elasticsearch.crtPath=/usr/local/tms/certs/http_ca.crt
+spring.data.elasticsearch.repositories.enabled=true
+ES配置类
+package com.tms.platform.common.config.es;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.ElasticsearchTransport;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.Header;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import javax.net.ssl.SSLContext;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.util.Collections;
+
+/**
+ * elasticsearch配置
+ */
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.data.elasticsearch")
+public class EsConfig {
+
+    private String endpoints;
+    /**
+     * 客户端和服务器建立连接超时时间
+     */
+    private Integer connectionTimeout;
+    /**
+     * 从服务器端到客户端传输数据超时时间
+     */
+    private Integer socketTimeout;
+    /**
+     * 从连接池中获取连接超时时间
+     */
+    private Integer connectionRequestTimeout;
+    /**
+     * 同时间正在使用的最多的连接数
+     */
+    private Integer maxConnTotal;
+    /**
+     * 针对一个域名同时间正在使用的最多的连接数
+     */
+    private Integer maxConnPerRoute;
+
+    /**
+     * rest api token(经过base64加密)，优先支持token，其次是账号密码
+     */
+    private String apiKey;
+
+    private String username;
+
+    private String password;
+    /**
+     * CA证书的绝对路径，可从ES获取：/etc/elasticsearch/certs/http_ca.crt
+     */
+    private String crtPath;
+
+    @Bean
+    @Lazy
+    public ElasticsearchClient elasticsearchClient() {
+        if (StringUtils.isBlank(endpoints)) {
+            return null;
+        }
+        // Create the low-level client
+        RestClientBuilder clientBuilder = RestClient.builder(HttpHost.create(endpoints));
+        if (StringUtils.isNotBlank(crtPath)) {
+            clientBuilder.setHttpClientConfigCallback(hc -> {
+                try {
+                    hc.setSSLContext(buildSSLContext());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (StringUtils.isNotBlank(apiKey)) {
+                    // 添加API Key认证头
+                    hc.setDefaultHeaders(
+                        Collections.singletonList(
+                            new BasicHeader(HttpHeaders.AUTHORIZATION, "ApiKey " + apiKey)
+                        )
+                    );
+                } else if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) {
+                    // 添加ES的用户和密码认证
+                    final CredentialsProvider cp = new BasicCredentialsProvider();
+                    cp.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+                    hc.setDefaultCredentialsProvider(cp);
+                }
+                return hc;
+            });
+        }
+
+        // 2. 创建低级客户端
+        RestClient restClient = clientBuilder.build();
+        // 3. 创建传输层
+        ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+        // 4. 创建Java API客户端
+        return new ElasticsearchClient(transport);
+    }
+
+    /**
+     * 配置SSL上下文
+     * @return
+     * @throws Exception
+     */
+    private SSLContext buildSSLContext() throws Exception {
+        // 方法1: 使用CA证书验证 (生产环境推荐)
+        Path caCertPath = Paths.get(crtPath);
+        CertificateFactory factory = CertificateFactory.getInstance("X.509");
+        Certificate caCert;
+        // 加载CA证书
+        try (InputStream is = Files.newInputStream(caCertPath)) {
+            caCert = factory.generateCertificate(is);
+        }
+
+        // 创建信任库并添加CA证书
+        KeyStore trustStore = KeyStore.getInstance("pkcs12");
+        trustStore.load(null, null);
+        trustStore.setCertificateEntry("ca", caCert);
+
+        // 配置SSL上下文
+        SSLContextBuilder sslBuilder = SSLContextBuilder.create()
+                .loadTrustMaterial(trustStore, null);
+
+        // 方法2: 跳过证书验证 (仅用于开发环境，不安全!)
+        // SSLContextBuilder sslBuilder = SSLContexts.custom()
+        //     .loadTrustMaterial(null, (chain, authType) -> true);
+
+        return sslBuilder.build();
+    }
+
+}
+ES工具类
+package com.tms.platform.common.config.es;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.BulkRequest;
+import co.elastic.clients.elasticsearch.core.BulkResponse;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.List;
+
+@Slf4j
+@Component
+public class EsUtils implements EsConsts {
+
+    @Autowired(required = false)
+    private ElasticsearchClient client;
+
+    /**
+     * 批量写入ES
+     * @param list
+     * @param esIndexEnum
+     * @throws IOException
+     */
+    public boolean bulk(List list, EsIndexEnum esIndexEnum) throws IOException {
+        BulkRequest.Builder br = new BulkRequest.Builder();
+        list.stream().forEach(item -> {
+            JSONObject json = (JSONObject) JSONObject.toJSON(item);
+            br.operations(op -> op
+                    .index(idx -> idx
+                            .index(esIndexEnum.name())
+                            .id(json.getString("id"))
+                            .document(item)
+                    )
+            );
+        });
+        BulkResponse result = client.bulk(br.build());
+        if (result.errors()) {
+            log.error("Bulk had errors: {}", esIndexEnum.name());
+            result.items().stream().filter(item -> item.error() != null).forEach(item ->
+                    log.error(item.error().reason()));
+        }
+        return !result.errors();
+    }
+
+    /**
+     * @param esIndexEnum 索引名
+     * @param fieldName 字段名（keyword类型）
+     * @return 去重统计结果
+     * @throws IOException
+     */
+    public long agg(EsIndexEnum esIndexEnum, String fieldName) {
+        long result = 0;
+        try {
+            SearchResponse<Void> searchResponse = client.search(sr -> sr
+                    .index(esIndexEnum.name())
+                    .aggregations("total", a -> a.cardinality(c -> c.field(fieldName))),
+                Void.class
+            );
+            //获取聚合结果
+            result = searchResponse.aggregations().get("total").cardinality().value();
+        } catch (IOException e) {
+            log.warn("agg {}.{} error: {}", esIndexEnum.name(), fieldName, e.getMessage());
+        }
+        return result;
+    }
+}
+EsIndexEnum索引类
+
+package com.tms.platform.common.config.es;
+
+/**
+ * ES索引名常量
+ */
+public enum EsIndexEnum {
+    count,
+    hits,
+    duration,
+    ;
+}
+EsConsts常量类
+
+package com.tms.platform.common.config.es;
+
+/**
+ * <p>描述: [] </p>
+ * <p>创建时间: 2023-07-29 15:34 </p>
+ * @version v1.0
+ */
+public interface EsConsts {
+    /**
+     * 高版本es的QueryBuilders中的时间格式化
+     */
+    String QUERY_DATE_FMT = "8uuuu-MM-dd";
+    /**
+     * AggregationBuilders中的时间格式化
+     */
+    String AGG_DATE_FMT = "yyyy-MM-dd";
+    /**
+     * 默认日期字段名
+     */
+    String DATE_FIELD = "create_date";
+    /**
+     * 文档类型
+     */
+    String ES_TYPES = "_doc";
+}

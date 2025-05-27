@@ -1,0 +1,21 @@
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    container_name: es
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=knbsCore123
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch
+    networks:
+      - esnet
+
+networks:
+  esnet:
+    driver: bridge
+
+volumes:
+  esdata:

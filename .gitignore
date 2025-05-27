@@ -13,3 +13,4 @@
 /.idea/MDDoc.iml
 /.idea/modules.xml
 /.idea/.gitignore
+/MDDoc/docker/ES/ESCompose/esdata/**
