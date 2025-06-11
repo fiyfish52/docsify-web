@@ -243,6 +243,8 @@ public class GenerateTest {
 
 ### 接口文档配置
 
+[Knife4j · 集Swagger2及OpenAPI3为一体的增强解决方案. | Knife4j](https://doc.xiaominfo.com/)
+
 使用OpenAPI3的规范注解
 
 ```java
