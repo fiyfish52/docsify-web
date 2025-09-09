@@ -95,6 +95,12 @@ ps aux | grep redis
 ./redis-cli shutdown
 ```
 
+若redis设置了密码
+
+```sh
+./redis-cli -a password shutdown
+```
+
 ## 配置
 
 1. 外部无法访问linux上的redis：

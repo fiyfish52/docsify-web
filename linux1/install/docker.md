@@ -133,11 +133,20 @@ docker-compose -v
 vi /etc/docker/daemon.json
 ```
 
+2025年9月5日 11:40:21 加速拉取
+```shell
+docker search docker.1ms.run/redis
+```
+
 增加镜像地址：
 
 2025年4月28日 09:38:04 阿里云镜像加速，公共地址用不了了 
 
 ```shell
+
+
+{
+"registry-mirrors": [
     "https://docker.1ms.run",
     "https://docker.xuanyuan.me",
     "https://h6x865gy.mirror.aliyuncs.com",
@@ -147,6 +156,9 @@ vi /etc/docker/daemon.json
     "https://dockerproxy.com",
     "https://docker.mirrors.ustc.edu.cn",
     "https://docker.nju.edu.cn"
+]
+}
+
 ```
 
 重新加载配置

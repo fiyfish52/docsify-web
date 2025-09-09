@@ -32,6 +32,237 @@ passwd 用户名
 **passwd sixwork**
 
 ---
+## 设置开机自启
+
+### 用户自定义开机程序(/etc/rc.d/rc.local)（不推荐）
+
+这个文件里 就是开机的时候会自动执行的脚本和命令了。
+
+/etc/rc.local软链接到/etc/rc.d/rc.local，写到哪个文件里都是一样的
+
+写在这个文件里的开机脚本都是默认后台执行的，不需要再加&符号了
+
+**注意更改完文件后，需要在文件目录下 执行 chmod +x XXXX 命令，将该文件变为可执行文件；**
+
+例如：自动启动redis，在文件最后一行添加
+
+```shell
+/usr1/bin/knbs-redis/redis-6.2.7/src/redis-server /usr1/bin/knbs-redis/redis-6.2.7/redis.conf
+```
+
+
+### 创建自己的 systemd 服务
+
+#### systemd 简介
+
+```text
+Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。Linux系统启动流程是由通电-BIOS-主引导记录-操作系统组成，开发者和程序员能够任性修改的天地基本都在操作系统各部分，其他部分已经被写死无法修改。操作系统的启动过程首先会加载内核文件，在读入成功后会启动init程序，它的作用是初始化系统环境。之后系统依据设定好的运行级别，即本次系统运行所扮演的角色，例如服务器、桌面模式、单用户模式、多用户模式、重启等等，运行级别一般是开机/默认指定好的，读取/etc目录下的配置文件可获得本次系统运行级别，/etc下配置文件还包含每一级运行级别所需要启动的进程名单，init初始化程序会以串行的脚本启动方法依次启动列表中的程序，至此系统初始化完成，用户可以对系统进行正常操作。
+但事实上，init的系统初始化方法有两个重要的缺陷， 一是启动时间长。init进程是串行启动，只有前一个进程启动完，才会启动下一个进程。二是启动脚本复杂。init进程只是执行启动脚本，不管其他事情。脚本需要自己处理各种情况，这往往使得脚本变得很长。
+
+Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd 这个名字的含义，就是它要守护整个系统。使用了 Systemd，就不需要再用init了。Systemd 取代了initd，成为系统的第一个进程（PID 等于 1），其他进程都是它的子进程。
+更多的介绍详见**这里**
+
+综上所述，对于项目开发者，Systemd使得开发者可以安全的自定义项目系统启动的顺序，同时Systemd提供了完善的日志记录查找、服务状态查看维护等配套工具，大大方便了开发者对于系统自启动服务的掌控力。
+```
+
+####  service 文件格式说明
+
+```text
+单元文件中的 [Unit] 小节 包含与单元类型无关的通用信息
+	Description= ：有利于人类阅读的、对单元进行简单描述的字符串，将被 systemd 或其他程序用来标记此单元
+	Before= , After= :强制指定单元之间的启动先后顺序，接受一个空格分隔的单元列表
+	
+单元文件中的 [Service] 小节 含有所有单元启动过程中的配置功能选项
+	Type= ：设置进程的启动类型。必须设为 simple（默认值）, exec, forking, oneshot, dbus, notify, idle 之一
+    ExecStart= ：启动该服务时需要执行的 命令行(命令+参数)，除非 Type=oneshot ，否则必须且只能设置一个命令行
+	ExecStartPre=, ExecStartPost= ：设置在执行 ExecStart= 之前/后执行的命令行。 语法规则与 ExecStart= 完全相同。
+	ExecStop= ：这是一个可选的指令， 用于设置当该服务被要求停止时所执行的命令行。
+	TimeoutSec= ：一个同时设置 超时时长 与 最大启动时长的快捷方式。
+	Restart= ：当服务进程 正常退出、异常退出、被杀死、超时的时候，是否重新启动该服务。该选项的值可以取 no（默认值）, on-success, on-failure, on-abnormal, on-watchdog, on-abort, always 之一
+	User=, Group= ：设置进程在执行时使用的用户与组，默认是用户root
+	Environment= ：设置进程的环境变量， 接受一个空格分隔的 VAR=VALUE 列表。
+
+单元文件中[Install] 小节包含单元的启用信息。事实上，systemd 在运行时并不使用此小节。只有 systemctl的 enable 与 disable 命令在启用/停用单元时才会使用此小节。故在绝大部分情况下该部分无需自定义设置
+
+```
+##### TYPE
+
+```text
+ simple 类型
+ 类型特点：这是 systemd 的默认类型。启动服务时直接执行 ExecStart 指定的命令，且不进行额外处理。当该命令被调用后，systemd 会立即认为服务已启动成功。
+ 适用场景：适用于大多数前台/后台运行或无需特殊处理的服务。例如 nginx、某些自定义脚本等。
+ 
+ notify 类型
+ 类型特点：服务的启动方式与 simple 相同，但服务程序需要在完成自身初始化后，向 systemd 发送 READY=1 等状态信息，systemd 收到该信号后才认为服务启动成功。systemd没收到信号会一直显示启动中。
+ 适用场景：适用于启动后需要一段初始化时间的服务，例如 mysql、docker 等。
+ 
+ forking 类型
+ 类型特点：服务程序在执行 ExecStart 后会进行一次 fork()，父进程退出，子进程在后台运行。由于主命令会退出，因此 systemd 无法直接跟踪子进程，需借助 PIDFile= 指令指定子进程的 PID。
+ 适用场景：适用于传统的以守护进程（daemon）方式运行的服务，比如早期的 apache、vsftpd。
+ 
+ oneshot 类型
+ 类型特点：该类型服务通常用于执行一次性命令。类似 simple，但 systemd 会等待命令完全执行完毕后再继续。该类型不会持续运行，也不会监控进程状态。
+ 适用场景：适用于初始化脚本、配置加载、一次性环境准备等任务。可结合 RemainAfterExit=yes 选项在命令执行完后仍标记服务为“活跃”状态。
+ 
+ idle 类型
+ 类型特点：和 simple 类似，但服务不会立即启动，而是延迟到系统其他任务（如普通服务）完成之后才执行。用于减少启动早期的资源争用。
+ 适用场景：适用于系统空闲时才运行的低优先级任务。需要注意该类型实际使用较少。
+ 
+```
+
+##### 示例
+
+新增编写文件：vi /usr/lib/systemd/system/knbsredis.service
+
+```shell
+[Unit]
+Description=Knbs-redis AutoStart
+
+[Service]
+Type=simple
+ExecStart=/usr1/bin/knbs-redis/redis-6.2.7/src/redis-server /usr1/bin/knbs-redis/redis-6.2.7/redis.conf
+ExecStop=/usr1/bin/knbs-redis/redis-6.2.7/src/redis-cli -a knbsredis123 shutdown
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```shell
+[Unit]
+Description=Knbs-reids autostart
+
+[Service]
+Type=forking
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/java/jdk-11.0.1/bin" ""
+ExecStart=/usr/local/java/jdk/bin/java -jar /opt/map/module/alarmmanagement/AlarmManagement.jar
+Restart=no
+TimeoutSec=180
+
+[Install]
+WantedBy=multi-user.target
+
+
+```
+
+
+
+#### Systemd自启动部署流程
+
+1. 将写好的XXX.service文件放入systemd所指定的位置
+   Systemd启动时会加载一系列的单元目录（总共有10个），这些单元目录依照加载顺序分为优先级。
+
+   |单元目录	|描述|
+   |-|-|
+   |/etc/systemd/system.control	|通过 dbus API 创建的永久系统单元|
+   |/run/systemd/system.control|	通过 dbus API 创建的临时系统单元|
+   |/run/systemd/transient	|动态配置的临时单元(系统与全局用户共用)|
+   |/run/systemd/generator.early	|生成的高优先级单元(系统与全局用户共用)|
+   |/etc/systemd/system	|本地配置的系统单元|
+   |/run/systemd/system|	运行时配置的系统单元|
+   |/run/systemd/generator	|生成的中优先级系统单元|
+   |/usr/local/lib/systemd/system	|本地软件包安装的系统单元|
+   |/usr/lib/systemd/system	|发行版软件包安装的系统单元|
+   |/run/systemd/generator.late	|生成的低优先级系统单元|
+
+    **事实上，在大部分情况简单需求下，使用者只需要将service文件放入/usr/lib/systemd/system才是正确的 网上很多教程所说的是/etc/systemd/system，这个是不符合规范的做法！**
+
+2. 使用Systemd命令配置service单元使其生效
+   顺序执行以下命令即可完成自启动设置
+
+   ```shell
+   sudo systemctl daemon-reload （重新加载配置）
+   sudo systemctl enable XXXX.service （将该单元加入开机启动列表）
+   
+   ```
+   
+   **注：每次修改完.service文件之后需要重新执行 systemctl daemon-reload**
+3. 建议在配置完成之后进行手动service启动测试
+
+   ```shell
+   sudo systemctl start XXXX（启动某service单元）
+   sudo systemctl status XXXX（查看某service单元的运行状态）
+   sudo systemctl stop XXXX（停止某service单元）
+   ```
+
+####  systemctl日志查看
+
+在Linux系统中，systemctl 命令主要用于管理系统和服务，但它本身并不直接提供查看系统日志的功能。如果你想查看系统日志，你应该使用专门用于查看日志的工具，如 journalctl 命令。journalctl 是专门用于查看 systemd 日志的工具，它能够显示 systemd 日志守护程序收集的所有日志信息。
+
+使用 journalctl 命令
+查看所有日志
+
+```shell
+journalctl
+```
+
+
+查看最近的日志
+
+```shell
+journalctl -n 20  # 查看最近的20条日志
+```
+
+查看特定服务的日志
+
+```shell
+journalctl -u service_name.service  # 替换 service_name 为你的服务名
+```
+
+查看特定时间段的日志
+
+```shell
+journalctl --since "2023-03-01" --until "2023-03-02"
+```
+
+或者使用相对时间：
+
+```shell
+journalctl --since "yesterday"
+journalctl --since "1 hour ago"
+```
+
+查看带有特定关键字的日志
+
+```shell
+journalctl | grep keyword
+```
+
+查看特定级别的日志
+
+```shell
+journalctl -p err  # 显示错误日志
+journalctl -p info # 显示信息日志
+```
+
+示例
+查看所有服务的所有日志：
+
+```shell
+journalctl -b
+```
+
+这里 -b 选项表示从当前启动的系统开始显示日志。如果你想看从系统启动以来的所有日志，可以使用 -b -0。
+
+查看特定服务的日志：
+
+```shell
+journalctl -u ssh.service
+```
+
+这会显示所有与 SSH 服务相关的日志。
+
+注意
+如果你发现 journalctl 命令找不到任何日志，可能是因为你的系统使用的是不同的日志系统（如 syslog），在这种情况下，你应该使用 dmesg 查看内核消息，或者使用 /var/log/ 目录下的文件（如 /var/log/syslog, /var/log/messages 等）。
+
+确保你有适当的权限来访问这些日志文件，通常需要 root 权限。使用 sudo 前缀可以提升你的权限。例如：
+
+```shell
+sudo journalctl -u ssh.service
+```
+
+通过这些方法，你可以有效地使用 journalctl 来查看和管理你的系统日志。
+
 
 ## 更改环境变量
 

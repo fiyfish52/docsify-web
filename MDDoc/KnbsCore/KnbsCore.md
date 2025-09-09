@@ -247,6 +247,8 @@ public class GenerateTest {
 
 使用OpenAPI3的规范注解
 
+#### Controller
+
 ```java
 @RestController
 @RequestMapping("body")
@@ -271,5 +273,71 @@ public class BodyController {
        return ResponseEntity.ok(fileResp);
    }
 }
+```
+
+#### Entity
+
+```sql
+@Schema(
+        name = "实体类名称",
+        type = "TestModel",
+        description = "描述实体类"
+)
+@Data
+public class TestModel {
+
+    @Schema(description = "主键", example = "1"   ,type = "int")
+    private int id;
+
+    @Schema(description = "名称", example = "张三"   ,type = "String")
+    private String name;
+
+    @Schema(description = "年龄", example = "18"   ,type = "Double")
+    private Double age;
+
+    @Schema(description = "地址", example = "北京市"   ,type = "String")
+    private String address;
+
+    @Schema(description = "map", example = "\"map\":{\"key\":\"value\"}"   ,type = "Map")
+    private Map<String, Object> map;
+
+    @Schema(description = "listMap", example = "\"listMap\":[{\"key\":\"value\"},{\"key2\":\"value2\"}]"   ,type = "List")
+    private List<Map<String,Object>> listMap;
+}
+```
+
+### 数据库唯一主键
+
+配置使用对应的方案
+
+#### 入参说明
+
+| 参数            | 说明           | 参数                                                        | 默认值    |
+| --------------- | -------------- | ----------------------------------------------------------- | --------- |
+| enabled         | 是否加载该配置 | false:不记载；true：加载                                    | false     |
+| type            | 生成类型       | snowflake:雪花算法；uuid：uuid                              | snowflake |
+| snow-flake-conf | 雪花算法配置   | datacenter-id：数据中心id（0-31）machine-id：机器id（0-31） | 无        |
+| uuid-conf       | uuid配置       | version：uuid取值版本 (当前支持版本："4","7")               | "7"       |
+
+#### uuid
+
+```yml
+  uniqueid:
+    enabled: true
+    type: uuid
+    uuid-conf:
+      version: 7 // 支持版本7 与版本 4
+```
+
+#### 雪花id
+
+```yml
+  uniqueid:
+    enabled: true
+    snow-flake-conf:
+    # 指定数据中心id （0-31）
+      datacenter-id: 0 
+    # 指定机器id （0-31）
+      machine-id: 0
 ```
 

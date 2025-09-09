@@ -88,6 +88,7 @@
       * [&#x1F4D8; dml](/server/DB/oracle/dml.md)
       * [&#x1F4D8; oracle](/server/DB/oracle/oracle.md)
       * [&#x1F4D8; oracle grammar](/server/DB/oracle/oracleGrammar.md)
+      * [&#x1F4D8; oracle sql](/server/DB/oracle/sql.md)
     * mysql
       * [&#x1F4D8; mysql config](/server/DB/mysql/config.md)
       * [&#x1F4D8; dml](/server/DB/mysql/dml.md)
