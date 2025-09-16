@@ -1,0 +1,10 @@
+[Unit]
+Description=Knbs-redis AutoStart
+
+[Service]
+Type=simple
+ExecStart=/usr1/bin/knbs-redis/cluster/startclusternodes.sh
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

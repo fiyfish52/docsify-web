@@ -141,8 +141,48 @@ TimeoutSec=180
 
 [Install]
 WantedBy=multi-user.target
+```
+#### 一次启动多条脚本
+
+```
+方法一：使用Shell脚本
+‌编写Shell脚本‌：
+创建一个Shell脚本文件，例如start_service.sh，在该脚本中依次执行多个命令。
+
+bash
+Copy Code
+#!/bin/bash
+command1
+command2
+command3
+‌修改.service文件‌：
+在.service文件的ExecStart字段中，指向这个Shell脚本。
+
+[Service]
+ExecStart=/path/to/start_service.sh
+
+方法二：使用ExecStartPre和ExecStartPost
+ExecStartPre和ExecStartPost字段允许你在主启动命令之前或之后执行命令。
+
+[Service]
+ExecStartPre=/path/to/command1
+ExecStart=/path/to/main_command
+ExecStartPost=/path/to/command2
+方法三：在启动命令中使用&&或;
+在某些情况下，你可以直接在ExecStart字段中使用Shell的&&或;来连接多个命令。但请注意，这种方法可能不如使用Shell脚本那样清晰和易于维护。
 
 
+[Service]
+ExecStart=/bin/bash -c "command1 && command2 && command3"
+或者
+
+[Service]
+ExecStart=/bin/bash -c "command1; command2; command3"
+注意事项
+‌绝对路径‌：确保所有命令都使用绝对路径，以避免因环境变量问题导致的命令找不到的情况。
+‌错误处理‌：如果某个命令失败，可能会影响后续命令的执行。因此，在编写Shell脚本或使用&&连接命令时，要考虑错误处理逻辑。
+‌安全性‌：如果服务需要以特定用户身份运行，确保Shell脚本或命令具有相应的执行权限，并且不包含敏感信息。
+综上所述，推荐使用‌方法一‌（编写Shell脚本）来实现ExecStart执行多个命令的需求，因为它既清晰又易于维护。
 ```
 
 
@@ -173,7 +213,7 @@ WantedBy=multi-user.target
    ```shell
    sudo systemctl daemon-reload （重新加载配置）
    sudo systemctl enable XXXX.service （将该单元加入开机启动列表）
-   
+   sudo systemctl disable XXXX.service (取消自启动)
    ```
    
    **注：每次修改完.service文件之后需要重新执行 systemctl daemon-reload**

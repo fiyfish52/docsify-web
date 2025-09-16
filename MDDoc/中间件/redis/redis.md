@@ -294,6 +294,8 @@ db0:keys=1,expires=0,avg_ttl=0
 
 链接redis后 输入 help @string @list @set @sorted_set
 
+[官网文档](https://redis.ac.cn/docs/latest/commands/)
+
 ### 数据结构
 
 字符串string  
@@ -314,23 +316,67 @@ db0:keys=1,expires=0,avg_ttl=0
 
 #### 字符串
 
-命令
+##### 命令
+
+| 命令                            | 说明                                                         | 返回值                                                    |
+| ------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------- |
+| append key value                | 如果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾。如果可以不存在，则会新创建一个key-value | value 的长度                                              |
+| decr key                        | 若key存在，将 key 中储存的数字值减一。若key不存在，则设置新key，且从0开始减一； | 递减后的value                                             |
+| decrby key decrement            | 若key存在，将key 所储存的值减去给定的减量值（decrement） 。若不存在，则设置新key，且从0开始减去给定的减量值（decrement）； | 递减后的value                                             |
+| get key                         | 获取指定 key 的值。                                          | value                                                     |
+| getbit key offset               | 对 key 所储存的字符串值，获取指定偏移量上的位(bit)。         | 指定偏移量上的位                                          |
+| getdel key                      | 返回value 并删除key                                          |                                                           |
+| getex                           | GETEX key [EX seconds \| PX milliseconds \| EXAT unix-time-seconds \|   PXAT unix-time-milliseconds \| PERSIST]                                                                                                                     `EX` *seconds* -- 设置指定的过期时间，单位为秒。 `PX` *milliseconds* -- 设置指定的过期时间，单位为毫秒。 `EXAT` *timestamp-seconds* -- 设置键将过期的指定 Unix 时间（单位为秒）。 `PXAT` *timestamp-milliseconds* -- 设置键将过期的指定 Unix 时间（单位为毫秒）。 [`PERSIST`](https://redis.ac.cn/docs/latest/commands/persist/) -- 移除与键相关联的生存时间。 |                                                           |
+| getrange key start end          | 返回 key 中字符串值的子字符                                  |                                                           |
+| getset key value                | 将给定 key 的值设为 value ，并返回 key 的旧值(old value)。   | 返回 key 的旧值(old value)                                |
+| incr key                        | 将 key 中储存的数字值增一。                                  |                                                           |
+| incrby key increment            | 将 key 所储存的值加上给定的增量值（increment） 。            | new value                                                 |
+| incrbyfloat key increment       | 将 key 所储存的值加上给定的浮点增量值（increment） 。        | new value                                                 |
+| lcs                             |                                                              |                                                           |
+| mget key1 [key2...]             | 获取所有(一个或多个)给定 key 的值。                          | 多个key对应的value                                        |
+| mset key value [key value...]   | 同时设置一个或多个 key-value 对。                            | 成功 ok                                                   |
+| msetnx key value [key value...] | 同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。 |                                                           |
+| psetex key milliseconds value   | 这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。 | 成功 ok                                                   |
+| set key                         | 设置指定 key 的值。                                          | 成功 ok 失败                                              |
+| setbit key offset value         | 对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。   | value                                                     |
+| setex key seconds value         | 将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。                     Redis Setex 命令为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。 | 设置成功时返回 OK                                         |
+| setnx key value                 | 只有在 key 不存在时设置 key 的值。Setnx（**SET** if **N**ot e**X**ists） 命令在指定的 key 不存在时，为 key 设置指定的值。 | 设置成功时返回 true ，失败返回false。                     |
+| setrange key offset value       | 用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。 | value 长度                                                |
+| strlen key                      | 返回 key 所储存的字符串值的长度。                            | 返回 key 所储存的字符串值的长度。                         |
+| SUBSTR key start end            | 获取子字符串，下标从0开始                                    | Returns the substring of the string value stored at `key` |
+
+
 
 #### 哈希
 
 ##### 命令
 
-|命令|说明|
-|-|-|
-|**HSET** key field value | 存储一个哈希表 key 的键值|
-|**HSETNX** key field value | 存储一个不存在的哈希表 key 的键值|
-|**HMSET** key field value [field value ...] | 在一个哈希表 key 中存储多个键值对|
-|**HGET** key field | 获取哈希表 key 对应的 field 键值|
-|**HMGET** key field [field ...] | 批量获取哈希表 key 中多个 field 键值|
-|**HDEL** key field [field ...] | 删除哈希表 key 中的 field 键值|
-|**HLEN** key | 返回哈希表 key 中 field 的数量|
-|**HGETALL** key | 返回哈希表 key 中所有的键值|
-|**HINCRBY** key field increment | 为哈希表 key 中 field 键的值加上增量 increment |
+|命令|说明||
+|-|-|-|
+|**HDEL** key field [field ...]|从存储在 `key` 的哈希中移除指定的字段。忽略哈希中不存在的指定字段。如果哈希中没有剩余字段，则删除该哈希。如果 `key` 不存在，则将其视为空哈希，此命令返回 `0`。||
+|**HEXISTS** key field|返回 `field` 是否是存储在 `key` 的哈希中的现有字段。|不包含，或者键不存在，返回 `0`。如果哈希包含该字段，返回 `1`|
+|**HEXPIRE** key seconds [NX \| XX \| GT \| LT] FIELDS numfields field   [field ...]|为给定哈希键的一个或多个字段设置过期时间（TTL 或生存时间）。您必须至少指定一个字段。字段的 TTL 到期时将自动从哈希键中删除。`NX` -- 对于每个指定字段，仅当字段没有过期时间时设置过期时间。 `XX` -- 对于每个指定字段，仅当字段已存在过期时间时设置过期时间。 `GT` -- 对于每个指定字段，仅当新的过期时间大于当前过期时间时设置过期时间。 `LT` -- 对于每个指定字段，仅当新的过期时间小于当前过期时间时设置过期时间。|HEXPIRE mykey 10 FIELDS 3 field1 field2 field3|
+|**HEXPIREAT** key unix-time-seconds [NX \| XX \| GT \| LT] FIELDS numfields   field [field ...]|`HEXPIREAT` 的效果和语义与 [`HEXPIRE`](https://redis.ac.cn/docs/latest/commands/hexpire/) 相同，但它不是指定 TTL（生存时间）的秒数，而是采用自 Unix 纪元以来的绝对 [Unix 时间戳](http://en.wikipedia.org/wiki/Unix_time)（以秒为单位）。过去的时间戳将立即删除该字段。||
+|**HEXPIRETIME** key FIELDS numfields field [field ...]|返回给定键的字段将过期的绝对 Unix 时间戳（以秒为单位）。||
+|HGET key field|返回存储在 `key` 中的哈希表内与 `field` 关联的值。||
+|HGETALL key|返回存储在 `key` 处的哈希的所有字段和值。在返回的值中，每个字段名称后面跟着其值，因此回复的长度是哈希大小的两倍。||
+|BLMOVE source destination <LEFT \| RIGHT> <LEFT \| RIGHT> timeout|||
+||||
+||||
+||||
+||||
+||||
+||||
+||||
+|**HSET** key field value | 存储一个哈希表 key 的键值| |
+|**HSETNX** key field value | 存储一个不存在的哈希表 key 的键值| |
+|**HMSET** key field value [field value ...] | 在一个哈希表 key 中存储多个键值对| |
+|**HGET** key field | 获取哈希表 key 对应的 field 键值| |
+|**HMGET** key field [field ...] | 批量获取哈希表 key 中多个 field 键值| |
+|**HDEL** key field [field ...] | 删除哈希表 key 中的 field 键值| |
+|**HLEN** key | 返回哈希表 key 中 field 的数量| |
+|**HGETALL** key | 返回哈希表 key 中所有的键值| |
+|**HINCRBY** key field increment | 为哈希表 key 中 field 键的值加上增量 increment |  |
 
 ##### 应用场景：电商购物车
 
@@ -586,40 +632,46 @@ Summary:
         0.570     0.224     0.527     0.983     1.407     3.311
 ```
 
-## 部署
-
 ### 持久化
 
-RDB快照（snapshot）
+#### RDB快照（snapshot）
+
 在默认情况下， Redis 将内存数据库快照保存在名字为 dump.rdb 的二进制文件中。
 你可以对 Redis 进行设置， 让它在“ N 秒内数据集至少有 M 个改动”这一条件被满足时， 自动保存一次
 数据集。
 比如说， 以下设置会让 Redis 在满足“ 60 秒内有至少有 1000 个键被改动”这一条件时， 自动保存一次
 数据集：
-### save 60 1000 //关闭RDB只需要将所有的save保存策略注释掉即可
-还可以手动执行命令生成RDB快照，进入redis客户端执行命令save或bgsave可以生成dump.rdb文件，
-每次命令执行都会将所有redis内存快照到一个新的rdb文件里，并覆盖原有rdb快照文件。
+
+```
+save 60 1000 //关闭RDB只需要将所有的save保存策略注释掉即可
+```
+
+还可以手动执行命令生成RDB快照，进入redis客户端执行命令**save**或**bgsave**可以生成dump.rdb文件，每次命令执行都会将所有redis内存快照到一个新的rdb文件里，并覆盖原有rdb快照文件。
+
 bgsave的写时复制(COW)机制
-Redis 借助操作系统提供的写时复制技术（Copy-On-Write, COW），在生成快照的同时，依然可以正常
-处理写命令。简单来说，bgsave 子进程是由主线程 fork 生成的，可以共享主线程的所有内存数据。
-bgsave 子进程运行后，开始读取主线程的内存数据，并把它们写入 RDB 文件。此时，如果主线程对这些
-数据也都是读操作，那么，主线程和 bgsave 子进程相互不影响。但是，如果主线程要修改一块数据，那
-么，这块数据就会被复制一份，生成该数据的副本。然后，bgsave 子进程会把这个副本数据写入 RDB 文
+
+Redis 借助操作系统提供的写时复制技术（Copy-On-Write, COW），在生成快照的同时，依然可以正常处理写命令。简单来说，bgsave 子进程是由主线程 fork 生成的，可以共享主线程的所有内存数据。bgsave 子进程运行后，开始读取主线程的内存数据，并把它们写入 RDB 文件。此时，如果主线程对这些数据也都是读操作，那么，主线程和 bgsave 子进程相互不影响。但是，如果主线程要修改一块数据，那么，这块数据就会被复制一份，生成该数据的副本。然后，bgsave 子进程会把这个副本数据写入 RDB 文
 件，而在这个过程中，主线程仍然可以直接修改原来的数据。
-save与bgsave对比：
-命令 save bgsave
-IO类型 同步 异步
-是否阻塞redis其它命令 是 否(在生成子进程执行调用fork函
-数时会有短暂阻塞)
-复杂度 O(n) O(n)
-优点 不会消耗额外内存 不阻塞客户端命令
-缺点 阻塞客户端命令 需要fork子进程，消耗内存
+
+##### save与bgsave对比
+
+| 命令                  | save             | bgsave                                         |
+| --------------------- | ---------------- | ---------------------------------------------- |
+| IO类型                | 同步             | 异步                                           |
+| 是否阻塞redis其它命令 | 是               | 否(在生成子进程执行调用fork函数时会有短暂阻塞) |
+| 复杂度                | O(n)             | O(n)                                           |
+| 优点                  | 不会消耗额外内存 | 不阻塞客户端命令                               |
+| 缺点                  | 阻塞客户端命令   | 需要fork子进程，消耗内存                       |
+
 配置自动生成rdb文件后台使用的是bgsave方式。
-AOF（append-only file）
+
+#### AOF（append-only file）
+
 快照功能并不是非常耐久（durable）： 如果 Redis 因为某些原因而造成故障停机， 那么服务器将丢失
 最近写入、且仍未保存到快照中的那些数据。从 1.1 版本开始， Redis 增加了一种完全耐久的持久化方
 式： AOF 持久化，将修改的每一条指令记录进文件appendonly.aof中(先写入os cache，每隔一段时间
 fsync到磁盘)
+
 比如执行命令“set zhuge 666”，aof文件里会记录如下数据
 1 *3
 2 $3
@@ -647,21 +699,31 @@ fsync到磁盘)
 12 tuling
 13 $13
 14 1604249786301
+
 你可以通过修改配置文件来打开 AOF 功能：
+
 1 # appendonly yes
+
 从现在开始， 每当 Redis 执行一个改变数据集的命令时（比如 SET）， 这个命令就会被追加到 AOF 文
 件的末尾。
 这样的话， 当 Redis 重新启动时， 程序就可以通过重新执行 AOF 文件中的命令来达到重建数据集的目
 的。
+
 你可以配置 Redis 多久才将数据 fsync 到磁盘一次。
+
 有三个选项：
+
 1 appendfsync always：每次有新命令追加到 AOF 文件时就执行一次 fsync ，非常慢，也非常安全。
 2 appendfsync everysec：每秒 fsync 一次，足够快，并且在故障时只会丢失 1 秒钟的数据。
 3 appendfsync no：从不 fsync ，将数据交给操作系统来处理。更快，也更不安全的选择。
 推荐（并且也是默认）的措施为每秒 fsync 一次， 这种 fsync 策略可以兼顾速度和安全性。
-AOF重写
+
+##### AOF重写
+
 AOF文件里可能有太多没用指令，所以AOF会定期根据内存的最新数据生成aof文件
 例如，执行了如下几条命令：
+
+```
 1 127.0.0.1:6379> incr readcount
 2 (integer) 1
 3 127.0.0.1:6379> incr readcount
@@ -672,7 +734,11 @@ AOF文件里可能有太多没用指令，所以AOF会定期根据内存的最�
 8 (integer) 4
 9 127.0.0.1:6379> incr readcount
 10 (integer) 5
+```
+
 重写后AOF文件里变成
+
+```
 1 *3
 2 $3
 3 SET
@@ -680,22 +746,225 @@ AOF文件里可能有太多没用指令，所以AOF会定期根据内存的最�
 5 readcount
 6 $1
 7 5
+```
+
 如下两个配置可以控制AOF自动重写频率
-1 # auto‐aof‐rewrite‐min‐size 64mb //aof文件至少要达到64M才会自动重写，文件太小恢复速度本来就
-很快，重写的意义不大
+
+```
+1 # auto‐aof‐rewrite‐min‐size 64mb //aof文件至少要达到64M才会自动重写，文件太小恢复速度本来就很快，重写的意义不大
 2 # auto‐aof‐rewrite‐percentage 100 //aof文件自上一次重写后文件大小增长了100%则再次触发重写
-当然AOF还可以手动重写，进入redis客户端执行命令bgrewriteaof重写AOF
-注意，AOF重写redis会fork出一个子进程去做(与bgsave命令类似)，不会对redis正常命令处理有太多
-影响
-RDB 和 AOF ，我应该用哪一个？
-命令 RDB AOF
-启动优先级 低 高
-体积 小 大
-恢复速度 快 慢
-数据安全性 容易丢数据 根据策略决定
+```
+
+当然AOF还可以手动重写，进入redis客户端执行命令**bgrewriteaof**重写AOF
+
+**注意，AOF重写redis会fork出一个子进程去做(与bgsave命令类似)，不会对redis正常命令处理有太多影响**
+
+
+
+#### RDB 和 AOF ，我应该用哪一个？
+
+| 命令       | RDB        | AOF          |
+| ---------- | ---------- | ------------ |
+| 启动优先级 | 低         | 高           |
+| 体积       | 小         | 大           |
+| 恢复速度   | 快         | 慢           |
+| 数据安全性 | 容易丢数据 | 根据策略决定 |
+
 生产环境可以都启用，redis启动时如果既有rdb文件又有aof文件则优先选择aof文件恢复数据，因为aof
 一般来说数据更全一点。
 
+
+
+## 部署
+
+
+
 ### 主从
 
-### 集群
+### 哨兵
+
+![image-20250911114856387](./redis.assets/image-20250911114856387.png)
+
+### redis cluster
+
+官方：最多支持1W个，实际中不要超过1K个
+
+![image-20250911114832267](./redis.assets/image-20250911114832267.png)
+
+
+
+#### 部署步骤
+
+##### 环境：
+
+| 机器地址       | 路径                         | node                      |
+| -------------- | ---------------------------- | ------------------------- |
+| 192.168.31.130 | /usr1/bin/knbs-redis/cluster | cluster-6380 cluster-6381 |
+| 192.168.31.132 | /usr1/bin/knbs-redis/cluster | cluster-6380 cluster-6381 |
+| 192.168.31.132 | /usr1/bin/knbs-redis/cluster | cluster-6380 cluster-6381 |
+
+##### 准备
+
+
+
+##### 创建文件夹
+
+```
+mkdir -p /usr1/bin/knbs-redis/cluster/cluster-6380
+mkdir -p /usr1/bin/knbs-redis/cluster/cluster-6380/data
+mkdir -p /usr1/bin/knbs-redis/cluster/cluster-6381
+mkdir -p /usr1/bin/knbs-redis/cluster/cluster-6381/data
+```
+
+##### 创建配置文件
+
+```
+将解压文件中的redis.config 复制到第一步的路径下
+```
+
+##### 更改配置文件
+
+```
+
+6 （1）daemonize yes
+7 （2）port 8001（分别对每个机器的端口号进行设置）
+8 （3）pidfile /var/run/redis_8001.pid # 把pid进程号写入pidfile配置的文件
+9 （4）dir /usr/local/redis‐cluster/8001/（指定数据文件存放位置，必须要指定不同的目录位置，不然会
+丢失数据）
+10 （5）cluster‐enabled yes（启动集群模式）
+11 （6）cluster‐config‐file nodes‐8001.conf（集群节点信息文件，这里800x最好和port对应上）
+12 （7）cluster‐node‐timeout 10000
+13 (8)# bind 127.0.0.1（bind绑定的是自己机器网卡的ip，如果有多块网卡可以配多个ip，代表允许客户端通
+过机器的哪些网卡ip去访问，内网一般可以不配置bind，注释掉即可）
+14 (9)protected‐mode no （关闭保护模式）
+15 (10)appendonly yes
+16 如果要设置密码需要增加如下配置：
+17 (11)requirepass zhuge (设置redis访问密码)
+18 (12)masterauth zhuge (设置集群节点间访问密码，跟上面一致)
+```
+
+集群节点配置
+
+ [redis-6380.conf](redis.assets\redis-6380.conf) 
+
+ [redis-6381.conf](redis.assets\redis-6381.conf) 
+
+自启动配置
+
+ [startclusternodes.sh](redis.assets\startclusternodes.sh) 
+
+ [knbsredisclusternodes.service](C:\Users\zhanglipengLZ\Desktop\knbsredisclusternodes.service) 
+
+##### 复制配置文件
+
+给所有节点都复制该配置文件，注意更改端口号，以及与端口号相关的配置
+
+##### 启动所有节点
+
+```
+/usr1/bin/knbs-redis/redis-6.2.7/src/redis-server /usr1/bin/knbs-redis/cluster/cluster-6380/redis-6380.conf
+/usr1/bin/knbs-redis/redis-6.2.7/src/redis-server /usr1/bin/knbs-redis/cluster/cluster-6381/redis-6381.conf
+```
+
+##### 检查是否启动成功
+
+```
+ps -ef|grep redis
+```
+
+![image-20250911150949973](./redis.assets/image-20250911150949973.png)
+
+##### 放开防火墙
+
+因为集群需要互相连通，每台机器的防火墙都要放开
+
+需要打开redis服务端口和集群节点gossip通信端口16379(默认是在redis端口号上加1W)  
+
+```
+firewall-cmd --add-port=6380/tcp --permanent
+firewall-cmd --add-port=6381/tcp --permanent
+firewall-cmd --add-port=16380/tcp --permanent
+firewall-cmd --add-port=16381/tcp --permanent
+firewall-cmd --reload
+```
+
+
+
+##### 配置集群
+
+```
+注意：下面这条创建集群的命令大家不要直接复制，里面的空格编码可能有问题导致创建集群不成功
+# -a redis节点密码    -- cluster-replicas 1   这个1 表示每台主机有一个备机
+/usr1/bin/knbs-redis/redis-6.2.7/src/redis-cli -a knbsredis123 --cluster create --cluster-replicas 1 192.168.31.130:6380 192.168.31.130:6381 192.168.31.131:6380 192.168.31.131:6381 192.168.31.132:6380 192.168.31.132:6381
+```
+
+提示将要按照该配置创建集群是否接受？
+
+![image-20250911151817802](./redis.assets/image-20250911151817802.png)
+
+输入yes，开始按照该配置创建集群。等待……
+
+![image-20250911151900598](./redis.assets/image-20250911151900598.png)
+
+创建成功
+
+![image-20250911162750006](./redis.assets/image-20250911162750006.png)
+
+##### 验证
+
+```sh
+/usr1/bin/knbs-redis/redis-6.2.7/src/redis-cli -a knbsredis123 -c -h 192.168.31.130 -p 6380
+输入cluster info（查看集群信息） cluster nodes(查看节点信息)
+```
+
+集群信息如下：
+
+![image-20250911163305828](./redis.assets/image-20250911163305828.png)
+
+节点信息如下：
+
+![image-20250911163231940](./redis.assets/image-20250911163231940.png)
+
+##### 关闭集群
+
+需要逐个进行关闭，使用命令：
+
+```
+/usr1/bin/knbs-redis/redis-6.2.7/src/redis-cli -a knbsredis123 -c -h 192.168.31.130 -p 6380 shutdown
+```
+
+##### 重启
+
+不需要再执行 create 命令
+
+只需要启动所有nodes节点即可
+
+
+
+##### 重新部署
+
+重新部署需要删掉 对应的配置文件以及 持久化数据，
+
+
+
+```
+
+1.停止所有节点 
+ps -ef|grep redis
+
+2.删除所有节点下的data 文件夹，文件中数据为cluster运行时数据，包括node节点信息以及持久化数据
+cd /usr1/bin/knbs-redis/cluster/cluster-6380
+ rm -rf data
+ mkdir data
+ cd /usr1/bin/knbs-redis/cluster/cluster-6381
+ rm -rf data
+ mkdir data
+3. 然后重新启动，从新创建集群
+```
+
+
+
+## 高可用
+
+单机内存 不超过10G；
+
